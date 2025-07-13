@@ -6,8 +6,8 @@ export function ComparisonGrid() {
       {["✅", "❌", "❌", "❌"].map((symbol, col) => {
         const cellClasses =
           symbol === "✅"
-            ? "bg-[var(--background-secundary-color)] text-white shadow-[0_0_1px_var(--third-color)_0_0_2px_var(--third-color)_0_0_3px_var(--third-color)]"
-            : "bg-[var(--background-secundary-color)] shadow-[0_0_1px_var(--white)_0_0_2px_var(--white)_0_0_3px_var(--white)]";
+            ? "bg-[var(--background-secundary-color)] text-white shadow-[0_0_1px_var(--third-color),_0_0_2px_var(--third-color),_0_0_3px_var(--third-color),_0_0_4px_var(--third-color),_0_0_5px_var(--third-color),_0_0_6px_var(--third-color),_0_0_7px_var(--third-color)]"
+            : "bg-[var(--background-secundary-color)] shadow-[0_0_1px_var(--white),_0_0_2px_var(--white),_0_0_3px_var(--white),_0_0_4px_var(--white),_0_0_5px_var(--white),_0_0_6px_var(--white),_0_0_7px_var(--white)]";
         return (
           <div
             key={`cell-${row}-${col}`}

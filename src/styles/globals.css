@@ -1,18 +1,90 @@
 @import "tailwindcss";
-@import "./variables.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-color: #144750;
+  --secundary-color: #299c9c;
+  --third-color: #41aaa3;
+  --fourth-color: #4dd1c8;
+  --white: #f8f8f8;
+
+  --border-color: #333333;
+  --background-input-color: #262626;
+  --background-container-color: #202020;
+  --background-secundary-color: #1a1a1a;
+  --background-primary-color: #111111;
+  --dollar-bill-container: #e3f4f7;
+
+  --black-to-white: #202020;
+  --black-to-gray: #111111;
+  --black-to-light-blue: #1a1a1a;
+  --black-to-primary: #1a1a1a;
+
+  --primary-to-white: #144750;
+  --white-to-primary: #f8f8f8;
+
+  --secundary-to-white: #299c9c;
+  --secundary-to-primary: #299c9c;
+
+  --third-to-primary: #41aaa3;
+  --third-to-fourth: #41aaa3;
+  --third-to-white: #41aaa3;
+
+  --green-to-white: #388e3c;
+  --danger-to-white: #f75a68;
+
+  --transparent-to-green: transparent;
+  --transparent-to-danger: transparent;
+
+  --danger: #f75a68;
+  --danger-hover: #ff7b87;
+
+  --gray-100: #808080;
+  --green-100: #47ce57;
+  --green-200: #51be55;
+  --green-300: #4caf50;
+  --green-400: #388e3c;
+  --green-500: #2e7d32;
+  --green-500-30-opacity: #2e7d324d;
 }
 
-[data-theme="dark"] {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+[data-theme="light"] {
+  --primary-color: #144750;
+  --secundary-color: #278d8d;
+  --third-color: #41aaa3;
+  --fourth-color: #4dd1c8;
+
+  --border-color: #b6b6b6;
+  --background-input-color: #f8f8f8;
+  --background-container-color: #f8f8f8;
+  --background-secundary-color: #f8f8f8;
+  --background-primary-color: #144750;
+
+  --gray: #dfdfdf;
+  --light-gray: #f0f0f0;
+
+  --black-to-light-blue: #dcf5f3;
+  --black-to-white: #f8f8f8;
+  --black-to-gray: #d1ddde;
+  --black-to-primary: #144750;
+
+  --primary-to-white: #f8f8f8;
+  --white-to-primary: #144750;
+
+  --secundary-to-primary: #144750;
+  --secundary-to-fourth: #4dd1c8;
+  --secundary-to-white: #f8f8f8;
+
+  --third-to-primary: #144750;
+  --third-to-white: #f8f8f8;
+  --third-to-fourth: #4dd1c8;
+
+  --green-to-white: #f8f8f8;
+  --danger-to-white: #f8f8f8;
+
+  --transparent-to-green: #388e3c;
+  --transparent-to-danger: #f75a68;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: "Poppins", sans-serif;
 }
