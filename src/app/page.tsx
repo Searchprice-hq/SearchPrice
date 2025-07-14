@@ -3,7 +3,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/hooks/useTheme";
-import { Footer } from "@/components/Footer";
 import { ComparisonGrid } from "@/components/ComparisonGrid";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -42,7 +41,7 @@ export default function Home() {
             </li>
           </ul>
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
           <button
             onClick={toggleTheme}
             className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
@@ -126,49 +125,60 @@ export default function Home() {
 
         {/* Section 3: Artigos */}
         <section className="w-full pb-8">
-          {[1, 2, 3].map((i) => (
-            <article
-              key={i}
-              className={`flex items-center justify-center ${
-                isEven ? "flex-row-reverse" : "flex-row"
-              }`}
-            >
-              <img
-                src={`/article${i}.png`}
-                alt={`Artigo ${i}`}
-                className="mt-6 w-[18rem] mr-8 rounded-xl"
-              />
-              <div className="mt-5 flex flex-col w-[24rem]">
-                <h4 className="text-[var(--third-color)] text-base font-medium">
-                  {i === 1
-                    ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
-                    : i === 2
-                    ? "FIQUE SEMPRE UM PASSO À FRENTE!"
-                    : "TOME DECISÕES BASEADAS EM DADOS!"}
-                </h4>
-                <h2 className="text-[var(--white-to-primary)] text-xl font-medium mt-2">
-                  {i === 1 &&
-                    "Compare a lucratividade de vários produtos em vários marketplaces com um clique"}
-                  {i === 2 && "Precificação inteligente para dominar o mercado"}
-                  {i === 3 && "Dados precisos para impulsionar seu negócio"}
-                </h2>
-                <p className="text-[var(--third-to-primary)] text-[0.95rem] font-medium text-justify mt-2 w-[22rem]">
-                  {i === 1 &&
-                    "A Search Price permite que você encontre os preços mais competitivos em diversos marketplaces com apenas alguns cliques. Chega de perder horas navegando em diferentes sites - agora você pode obter as informações que precisa instantaneamente, economizando um tempo valioso que pode ser dedicado a fazer crescer seu negócio."}
-                  {i === 2 &&
-                    "Em um cenário altamente competitivo, ter os melhores preços é essencial para se destacar. Com nossa plataforma, você acompanha em tempo real os valores praticados pelos concorrentes e ajusta suas ofertas estrategicamente. Garante mais visibilidade, mais vendas e torna sua loja a opção mais atraente para os clientes!"}
-                  {i === 3 &&
-                    "Tome decisões de precificação embasadas em dados concretos e não em suposições. Nosso software fornece relatórios detalhados e insights valiosos sobre as tendências de preços no mercado. Com essas informações estratégicas, você poderá identificar oportunidades, antecipar mudanças e adaptar-se rapidamente para maximizar seus lucros."}
-                </p>
-              </div>
-            </article>
-          ))}
+          {[1, 2, 3].map((i) => {
+            const isEven = i % 2 === 0;
+            return (
+              <article
+                key={i}
+                className={`flex items-center justify-center ${
+                  isEven ? "flex-row-reverse" : "flex-row"
+                }`}
+              >
+                {/* imagem */}
+                <img
+                  src={`/article${i}.png`}
+                  alt={`Artigo ${i}`}
+                  className={`mt-6 w-[18rem] rounded-xl ${
+                    isEven ? "ml-8" : "mr-8"
+                  }`}
+                />
+
+                {/* texto */}
+                <div className="mt-5 flex flex-col w-[24rem]">
+                  <h4 className="text-[var(--third-color)] text-base font-medium">
+                    {i === 1
+                      ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
+                      : i === 2
+                      ? "FIQUE SEMPRE UM PASSO À FRENTE!"
+                      : "TOME DECISÕES BASEADAS EM DADOS!"}
+                  </h4>
+
+                  <h2 className="text-[var(--white-to-primary)] text-xl font-medium mt-2">
+                    {i === 1 &&
+                      "Compare a lucratividade de vários produtos em vários marketplaces com um clique"}
+                    {i === 2 &&
+                      "Precificação inteligente para dominar o mercado"}
+                    {i === 3 && "Dados precisos para impulsionar seu negócio"}
+                  </h2>
+
+                  <p className="text-[var(--third-to-primary)] text-[0.95rem] font-medium text-justify mt-2">
+                    {i === 1 &&
+                      "A Search Price permite que você encontre os preços mais competitivos em diversos marketplaces com apenas alguns cliques. Chega de perder horas navegando em diferentes sites - agora você pode obter as informações que precisa instantaneamente, economizando um tempo valioso que pode ser dedicado a fazer crescer seu negócio."}
+                    {i === 2 &&
+                      "Em um cenário altamente competitivo, ter os melhores preços é essencial para se destacar. Com nossa plataforma, você acompanha em tempo real os valores praticados pelos concorrentes e ajusta suas ofertas estrategicamente. Garante mais visibilidade, mais vendas e torna sua loja a opção mais atraente para os clientes!"}
+                    {i === 3 &&
+                      "Tome decisões de precificação embasadas em dados concretos e não em suposições. Nosso software fornece relatórios detalhados e insights valiosos sobre as tendências de preços no mercado. Com essas informações estratégicas, você poderá identificar oportunidades, antecipar mudanças e adaptar-se rapidamente para maximizar seus lucros."}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
         </section>
 
         {/* Section 4: Chamada Cinza */}
         <section className="w-full flex justify-center items-center py-8">
-          <div className="w-[98%] h-40 bg-[var(--black-to-gray)] rounded-xl flex flex-col items-center pt-6">
-            <h3 className="mb-2 text-center text-[1.2rem] text-[var(--white-to-primary)]">
+          <div className="w-[98%] h-48 bg-[var(--black-to-gray)] rounded-xl flex flex-col items-center pt-10">
+            <h3 className="mb-6 text-center text-[1.3rem] text-[var(--white-to-primary)]">
               Comece a economizar tempo hoje
             </h3>
             <div className="flex justify-between gap-4 w-[32rem]">
@@ -183,8 +193,8 @@ export default function Home() {
         </section>
 
         {/* Section 5: Grid de Recursos e Comparativo */}
-        <section className="w-full pb-8">
-          <div className="mx-auto text-center w-[49rem] my-10 -mb-6">
+        <section className="w-full pb-10">
+          <div className="mx-auto text-center w-[49rem] my-4 -mb-6">
             <p className="text-[2rem] font-medium text-[var(--white-to-primary)]">
               Somos a{" "}
               <span className="text-[var(--third-color)] font-bold">
@@ -211,7 +221,7 @@ export default function Home() {
                   <img
                     src="/dollarBill.png"
                     alt="Ícone"
-                    className="w-[2.5rem] p-1 bg-[var(--dollar-bill-container)] rounded"
+                    className="w-[2.5rem] p-1 bg-[var(--dollar-bill-container)] rounded-[1rem]"
                   />
                   <p className="ml-2 text-[var(--white-to-primary)] font-medium">
                     {txt}
@@ -219,24 +229,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
-            {/* Comparativo */}
-            <div className="grid grid-rows-6 grid-cols-4 gap-4 mt-12 h-[22rem]">
-              {/* Cabeçalho */}
-              <div className="flex items-center justify-center p-2 bg-[var(--background-secundary-color)] text-white rounded-md shadow">
-                Search Price
-              </div>
-              {["Google", "Chat GPT", "Avantpro"].map((t) => (
-                <div
-                  key={t}
-                  className="flex items-center justify-center bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] rounded-md shadow"
-                >
-                  {t}
-                </div>
-              ))}
-              {/* Linhas de checks/cross */}
-              <ComparisonGrid />
-            </div>
+            <ComparisonGrid />
           </div>
         </section>
 
@@ -266,13 +259,38 @@ export default function Home() {
             {[
               {
                 q: "O que é a Search Price?",
-                a: "É uma plataforma de comparação massiva e centralizada...",
+                a: "É uma plataforma de comparação massiva e centralizada para os principais marketplaces, permitindo acesso a dados como preços, visitas e vendas. Nela também o usuário encontrará fornecedores e ofertas para os produtos pesquisados.",
               },
-              /* ... demais perguntas ... */
+              {
+                q: "Como a Search Price ajuda os vendedores?",
+                a: "A plataforma economiza tempo ao centralizar a busca por preços competitivos, permitindo que os vendedores foquem em estratégias para crescer seus negócios.",
+              },
+              {
+                q: "Quais são os benefícios de usar a Search Price?",
+                a: "Centralização das informações, economia de tempo, maior assertividade nas decisões de compra e venda, e uma visão ampla do mercado.",
+              },
+              {
+                q: "Como a Search Price pode me ajudar a definir preços competitivos?",
+                a: "A plataforma fornece dados em tempo real sobre os preços praticados pelos concorrentes, permitindo ajustes estratégicos nas suas ofertas.",
+              },
+              {
+                q: "O que diferencia a Search Price de outras ferramentas no mercado?",
+                a: "A Search Price combina comparação massiva de preços e compra centralizada, oferecendo uma solução integrada que outras ferramentas não possuem.",
+              },
+              {
+                q: "Posso utilizar a Search Price em diferentes marketplaces?",
+                a: "Sim, a Search Price permite comparar preços em múltiplos marketplaces de forma simultânea.",
+              },
             ].map(({ q, a }) => (
               <Accordion
                 key={q}
-                className="w-[95%] rounded-xl border border-[var(--secundary-color)] bg-[var(--black-to-light-blue)]"
+                sx={{
+                  backgroundColor: "var(--black-to-light-blue)",
+                  borderRadius: "0.5rem",
+                  borderWidth: "1.5px",
+                  color: "var(--white-to-primary)",
+                }}
+                className="w-[95%] border rounded-2xl dark:border-[var(--secundary-color)]"
               >
                 <AccordionSummary
                   expandIcon={
@@ -300,8 +318,12 @@ export default function Home() {
           </button>
         </section>
       </main>
-
-      <Footer />
+      <footer className="bg-[var(--background-primary-color)] text-white w-full mt-auto px-8 py-6 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+        <p className="text-base">
+          © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
+          reservados.
+        </p>
+      </footer>
     </div>
   );
 }
