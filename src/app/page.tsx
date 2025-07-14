@@ -41,7 +41,7 @@ export default function Home() {
             </li>
           </ul>
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
           <button
             onClick={toggleTheme}
             className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
