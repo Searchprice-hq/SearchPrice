@@ -16,6 +16,9 @@
 
   --black-to-white: #202020;
   --black-to-gray: #111111;
+
+  --light-black-to-gray: #1a1a1a;
+  --black-to-light-gray: #1a1a1a;
   --black-to-light-blue: #1a1a1a;
   --black-to-primary: #1a1a1a;
 
@@ -61,9 +64,11 @@
 
   --gray: #dfdfdf;
   --light-gray: #f0f0f0;
+  --light-black-to-gray: #d1ddde;
 
   --black-to-light-blue: #dcf5f3;
   --black-to-white: #f8f8f8;
+  --black-to-light-gray: #f0f0f0;
   --black-to-gray: #d1ddde;
   --black-to-primary: #144750;
 

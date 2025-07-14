@@ -1,24 +1,52 @@
 import React from "react";
+import clsx from "clsx";
 
 export function ComparisonGrid() {
-  const rows = Array.from({ length: 5 }, (_, row) => (
-    <React.Fragment key={row}>
-      {["✅", "❌", "❌", "❌"].map((symbol, col) => {
-        const cellClasses =
-          symbol === "✅"
-            ? "bg-[var(--background-secundary-color)] text-white shadow-[0_0_1px_var(--third-color),_0_0_2px_var(--third-color),_0_0_3px_var(--third-color),_0_0_4px_var(--third-color),_0_0_5px_var(--third-color),_0_0_6px_var(--third-color),_0_0_7px_var(--third-color)]"
-            : "bg-[var(--background-secundary-color)] shadow-[0_0_1px_var(--white),_0_0_2px_var(--white),_0_0_3px_var(--white),_0_0_4px_var(--white),_0_0_5px_var(--white),_0_0_6px_var(--white),_0_0_7px_var(--white)]";
+  const headers = ["Search Price", "Google", "Chat GPT", "Avantpro"];
+
+  const features = Array.from({ length: 5 }, (_, row) =>
+    ["✅", "❌", "❌", "❌"].map((symbol, col) => {
+      const cellClasses = clsx(
+        "flex items-center justify-center rounded-md text-base border-2",
+        {
+          "bg-[var(--light-black-to-gray)] text-white dark:border-teal-600":
+            symbol === "✅",
+          "bg-[var(--black-to-light-gray)] dark:border-white": symbol !== "✅",
+        }
+      );
+
+      return (
+        <div key={`feature-${row}-${col}`} className={cellClasses}>
+          {symbol}
+        </div>
+      );
+    })
+  ).flat();
+
+  return (
+    <div className="grid grid-rows-6 grid-cols-4 gap-4 mt-12 h-[22rem]">
+      {/* Cabeçalho */}
+      {headers.map((label, idx) => {
+        const isFirst = idx === 0;
+        const headerClasses = clsx(
+          "flex items-center justify-center p-2 rounded-md border-2",
+          {
+            "bg-[var(--black-to-primary)] text-white dark:border-teal-600":
+              isFirst,
+            "bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] dark:border-white":
+              !isFirst,
+          }
+        );
+
         return (
-          <div
-            key={`cell-${row}-${col}`}
-            className={`flex items-center justify-center rounded-md text-base ${cellClasses}`}
-          >
-            {symbol}
+          <div key={label} className={headerClasses}>
+            {label}
           </div>
         );
       })}
-    </React.Fragment>
-  ));
 
-  return <>{rows}</>;
+      {/* Linhas de checks/crosses */}
+      {features}
+    </div>
+  );
 }

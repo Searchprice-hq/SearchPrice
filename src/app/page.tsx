@@ -3,7 +3,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/hooks/useTheme";
-import { Footer } from "@/components/Footer";
 import { ComparisonGrid } from "@/components/ComparisonGrid";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -179,7 +178,7 @@ export default function Home() {
         {/* Section 4: Chamada Cinza */}
         <section className="w-full flex justify-center items-center py-8">
           <div className="w-[98%] h-48 bg-[var(--black-to-gray)] rounded-xl flex flex-col items-center pt-10">
-            <h3 className="mb-6 text-center text-[1.2rem] text-[var(--white-to-primary)]">
+            <h3 className="mb-6 text-center text-[1.3rem] text-[var(--white-to-primary)]">
               Comece a economizar tempo hoje
             </h3>
             <div className="flex justify-between gap-4 w-[32rem]">
@@ -230,24 +229,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
-            {/* Comparativo */}
-            <div className="grid grid-rows-6 grid-cols-4 gap-4 mt-12 h-[22rem]">
-              {/* Cabeçalho */}
-              <div className="flex items-center justify-center p-2 bg-[var(--background-secundary-color)] text-white rounded-md shadow-[0_0_1px_var(--third-color),_0_0_2px_var(--third-color),_0_0_3px_var(--third-color),_0_0_4px_var(--third-color),_0_0_5px_var(--third-color),_0_0_6px_var(--third-color),_0_0_7px_var(--third-color)]">
-                Search Price
-              </div>
-              {["Google", "Chat GPT", "Avantpro"].map((t) => (
-                <div
-                  key={t}
-                  className="flex items-center justify-center bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] rounded-md shadow-[0_0_1px_var(--white),_0_0_2px_var(--white),_0_0_3px_var(--white),_0_0_4px_var(--white),_0_0_5px_var(--white),_0_0_6px_var(--white),_0_0_7px_var(--white)]"
-                >
-                  {t}
-                </div>
-              ))}
-              {/* Linhas de checks/cross */}
-              <ComparisonGrid />
-            </div>
+            <ComparisonGrid />
           </div>
         </section>
 
@@ -277,13 +259,38 @@ export default function Home() {
             {[
               {
                 q: "O que é a Search Price?",
-                a: "É uma plataforma de comparação massiva e centralizada...",
+                a: "É uma plataforma de comparação massiva e centralizada para os principais marketplaces, permitindo acesso a dados como preços, visitas e vendas. Nela também o usuário encontrará fornecedores e ofertas para os produtos pesquisados.",
               },
-              /* ... demais perguntas ... */
+              {
+                q: "Como a Search Price ajuda os vendedores?",
+                a: "A plataforma economiza tempo ao centralizar a busca por preços competitivos, permitindo que os vendedores foquem em estratégias para crescer seus negócios.",
+              },
+              {
+                q: "Quais são os benefícios de usar a Search Price?",
+                a: "Centralização das informações, economia de tempo, maior assertividade nas decisões de compra e venda, e uma visão ampla do mercado.",
+              },
+              {
+                q: "Como a Search Price pode me ajudar a definir preços competitivos?",
+                a: "A plataforma fornece dados em tempo real sobre os preços praticados pelos concorrentes, permitindo ajustes estratégicos nas suas ofertas.",
+              },
+              {
+                q: "O que diferencia a Search Price de outras ferramentas no mercado?",
+                a: "A Search Price combina comparação massiva de preços e compra centralizada, oferecendo uma solução integrada que outras ferramentas não possuem.",
+              },
+              {
+                q: "Posso utilizar a Search Price em diferentes marketplaces?",
+                a: "Sim, a Search Price permite comparar preços em múltiplos marketplaces de forma simultânea.",
+              },
             ].map(({ q, a }) => (
               <Accordion
                 key={q}
-                className="w-[95%] rounded-xl border border-[var(--secundary-color)] bg-[var(--black-to-light-blue)]"
+                sx={{
+                  backgroundColor: "var(--black-to-light-blue)",
+                  borderRadius: "0.5rem",
+                  borderWidth: "1.5px",
+                  color: "var(--white-to-primary)",
+                }}
+                className="w-[95%] border rounded-2xl dark:border-[var(--secundary-color)]"
               >
                 <AccordionSummary
                   expandIcon={
@@ -311,8 +318,12 @@ export default function Home() {
           </button>
         </section>
       </main>
-
-      <Footer />
+      <footer className="bg-[var(--background-primary-color)] text-white w-full mt-auto px-8 py-6 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+        <p className="text-base">
+          © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
+          reservados.
+        </p>
+      </footer>
     </div>
   );
 }

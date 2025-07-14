@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class", '[data-theme="dark"]'],
   content: [
     "./src/app/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
@@ -16,6 +17,7 @@ const config: Config = {
         third: "var(--third-color)",
         fourth: "var(--fourth-color)",
         danger: "var(--danger)",
+        white: "var(--white)",
         gray: {
           100: "var(--gray-100)",
         },
