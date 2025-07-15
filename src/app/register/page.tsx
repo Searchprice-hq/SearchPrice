@@ -29,7 +29,7 @@ export default function Register() {
   const router = useRouter();
 
   const [fullName, setFullName] = useState<string>("");
-  const [cpfCnpj, setCpfCnpj] = useState<string>("");
+  const [document, setDocument] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -48,11 +48,11 @@ export default function Register() {
 
   const isValidPassword = validatePassword(password);
   const passwordsMatch = checkPasswordsMatch(password, confirmPassword);
-  const docValid = validateDocument(cpfCnpj);
+  const docValid = validateDocument(document);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await handleRegister(fullName, cpfCnpj, email, password, confirmPassword);
+    await handleRegister(fullName, document, email, password, confirmPassword);
   };
 
   return (
@@ -77,12 +77,12 @@ export default function Register() {
             <input
               type="text"
               placeholder="CPF ou CNPJ"
-              value={cpfCnpj}
-              onChange={(e) => setCpfCnpj(e.target.value.replace(/\D/g, ""))}
+              value={document}
+              onChange={(e) => setDocument(e.target.value.replace(/\D/g, ""))}
               className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
               disabled={loading}
             />
-            {!docValid && cpfCnpj.length > 0 && (
+            {!docValid && document.length > 0 && (
               <p className="text-[var(--danger)] text-xs ml-1">
                 Digite apenas números
               </p>
