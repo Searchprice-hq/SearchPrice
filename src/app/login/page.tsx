@@ -5,16 +5,20 @@ import { useRouter } from "next/navigation";
 import { useLogin } from "@/hooks/useLogin";
 
 interface UseLoginReturn {
-  handleLogin: (email: string, password: string) => Promise<void> | void;
+  handleLogin: (email: string, password: string) => Promise<void>;
+  handleForgotPassword: (email: string) => Promise<string>;
   error: string | null;
+  loading: boolean;
 }
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { handleLogin, error } = useLogin() as UseLoginReturn;
   const [forgotStatus, setForgotStatus] = useState<string | null>(null);
+
+  const { handleLogin, handleForgotPassword, error, loading } =
+    useLogin() as UseLoginReturn;
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,21 +30,11 @@ export default function LoginPage() {
       setForgotStatus("Informe seu e‑mail primeiro.");
       return;
     }
-    try {
-      const res = await fetch("/api/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (res.ok) {
-        setForgotStatus("E‑mail de recuperação enviado com sucesso!");
-      } else {
-        const data = await res.json();
-        setForgotStatus(data.message || "Erro ao enviar e‑mail.");
-      }
-    } catch {
-      setForgotStatus("Erro de conexão.");
-    }
+    // envia o código
+    const msg = await handleForgotPassword(email);
+    setForgotStatus(msg);
+    // redireciona para página de reset com email na query
+    router.push(`/reset-password?email=${encodeURIComponent(email)}`);
   };
 
   return (
@@ -62,16 +56,18 @@ export default function LoginPage() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
               required
+              disabled={loading}
+              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
             />
             <input
               type="password"
               placeholder="Senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
               required
+              disabled={loading}
+              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
             />
           </div>
 
@@ -84,6 +80,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={onForgotPassword}
+            disabled={loading}
             className="self-end text-xs text-[var(--secundary-to-primary)] hover:text-[var(--third-color)]"
           >
             Esqueceu sua senha?
@@ -97,7 +94,8 @@ export default function LoginPage() {
           <div className="w-full max-w-sm flex justify-end">
             <button
               type="submit"
-              className="bg-[var(--primary-color)] hover:bg-[var(--secundary-color)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl"
+              disabled={loading}
+              className="bg-[var(--primary-color)] hover:bg-[var(--secundary-color)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl disabled:opacity-50"
             >
               Entrar
             </button>
@@ -110,14 +108,16 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => router.push("/register")}
-            className="w-full bg-[var(--green-400)] hover:bg-[var(--green-200)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl border border-[var(--green-400)]"
+            disabled={loading}
+            className="w-full bg-[var(--green-400)] hover:bg-[var(--green-200)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl border border-[var(--green-400)] disabled:opacity-50"
           >
             Cadastre-se agora
           </button>
           <button
             type="button"
             onClick={() => router.push("/")}
-            className="w-full bg-[var(--danger)] hover:bg-[var(--danger-hover)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl border border-[var(--danger)]"
+            disabled={loading}
+            className="w-full bg-[var(--danger)] hover:bg-[var(--danger-hover)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl border border-[var(--danger)] disabled:opacity-50"
           >
             Voltar
           </button>
