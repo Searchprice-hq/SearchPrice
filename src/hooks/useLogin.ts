@@ -15,9 +15,7 @@ export const useLogin = () => {
     setLoading(true);
     try {
       const data: LoginResponse = await loginUser(email, password);
-
       localStorage.setItem("token", data.token.token);
-      // Você pode até guardar o objeto completo se quiser:
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -26,7 +24,6 @@ export const useLogin = () => {
           email: data.email,
         })
       );
-
       router.push("/dashboard");
     } catch (err: any) {
       console.error(err);
@@ -38,11 +35,14 @@ export const useLogin = () => {
 
   const handleForgotPassword = async (email: string) => {
     setError(null);
+    setLoading(true);
     try {
       await forgotPassword(email);
       return "E‑mail de recuperação enviado com sucesso!";
     } catch (err: any) {
       return err.message || "Erro ao solicitar recuperação de senha";
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -11,8 +11,19 @@ export interface User {
 }
 
 export interface LoginResponse {
-  token: { token: string };
+  token: {
+    token: string; // string de autenticação
+    name: string; // nome da token (geralmente email)
+    type: string; // tipo de token (e.g. "bearer")
+    expiresAt: string; // ISO 8601
+  };
   id: number;
-  fullName: string;
+  fullName: string | null;
   email: string;
+  document: string;
+  phone: string;
+  groupId: number;
+  role: string;
+  createdAt: string;
+  updatedAt: string | null;
 }
