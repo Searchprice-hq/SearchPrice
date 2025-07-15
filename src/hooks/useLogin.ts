@@ -2,16 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/lib/api";
-
-type LoginResponse = {
-  token: {
-    token: string;
-  };
-  id: number;
-  fullName: string;
-  email: string;
-};
+import { loginUser, forgotPassword } from "@/lib/api";
+import type { LoginResponse } from "@/models/User";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
@@ -25,23 +17,34 @@ export const useLogin = () => {
       const data: LoginResponse = await loginUser(email, password);
 
       localStorage.setItem("token", data.token.token);
+      // Você pode até guardar o objeto completo se quiser:
       localStorage.setItem(
         "user",
         JSON.stringify({
-          id: String(data.id),
+          id: data.id,
           fullName: data.fullName,
           email: data.email,
         })
       );
 
       router.push("/dashboard");
-    } catch (error) {
-      console.error(error);
-      setError("Usuário ou senha incorretos");
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Usuário ou senha incorretos");
     } finally {
       setLoading(false);
     }
   };
 
-  return { handleLogin, error, loading };
+  const handleForgotPassword = async (email: string) => {
+    setError(null);
+    try {
+      await forgotPassword(email);
+      return "E‑mail de recuperação enviado com sucesso!";
+    } catch (err: any) {
+      return err.message || "Erro ao solicitar recuperação de senha";
+    }
+  };
+
+  return { handleLogin, handleForgotPassword, error, loading };
 };

@@ -12,6 +12,7 @@ interface PasswordRequirement {
 interface UseRegisterReturn {
   handleRegister: (
     fullName: string,
+    cpfCnpj: string,
     email: string,
     password: string,
     confirmPassword: string
@@ -21,18 +22,19 @@ interface UseRegisterReturn {
   passwordRequirements: PasswordRequirement[];
   validatePassword: (password: string) => boolean;
   checkPasswordsMatch: (password: string, confirmPassword: string) => boolean;
+  validateDocument: (value: string) => boolean;
 }
 
 export default function Register() {
   const router = useRouter();
 
   const [fullName, setFullName] = useState<string>("");
+  const [cpfCnpj, setCpfCnpj] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPasswordRules, setShowPasswordRules] = useState<boolean>(false);
-  const [showConfirmPasswordError, setShowConfirmPasswordError] =
-    useState<boolean>(false);
+  const [showConfirmError, setShowConfirmError] = useState<boolean>(false);
 
   const {
     handleRegister,
@@ -41,16 +43,16 @@ export default function Register() {
     passwordRequirements,
     validatePassword,
     checkPasswordsMatch,
+    validateDocument,
   } = useRegister() as UseRegisterReturn;
 
   const isValidPassword = validatePassword(password);
   const passwordsMatch = checkPasswordsMatch(password, confirmPassword);
+  const docValid = validateDocument(cpfCnpj);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await handleRegister(fullName, email, password, confirmPassword);
-    // se quiser navegar após cadastro, descomente abaixo:
-    // router.push('/login')
+    await handleRegister(fullName, cpfCnpj, email, password, confirmPassword);
   };
 
   return (
@@ -71,6 +73,20 @@ export default function Register() {
               className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
               disabled={loading}
             />
+
+            <input
+              type="text"
+              placeholder="CPF ou CNPJ"
+              value={cpfCnpj}
+              onChange={(e) => setCpfCnpj(e.target.value.replace(/\D/g, ""))}
+              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+              disabled={loading}
+            />
+            {!docValid && cpfCnpj.length > 0 && (
+              <p className="text-[var(--danger)] text-xs ml-1">
+                Digite apenas números
+              </p>
+            )}
 
             <input
               type="email"
@@ -119,15 +135,15 @@ export default function Register() {
                 placeholder="Confirme sua senha"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                onFocus={() => setShowConfirmPasswordError(true)}
+                onFocus={() => setShowConfirmError(true)}
                 onBlur={() => {
                   if (passwordsMatch || !confirmPassword)
-                    setShowConfirmPasswordError(false);
+                    setShowConfirmError(false);
                 }}
                 className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
                 disabled={loading}
               />
-              {showConfirmPasswordError && !passwordsMatch && (
+              {showConfirmError && !passwordsMatch && (
                 <p className="absolute text-[var(--danger)] text-sm mt-1">
                   As senhas não coincidem!
                 </p>
@@ -143,16 +159,16 @@ export default function Register() {
 
           <button
             type="submit"
-            className={`
-              mt-8 h-14 w-full max-w-xs rounded-xl border 
+            className={`mt-8 h-14 w-full max-w-xs rounded-xl border flex items-center justify-center text-white transition-all duration-200
               ${
-                !isValidPassword || !passwordsMatch || loading
+                !isValidPassword || !passwordsMatch || !docValid || loading
                   ? "bg-[var(--green-300)] border-[var(--green-400)] opacity-50 cursor-not-allowed"
                   : "bg-[var(--green-400)] border-[var(--green-400)] hover:bg-[var(--green-200)] hover:scale-105"
               }
-              text-white transition-all duration-200
             `}
-            disabled={!isValidPassword || !passwordsMatch || loading}
+            disabled={
+              !isValidPassword || !passwordsMatch || !docValid || loading
+            }
           >
             {loading ? "Registrando..." : "Registrar-se agora"}
           </button>
