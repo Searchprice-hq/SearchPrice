@@ -4,16 +4,19 @@ import { useEffect, useState } from "react";
 export function useTheme() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
+  // ao montar, lê do localStorage e aplica
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const currentTheme = savedTheme || "dark";
-    setTheme(currentTheme);
-    document.body.dataset.theme = currentTheme;
+    const saved = localStorage.getItem("theme") as "light" | "dark" | null;
+    const initial = saved ?? "dark";
+    setTheme(initial);
+    // opcional: aplicando no <html> em vez de <body>
+    document.documentElement.dataset.theme = initial;
   }, []);
 
+  // sempre que mudar, persiste e reaplica no html
   useEffect(() => {
-    document.body.dataset.theme = theme;
     localStorage.setItem("theme", theme);
+    document.documentElement.dataset.theme = theme;
   }, [theme]);
 
   const toggleTheme = () => {

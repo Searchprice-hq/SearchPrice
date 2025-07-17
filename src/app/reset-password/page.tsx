@@ -86,7 +86,7 @@ export default function ResetPasswordPage() {
             disabled={!isFormValid || loading}
             className={`w-full h-12 mt-2 text-white rounded-xl transition ${
               isFormValid && !loading
-                ? "bg-[var(--primary-color)] hover:bg-[var(--secundary-color)]"
+                ? "bg-[var(--primary-color)] hover:bg-[var(--secondary-color)]"
                 : "bg-[var(--primary-color)] opacity-50 cursor-not-allowed"
             }`}
           >

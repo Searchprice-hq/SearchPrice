@@ -7,7 +7,7 @@ export function ComparisonGrid() {
   const features = Array.from({ length: 5 }, (_, row) =>
     ["✅", "❌", "❌", "❌"].map((symbol, col) => {
       const cellClasses = clsx(
-        "flex items-center justify-center rounded-md text-base border-2",
+        "flex items-center justify-center rounded-md text-base border-2 border-transparent",
         {
           "bg-[var(--light-black-to-gray)] text-white dark:border-teal-600":
             symbol === "✅",
@@ -29,7 +29,7 @@ export function ComparisonGrid() {
       {headers.map((label, idx) => {
         const isFirst = idx === 0;
         const headerClasses = clsx(
-          "flex items-center justify-center p-2 rounded-md border-2",
+          "flex items-center justify-center p-2 rounded-md border-2 border-transparent",
           {
             "bg-[var(--black-to-primary)] text-white dark:border-teal-600":
               isFirst,

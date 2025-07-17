@@ -81,7 +81,7 @@ export default function LoginPage() {
             type="button"
             onClick={onForgotPassword}
             disabled={loading}
-            className="self-end text-xs text-[var(--secundary-to-primary)] hover:text-[var(--third-color)]"
+            className="self-end text-xs text-[var(--secondary-to-primary)] hover:text-[var(--third-color)]"
           >
             Esqueceu sua senha?
           </button>
@@ -95,7 +95,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-[var(--primary-color)] hover:bg-[var(--secundary-color)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl disabled:opacity-50"
+              className="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl disabled:opacity-50"
             >
               Entrar
             </button>

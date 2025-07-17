@@ -16,6 +16,7 @@ export const useLogin = () => {
     try {
       const data: LoginResponse = await loginUser(email, password);
       localStorage.setItem("token", data.token.token);
+      console.log(data.token.token); // Log do token para depuração
       localStorage.setItem(
         "user",
         JSON.stringify({
