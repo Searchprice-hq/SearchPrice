@@ -4,6 +4,7 @@ import React, { useState, useEffect, FormEvent } from "react";
 import Image from "next/image";
 import { fetchProducts } from "@/services/productService";
 import type { Product } from "@/models/Product";
+import { useRouter } from "next/navigation";
 
 const FILTER_OPTIONS = [
   { value: "", label: "— Todos —" },
@@ -24,7 +25,7 @@ export default function DashboardPage() {
   const [dataFilter, setDataFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const router = useRouter();
   // paginação simples
   const [pageIndex, setPageIndex] = useState(0);
   const pageSize = 10;
@@ -53,6 +54,13 @@ export default function DashboardPage() {
     }
   }
 
+  function handleLogout() {
+    // remove o token (ou qualquer outro cleanup)
+    localStorage.removeItem("token");
+    // redireciona para a home
+    router.push("/");
+  }
+
   useEffect(() => {
     loadProducts();
   }, []);
@@ -62,17 +70,45 @@ export default function DashboardPage() {
     loadProducts();
   }
 
-  function resetFilters() {
+  async function resetFilters() {
     setFilter("");
     setDataFilter("");
+    setPageIndex(0);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const lista = await fetchProducts();
+      setProducts(Array.isArray(lista) ? lista : []);
+    } catch (err: any) {
+      setError(err.message);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <div className="p-8 bg-[var(--black-to-primary)] min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-[var(--white)]">
-        Dashboard de Produtos
-      </h1>
+      <div className="flex items-center justify-between ">
+        <h1 className="text-3xl font-bold mb-6 text-[var(--white)]">
+          Dashboard de Produtos
+        </h1>
+        <div className="relative inline-block group">
+          <button
+            onClick={handleLogout}
+            className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
+            aria-label="Logout"
+          >
+            <img src="/profile.png" alt="Logout" />
+          </button>
 
+          {/* balão abaixo da imagem */}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-white text-red-600 font-bold text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+            Logout?
+          </div>
+        </div>
+      </div>
       <form
         onSubmit={handleSubmit}
         className="flex flex-wrap gap-4 mb-6 items-end"
@@ -206,7 +242,19 @@ export default function DashboardPage() {
                   Disponível
                 </th>
                 <th className="px-4 py-2 text-center text-[var(--white)] text-sm font-medium">
+                  Vendidos
+                </th>
+                <th className="px-4 py-2 text-center text-[var(--white)] text-sm font-medium">
                   Vendedor
+                </th>
+                <th className="px-4 py-2 text-center text-[var(--white)] text-sm font-medium">
+                  Código EAN
+                </th>
+                <th className="px-4 py-2 text-center text-[var(--white)] text-sm font-medium">
+                  Visitas no Último Mês
+                </th>
+                <th className="px-4 py-2 text-center text-[var(--white)] text-sm font-medium">
+                  Visualizações
                 </th>
               </tr>
             </thead>
@@ -236,7 +284,13 @@ export default function DashboardPage() {
                     {p.shipping}
                   </td>
                   <td className="px-4 py-2 text-center">{p.amountAvailable}</td>
+                  <td className="px-4 py-2 text-center">{p.amountSold}</td>
                   <td className="px-4 py-2 text-center">{p.sellerName}</td>
+                  <td className="px-4 py-2 text-center">{p.productCode}</td>
+                  <td className="px-4 py-2 text-center">
+                    {p.amountVisitsLastMonth}
+                  </td>
+                  <td className="px-4 py-2 text-center">{p.amountReviews}</td>
                 </tr>
               ))}
             </tbody>
