@@ -43,7 +43,7 @@ export default function Home() {
               className="text-[var(--white)] cursor-pointer transition-transform duration-200 hover:scale-110 hover:rounded-md"
               onClick={() => router.push("/our-advantages")}
             >
-              Redes Sociais
+              Nossos diferenciais
             </li>
           </ul>
         </nav>

@@ -1,10 +1,10 @@
+// src/app/about/page.tsx
 import React from "react";
-
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Redes Sociais • Search Price",
-  description: "Siga a Search Price nas principais redes sociais",
+  title: "Nossos diferenciais",
+  description: "Os principais benefícios da Search Price",
 };
 
 // Componente para os cards de info
@@ -36,26 +36,27 @@ function StatCard({ value, label }: { value: string | number; label: string }) {
   );
 }
 
-export default function SocialPage() {
+export default function OurAdvantagesPage() {
   return (
     <main className="bg-gray-50 text-gray-900 min-h-screen">
       {/* 1. Hero / Apresentação */}
       <section className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white py-20">
-        <div className="container mx-auto px-6 text-center space-y-4">
+        <div className="container mx-auto px-6 text-center space-y-6 md:space-y-8">
           <h1 className="text-4xl md:text-5xl font-bold">
-            Bem-vindo à Search Price
+            Estratégia de preços com inteligência de mercado
           </h1>
-          <p className="max-w-2xl mx-auto text-lg">
-            Nossa missão é simplificar a busca e análise de preços em múltiplos
-            marketplaces, entregando dados precisos e insights valiosos em tempo
-            real.
+          <p className="max-w-2xl mx-auto text-lg leading-relaxed">
+            Na Search Price, oferecemos uma plataforma completa que agrega e
+            analisa dados de múltiplos marketplaces em um só lugar, permitindo
+            que você acompanhe tendências, ajuste ofertas e maximize sua
+            lucratividade de forma simples e rápida.
           </p>
         </div>
       </section>
 
-      {/* 2. Três grandes pilares */}
+      {/* 2. Cinco grandes pilares */}
       <section className="py-16">
-        <div className="container mx-auto px-6 grid gap-8 md:grid-cols-3">
+        <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           <InfoCard icon="🔍" title="Busca Unificada">
             Compare preços de Amazon, Shopee e Mercado Livre sem sair de uma
             tela.
@@ -68,6 +69,14 @@ export default function SocialPage() {
             Dashboards e relatórios que mostram tendências e oportunidades de
             lucro.
           </InfoCard>
+          <InfoCard icon="🔒" title="Segurança de Dados">
+            Seus dados são criptografados e armazenados em servidores confiáveis
+            para sua total tranquilidade.
+          </InfoCard>
+          <InfoCard icon="💬" title="Suporte Dedicado">
+            Equipe especializada disponível 24/7 para ajudar você a extrair o
+            máximo da plataforma.
+          </InfoCard>
         </div>
       </section>
 
@@ -76,7 +85,28 @@ export default function SocialPage() {
         <div className="container mx-auto px-6 grid gap-6 md:grid-cols-3">
           <StatCard value="10K+" label="Consultas realizadas" />
           <StatCard value="3" label="Marketplaces suportados" />
-          <StatCard value="24/7" label="Dados em tempo real" />
+          <StatCard value="24/7" label="Suporte contínuo" />
+        </div>
+      </section>
+
+      {/* 4. Como Funciona */}
+      <section className="py-16">
+        <div className="container mx-auto px-6 max-w-3xl space-y-4 text-center">
+          <h2 className="text-3xl font-bold text-[var(--secondary-color)]">
+            Como Funciona
+          </h2>
+          <p className="text-gray-700 leading-relaxed">
+            Basta inserir o código do produto ou pesquisar por categoria, e a
+            Search Price retorna uma análise completa de preços, estoque, vendas
+            e avaliações, tudo em segundos. Com filtros avançados, você refina
+            os resultados e exporta relatórios detalhados para tomar decisões
+            embasadas.
+          </p>
+          <p className="text-gray-700 leading-relaxed">
+            Nossa infraestrutura em nuvem garante alta performance e
+            escalabilidade, enquanto nosso motor de filtragem avançada lhe
+            proporciona a visão mais precisa do mercado.
+          </p>
         </div>
       </section>
 
@@ -90,21 +120,28 @@ export default function SocialPage() {
             <li>
               <strong>Como faço uma busca?</strong>
               <p className="text-white">
-                Basta digitar o EAN ou escolher um marketplace e clicar em
-                Buscar.
+                Basta digitar o EAN ou nome do produto e clicar em Buscar.
               </p>
             </li>
             <li>
               <strong>Preciso de cadastro?</strong>
               <p className="text-white">
-                Sim, um cadastro rápido para protegermos suas pesquisas e
-                personalizar relatórios.
+                Sim, um cadastro rápido para proteger seu histórico e
+                personalizar alertas.
               </p>
             </li>
             <li>
-              <strong>Posso exportar os dados?</strong>
+              <strong>Quais marketplaces são suportados?</strong>
               <p className="text-white">
-                Em breve teremos exportação em CSV e integração via API externa.
+                Atualmente Amazon, Shopee e Mercado Livre, com novos sendo
+                adicionados em breve.
+              </p>
+            </li>
+            <li>
+              <strong>Posso exportar relatórios?</strong>
+              <p className="text-white">
+                Sim, exporte em CSV ou Excel para integrar com suas ferramentas
+                de BI.
               </p>
             </li>
           </ul>

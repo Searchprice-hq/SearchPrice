@@ -22,6 +22,7 @@
   --black-to-gray-50: #1a1a1a;
   --black-to-light-blue: #1a1a1a;
   --black-to-primary: #1a1a1a;
+  --black-to-secondary: #1a1a1a;
 
   --primary-to-white: #144750;
   --primary-to-secondary: #144750;
@@ -82,6 +83,7 @@
   --black-to-gray-50: #f9fafb;
   --black-to-gray: #d1ddde;
   --black-to-primary: #144750;
+  --black-to-secondary: #299c9c;
 
   --primary-to-white: #f8f8f8;
   --primary-to-secondary: #299c9c;
