@@ -3,6 +3,7 @@
 import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useRegister } from "@/hooks/useRegister";
+import Image from "next/image";
 
 interface PasswordRequirement {
   regex: RegExp;
@@ -58,10 +59,12 @@ export default function Register() {
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-[var(--black-to-primary)]">
       <div className="bg-[var(--background-container-color)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary-color)]">
-        <img
+        <Image
           src="/searchpriceLogo.png"
           alt="logo"
           className="mb-8 w-1/5 max-w-xs h-auto"
+          width={90}
+          height={90}
         />
         <form onSubmit={onSubmit} className="w-full flex flex-col items-center">
           <div className="w-full max-w-sm flex flex-col gap-6">

@@ -237,10 +237,12 @@ export default function Home() {
                   key={txt}
                   className="flex items-center bg-[var(--background-secondary-color)]"
                 >
-                  <img
+                  <Image
                     src="/dollarBill.png"
                     alt="Ícone"
                     className="w-[2.5rem] p-1 bg-[var(--dollar-bill-container)] rounded-[1rem]"
+                    width={40}
+                    height={40}
                   />
                   <p className="ml-2 text-[var(--white-to-primary)] font-medium">
                     {txt}

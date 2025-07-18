@@ -3,6 +3,7 @@
 import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useLogin } from "@/hooks/useLogin";
+import Image from "next/image";
 
 interface UseLoginReturn {
   handleLogin: (email: string, password: string) => Promise<void>;
@@ -40,9 +41,11 @@ export default function LoginPage() {
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-[var(--black-to-primary)]">
       <div className="bg-[var(--background-container-color)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary-color)]">
-        <img
+        <Image
           src="/searchpriceLogo.png"
           alt="SearchPrice Logo"
+          width={90}
+          height={90}
           className="mb-8 max-w-[80%] h-auto"
         />
 

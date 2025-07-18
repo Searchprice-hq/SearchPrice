@@ -168,8 +168,8 @@ export default function OurAdvantagesPage() {
         </div>
       </section>
       {/* Footer */}
-      <footer className="bg-[var(--background-secondary-color)] text-white px-8 py-8 mt-auto text-center">
-        <p className="text-base">
+      <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
+        <p className="text-base text-[var(--white-to-primary)]">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.
         </p>

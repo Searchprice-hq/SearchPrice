@@ -7,7 +7,7 @@ import { resetPassword } from "@/lib/api";
 
 export function useResetPassword() {
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleReset = async (
@@ -30,9 +30,13 @@ export function useResetPassword() {
     setLoading(true);
     try {
       await resetPassword(email, token, password);
-      router.push("/login"); // volta à tela de login
-    } catch (err: any) {
-      setError(err.message || "Erro ao redefinir senha");
+      router.push("/login");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err) || "Erro ao redefinir senha");
+      }
     } finally {
       setLoading(false);
     }

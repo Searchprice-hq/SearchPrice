@@ -1,3 +1,4 @@
+// src/hooks/useRegister.ts
 "use client";
 
 import { useState } from "react";
@@ -12,7 +13,7 @@ interface PasswordRequirement {
 
 export const useRegister = () => {
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const passwordRequirements: PasswordRequirement[] = [
@@ -68,8 +69,12 @@ export const useRegister = () => {
       );
       console.log("Usuário criado:", newUser);
       router.push("/login");
-    } catch (err: any) {
-      setError(err.message || "Erro ao registrar usuário");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err) || "Erro ao registrar usuário");
+      }
     } finally {
       setLoading(false);
     }

@@ -185,13 +185,7 @@ export default function DashboardPage() {
               className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
               aria-label="Logout"
             >
-              <Image
-                src="/profile.png"
-                alt="Logout"
-                width={32}
-                height={32}
-                className="w-8 h-8"
-              />
+              <Image src="/profile.png" alt="Logout" width={40} height={40} />
             </button>
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-white text-red-600 font-bold text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
               Logout?
@@ -263,7 +257,7 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={resetFilters}
-              className="px-4 py-2 bg-[var(--primary-to-secondary)] text-white rounded hover:bg-[var(--secondary-to-third)]transition-transform duration-200 hover:scale-105"
+              className="px-4 py-2 bg-[var(--primary-to-secondary)] text-white rounded hover:bg-[var(--secondary-to-third)] transition-transform duration-200 hover:scale-105"
             >
               Reset
             </button>
