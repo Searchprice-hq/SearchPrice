@@ -27,14 +27,17 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // busca produtos com filtro, se houver
-  async function loadProducts() {
+  // Busca produtos, permitindo overrides para reset
+  async function loadProducts(
+    filterArg: "price" | "shipping" | "productCode" | "" = filter,
+    dataFilterArg: string = dataFilter
+  ) {
     setLoading(true);
     setError(null);
     try {
       const list = await fetchProducts(
-        filter || undefined,
-        dataFilter || undefined
+        filterArg || undefined,
+        dataFilterArg || undefined
       );
       setProducts(Array.isArray(list) ? list : []);
     } catch (err: any) {
@@ -55,9 +58,11 @@ export default function DashboardPage() {
   }
 
   async function resetFilters() {
+    // limpa inputs
     setFilter("");
     setDataFilter("");
-    await loadProducts();
+    // recarrega sem filtros
+    await loadProducts("", "");
   }
 
   function handleLogout() {
@@ -264,7 +269,7 @@ export default function DashboardPage() {
         <p className="text-[var(--white)]">Nenhum produto encontrado.</p>
       )}
 
-      {/* Tabelas por marketplace */}
+      {/* Três tabelas por marketplace */}
       {!loading && !error && (
         <>
           {renderTable("Mercado Livre", mercadoLivre)}

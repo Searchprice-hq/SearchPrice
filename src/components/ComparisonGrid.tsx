@@ -7,11 +7,11 @@ export function ComparisonGrid() {
   const features = Array.from({ length: 5 }, (_, row) =>
     ["✅", "❌", "❌", "❌"].map((symbol, col) => {
       const cellClasses = clsx(
-        "flex items-center justify-center rounded-md text-base border-2 border-transparent",
+        "flex items-center justify-center rounded-md text-base border-2",
         {
-          "bg-[var(--light-black-to-gray)] text-white dark:border-teal-600":
+          "bg-[var(--light-black-to-gray)] text-white border-[var(--secondary-to-gray)]":
             symbol === "✅",
-          "bg-[var(--black-to-light-gray)] dark:border-white": symbol !== "✅",
+          "bg-[var(--black-to-light-gray)] border-white": symbol !== "✅",
         }
       );
 
@@ -29,11 +29,11 @@ export function ComparisonGrid() {
       {headers.map((label, idx) => {
         const isFirst = idx === 0;
         const headerClasses = clsx(
-          "flex items-center justify-center p-2 rounded-md border-2 border-transparent",
+          "flex items-center justify-center p-2 rounded-md border-2",
           {
-            "bg-[var(--black-to-primary)] text-white dark:border-teal-600":
+            "bg-[var(--black-to-primary)] text-white border-[var(--secondary-to-primary)]":
               isFirst,
-            "bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] dark:border-white":
+            "bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] border-white":
               !isFirst,
           }
         );

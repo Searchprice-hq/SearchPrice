@@ -19,17 +19,20 @@
 
   --light-black-to-gray: #1a1a1a;
   --black-to-light-gray: #1a1a1a;
+  --black-to-gray-50: #1a1a1a;
   --black-to-light-blue: #1a1a1a;
   --black-to-primary: #1a1a1a;
 
   --primary-to-white: #144750;
   --primary-to-secondary: #144750;
+  --secondary-to-gray: #144750;
   --white-to-primary: #f8f8f8;
 
   --secondary-to-primary: #299c9c;
   --secondary-to-third: #299c9c;
   --secondary-to-fourth: #299c9c;
   --secondary-to-white: #299c9c;
+  --secondary-to-gray: #299c9c;
 
   --third-to-primary: #41aaa3;
   --third-to-secondary: #41aaa3;
@@ -76,6 +79,7 @@
   --black-to-light-blue: #dcf5f3;
   --black-to-white: #f8f8f8;
   --black-to-light-gray: #f0f0f0;
+  --black-to-gray-50: #f9fafb;
   --black-to-gray: #d1ddde;
   --black-to-primary: #144750;
 
@@ -87,6 +91,7 @@
   --secondary-to-third: #41aaa3;
   --secondary-to-fourth: #4dd1c8;
   --secondary-to-white: #f8f8f8;
+  --secondary-to-gray: #d1ddde;
 
   --third-to-primary: #144750;
   --third-to-secondary: #299c9c;

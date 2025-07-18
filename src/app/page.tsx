@@ -33,7 +33,10 @@ export default function Home() {
             >
               Sobre
             </li>
-            <li className="text-[var(--white)] cursor-pointer transition-transform duration-200 hover:scale-110 hover:rounded-md">
+            <li
+              className="text-[var(--white)] cursor-pointer transition-transform duration-200 hover:scale-110 hover:rounded-md"
+              onClick={() => router.push("/testimonials")}
+            >
               Depoimentos
             </li>
             <li className="text-[var(--white)] cursor-pointer transition-transform duration-200 hover:scale-110 hover:rounded-md">
@@ -244,7 +247,7 @@ export default function Home() {
           </p>
           <button
             onClick={() => router.push("/register")}
-            className="mt-8 px-6 py-4 bg-[var(--primary-to-white)] text-[var(--white-to-primary)] rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]"
+            className="mt-8 px-6 py-4 bg-[var(--primary-to-white)] text-[var(--white-to-primary)] rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-to-white)]"
           >
             Quero ser um membro fundador
           </button>
