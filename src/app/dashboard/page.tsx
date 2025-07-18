@@ -165,118 +165,126 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="p-8 bg-[var(--black-to-primary)] min-h-screen">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-[var(--white)]">
-          Dashboard de Produtos
-        </h1>
-        <div className="relative inline-block group">
-          <button
-            onClick={handleLogout}
-            className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
-            aria-label="Logout"
-          >
-            <img src="/profile.png" alt="Logout" className="w-8 h-8" />
-          </button>
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-white text-red-600 font-bold text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-            Logout?
+    <div className="bg-[var(--black-to-primary)] min-h-screen">
+      <div className="p-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold text-[var(--white)]">
+            Dashboard de Produtos
+          </h1>
+          <div className="relative inline-block group">
+            <button
+              onClick={handleLogout}
+              className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
+              aria-label="Logout"
+            >
+              <img src="/profile.png" alt="Logout" className="w-8 h-8" />
+            </button>
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-white text-red-600 font-bold text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              Logout?
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Formulário de filtro */}
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-wrap gap-4 mb-6 items-end"
-      >
-        <div>
-          <label className="block mb-1 text-sm text-[var(--white)]">
-            Filtrar por:
-          </label>
-          <select
-            className="rounded p-2 bg-[var(--white)]"
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value as any);
-              setDataFilter("");
-            }}
-          >
-            {FILTER_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {filter === "shipping" && (
+        {/* Formulário de filtro */}
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-wrap gap-4 mb-6 items-end"
+        >
           <div>
             <label className="block mb-1 text-sm text-[var(--white)]">
-              Frete:
+              Filtrar por:
             </label>
             <select
               className="rounded p-2 bg-[var(--white)]"
-              value={dataFilter}
-              onChange={(e) => setDataFilter(e.target.value)}
+              value={filter}
+              onChange={(e) => {
+                setFilter(e.target.value as any);
+                setDataFilter("");
+              }}
             >
-              <option value="">— Todos —</option>
-              {SHIP_OPTIONS.map((s) => (
-                <option key={s} value={s}>
-                  {s}
+              {FILTER_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
                 </option>
               ))}
             </select>
           </div>
-        )}
 
-        {filter === "productCode" && (
-          <div>
-            <label className="block mb-1 text-sm text-[var(--white)]">
-              EAN:
-            </label>
-            <input
-              type="text"
-              className="border rounded p-2 bg-[var(--white)]"
-              placeholder="7891356059049"
-              value={dataFilter}
-              onChange={(e) => setDataFilter(e.target.value)}
-            />
+          {filter === "shipping" && (
+            <div>
+              <label className="block mb-1 text-sm text-[var(--white)]">
+                Frete:
+              </label>
+              <select
+                className="rounded p-2 bg-[var(--white)]"
+                value={dataFilter}
+                onChange={(e) => setDataFilter(e.target.value)}
+              >
+                <option value="">— Todos —</option>
+                {SHIP_OPTIONS.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {filter === "productCode" && (
+            <div>
+              <label className="block mb-1 text-sm text-[var(--white)]">
+                EAN:
+              </label>
+              <input
+                type="text"
+                className="border rounded p-2 bg-[var(--white)]"
+                placeholder="7891356059049"
+                value={dataFilter}
+                onChange={(e) => setDataFilter(e.target.value)}
+              />
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-[var(--primary-to-secondary)] text-white rounded hover:bg-[var(--secondary-to-third)] transition-transform duration-200 hover:scale-105"
+            >
+              Aplicar
+            </button>
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="px-4 py-2 bg-[var(--yellow-200)] text-white rounded hover:bg-[var(--yellow-100)] transition-transform duration-200 hover:scale-105"
+            >
+              Reset
+            </button>
           </div>
+        </form>
+
+        {/* Feedback */}
+        {loading && <p className="text-[var(--white)]">Carregando…</p>}
+        {error && <p className="text-red-500 mb-4">❌ {error}</p>}
+        {!loading && !error && products.length === 0 && (
+          <p className="text-[var(--white)]">Nenhum produto encontrado.</p>
         )}
 
-        <div className="flex gap-2">
-          <button
-            type="submit"
-            className="px-4 py-2 bg-[var(--primary-to-secondary)] text-white rounded hover:bg-[var(--secondary-to-third)] transition-transform duration-200 hover:scale-105"
-          >
-            Aplicar
-          </button>
-          <button
-            type="button"
-            onClick={resetFilters}
-            className="px-4 py-2 bg-[var(--yellow-200)] text-white rounded hover:bg-[var(--yellow-100)] transition-transform duration-200 hover:scale-105"
-          >
-            Reset
-          </button>
-        </div>
-      </form>
-
-      {/* Feedback */}
-      {loading && <p className="text-[var(--white)]">Carregando…</p>}
-      {error && <p className="text-red-500 mb-4">❌ {error}</p>}
-      {!loading && !error && products.length === 0 && (
-        <p className="text-[var(--white)]">Nenhum produto encontrado.</p>
-      )}
-
-      {/* Três tabelas por marketplace */}
-      {!loading && !error && (
-        <>
-          {renderTable("Mercado Livre", mercadoLivre)}
-          {renderTable("Amazon", amazon)}
-          {renderTable("Shopee", shopee)}
-        </>
-      )}
+        {/* Três tabelas por marketplace */}
+        {!loading && !error && (
+          <>
+            {renderTable("Mercado Livre", mercadoLivre)}
+            {renderTable("Amazon", amazon)}
+            {renderTable("Shopee", shopee)}
+          </>
+        )}
+      </div>
+      <footer className="bg-[var(--background-primary-color)] text-white w-full mt-auto px-8 py-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+        <p className="text-base">
+          © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
+          reservados.
+        </p>
+      </footer>
     </div>
   );
 }

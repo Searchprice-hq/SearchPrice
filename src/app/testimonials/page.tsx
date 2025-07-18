@@ -95,34 +95,32 @@ export default function TestimonialsPage() {
   return (
     <main className="bg-[var(--black-to-light-blue)] min-h-screen">
       {/* Hero */}
-      <header className="bg-[var(--background-primary-color)] text-white">
-        <div className="container mx-auto px-6 flex items-center justify-between py-8">
-          {/* Home no extremo esquerdo */}
-          <Link
-            href="/"
-            className="hover:opacity-90 transition-opacity transform transition-transform hover:scale-110"
-          >
-            <Image src="/leftPointer.png" alt="Home" height={42} width={42} />
-          </Link>
+      <header className="relative bg-[var(--background-primary-color)] text-white">
+        {/* Home no extremo esquerdo */}
+        <Link
+          href="/"
+          className="absolute top-4 left-4 hover:opacity-90 transition-opacity transform hover:scale-110"
+        >
+          <Image src="/leftPointer.png" alt="Home" width={42} height={42} />
+        </Link>
 
-          {/* Título centralizado */}
-          <div className="text-center flex-1 mx-6">
-            <h1 className="text-4xl font-bold mb-2 text-[var(--third-to-white)]">
-              Depoimentos
-            </h1>
-            <p className="max-w-md mx-auto">
-              Veja como a Search Price tem ajudado vendedores e empreendedores a
-              otimizarem suas vendas e lucros.
-            </p>
-          </div>
+        {/* Login no extremo direito */}
+        <Link
+          href="/login"
+          className="absolute top-4 right-4 hover:opacity-90 transition-opacity transform hover:scale-110"
+        >
+          <Image src="/profile.png" alt="Login" width={42} height={42} />
+        </Link>
 
-          {/* Login no extremo direito */}
-          <Link
-            href="/login"
-            className="hover:opacity-90 transition-opacity transform transition-transform hover:scale-110"
-          >
-            <Image src="/profile.png" alt="Login" height={42} width={42} />
-          </Link>
+        {/* Conteúdo centralizado */}
+        <div className="container mx-auto px-6 text-center py-8">
+          <h1 className="text-4xl font-bold mb-2 text-[var(--third-to-white)]">
+            Depoimentos
+          </h1>
+          <p className="max-w-md mx-auto">
+            Veja como a Search Price tem ajudado vendedores e empreendedores a
+            otimizarem suas vendas e lucros.
+          </p>
         </div>
       </header>
 
@@ -153,7 +151,7 @@ export default function TestimonialsPage() {
         </div>
       </section>
       {/* Footer */}
-      <footer className="bg-[var(--background-secondary-color)] text-white px-8 py-6 mt-auto text-center">
+      <footer className="bg-[var(--background-secondary-color)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.

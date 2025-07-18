@@ -324,7 +324,7 @@ export default function Home() {
           </button>
         </section>
       </main>
-      <footer className="bg-[var(--background-primary-color)] text-white w-full mt-auto px-8 py-6 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+      <footer className="bg-[var(--background-primary-color)] text-white w-full mt-auto px-8 py-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
         <p className="text-base">
           © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.

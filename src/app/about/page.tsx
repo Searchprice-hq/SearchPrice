@@ -67,24 +67,6 @@ function TeamMember({
   );
 }
 
-function InfoCard({
-  icon,
-  title,
-  children,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{children}</p>
-    </div>
-  );
-}
-
 export default function AboutPage() {
   return (
     <main className="bg-[var(--black-to-gray-50)] flex flex-col min-h-screen">
@@ -244,7 +226,7 @@ export default function AboutPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[var(--background-primary-color)] text-white px-8 py-6 mt-auto text-center">
+      <footer className="bg-[var(--background-primary-color)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.
