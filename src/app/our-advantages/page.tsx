@@ -1,0 +1,152 @@
+// src/app/about/page.tsx
+import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Nossos diferenciais",
+  description: "Os principais benefícios da Search Price",
+};
+
+// Componente para os cards de info
+function InfoCard({
+  icon,
+  title,
+  children,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p className="text-gray-600">{children}</p>
+    </div>
+  );
+}
+
+// Componente para estatísticas
+function StatCard({ value, label }: { value: string | number; label: string }) {
+  return (
+    <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white rounded-lg p-6 text-center">
+      <p className="text-3xl font-bold">{value}</p>
+      <p className="uppercase mt-1 text-sm">{label}</p>
+    </div>
+  );
+}
+
+export default function OurAdvantagesPage() {
+  return (
+    <main className="bg-gray-50 text-gray-900 min-h-screen">
+      {/* 1. Hero / Apresentação */}
+      <section className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white py-20">
+        <div className="container mx-auto px-6 text-center space-y-6 md:space-y-8">
+          <h1 className="text-4xl md:text-5xl font-bold">
+            Estratégia de preços com inteligência de mercado
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg leading-relaxed">
+            Na Search Price, oferecemos uma plataforma completa que agrega e
+            analisa dados de múltiplos marketplaces em um só lugar, permitindo
+            que você acompanhe tendências, ajuste ofertas e maximize sua
+            lucratividade de forma simples e rápida.
+          </p>
+        </div>
+      </section>
+
+      {/* 2. Cinco grandes pilares */}
+      <section className="py-16">
+        <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <InfoCard icon="🔍" title="Busca Unificada">
+            Compare preços de Amazon, Shopee e Mercado Livre sem sair de uma
+            tela.
+          </InfoCard>
+          <InfoCard icon="⚙️" title="Precificação Inteligente">
+            Ajuste automaticamente suas ofertas com base na concorrência e na
+            demanda.
+          </InfoCard>
+          <InfoCard icon="📊" title="Insights em Tempo Real">
+            Dashboards e relatórios que mostram tendências e oportunidades de
+            lucro.
+          </InfoCard>
+          <InfoCard icon="🔒" title="Segurança de Dados">
+            Seus dados são criptografados e armazenados em servidores confiáveis
+            para sua total tranquilidade.
+          </InfoCard>
+          <InfoCard icon="💬" title="Suporte Dedicado">
+            Equipe especializada disponível 24/7 para ajudar você a extrair o
+            máximo da plataforma.
+          </InfoCard>
+        </div>
+      </section>
+
+      {/* 3. Estatísticas rápidas */}
+      <section className="py-16 bg-[var(--background-primary-color)] text-white">
+        <div className="container mx-auto px-6 grid gap-6 md:grid-cols-3">
+          <StatCard value="10K+" label="Consultas realizadas" />
+          <StatCard value="3" label="Marketplaces suportados" />
+          <StatCard value="24/7" label="Suporte contínuo" />
+        </div>
+      </section>
+
+      {/* 4. Como Funciona */}
+      <section className="py-16">
+        <div className="container mx-auto px-6 max-w-3xl space-y-4 text-center">
+          <h2 className="text-3xl font-bold text-[var(--secondary-color)]">
+            Como Funciona
+          </h2>
+          <p className="text-gray-700 leading-relaxed">
+            Basta inserir o código do produto ou pesquisar por categoria, e a
+            Search Price retorna uma análise completa de preços, estoque, vendas
+            e avaliações, tudo em segundos. Com filtros avançados, você refina
+            os resultados e exporta relatórios detalhados para tomar decisões
+            embasadas.
+          </p>
+          <p className="text-gray-700 leading-relaxed">
+            Nossa infraestrutura em nuvem garante alta performance e
+            escalabilidade, enquanto nosso motor de filtragem avançada lhe
+            proporciona a visão mais precisa do mercado.
+          </p>
+        </div>
+      </section>
+
+      {/* 5. FAQ resumido */}
+      <section className="py-16 bg-[var(--background-primary-color)] text-[var(--secondary-color)]">
+        <div className="container mx-auto px-6 max-w-2xl">
+          <h2 className="text-3xl font-bold text-center mb-6">
+            Perguntas Frequentes
+          </h2>
+          <ul className="space-y-4">
+            <li>
+              <strong>Como faço uma busca?</strong>
+              <p className="text-white">
+                Basta digitar o EAN ou nome do produto e clicar em Buscar.
+              </p>
+            </li>
+            <li>
+              <strong>Preciso de cadastro?</strong>
+              <p className="text-white">
+                Sim, um cadastro rápido para proteger seu histórico e
+                personalizar alertas.
+              </p>
+            </li>
+            <li>
+              <strong>Quais marketplaces são suportados?</strong>
+              <p className="text-white">
+                Atualmente Amazon, Shopee e Mercado Livre, com novos sendo
+                adicionados em breve.
+              </p>
+            </li>
+            <li>
+              <strong>Posso exportar relatórios?</strong>
+              <p className="text-white">
+                Sim, exporte em CSV ou Excel para integrar com suas ferramentas
+                de BI.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  );
+}
