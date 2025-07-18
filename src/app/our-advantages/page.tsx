@@ -18,7 +18,7 @@ function InfoCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[var(--background-container-color)] rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+    <div className="bg-[var(--background-container-color)] rounded-lg shadow-md p-6 flex flex-col items-center text-center transform transition-transform hover:scale-105">
       <div className="text-4xl mb-4">{icon}</div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-[var(--white-to-primary)]">{children}</p>
@@ -28,7 +28,7 @@ function InfoCard({
 
 function StatCard({ value, label }: { value: string | number; label: string }) {
   return (
-    <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white rounded-lg p-6 text-center">
+    <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white rounded-lg p-6 text-center transform transition-transform hover:scale-105">
       <p className="text-3xl font-bold">{value}</p>
       <p className="uppercase mt-1 text-sm">{label}</p>
     </div>
@@ -43,7 +43,7 @@ export default function OurAdvantagesPage() {
         {/* Botão Home no canto superior esquerdo */}
         <Link
           href="/"
-          className="absolute top-4 left-4 flex-shrink-0 hover:opacity-80 transition-opacity"
+          className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
           <Image src="/leftPointer.png" alt="Home" width={40} height={40} />
         </Link>
@@ -51,7 +51,7 @@ export default function OurAdvantagesPage() {
         {/* Botão Login no canto superior direito */}
         <Link
           href="/login"
-          className="absolute top-4 right-4 flex-shrink-0 hover:opacity-80 transition-opacity"
+          className="absolute top-4 right-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
           <Image src="/profile.png" alt="Login" width={40} height={40} />
         </Link>
@@ -110,7 +110,7 @@ export default function OurAdvantagesPage() {
       {/* 4. Como Funciona em Card */}
       <section className="py-16">
         <div className="container mx-auto px-6 flex justify-center">
-          <div className="bg-[var(--background-container-color)] rounded-lg shadow-lg p-8 max-w-3xl w-full">
+          <div className="bg-[var(--background-container-color)] rounded-lg shadow-lg p-8 max-w-3xl w-full transform transition-transform hover:scale-105">
             <h2 className="text-3xl font-bold text-[var(--secondary-color)] text-center mb-4">
               Como Funciona
             </h2>

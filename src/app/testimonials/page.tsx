@@ -62,7 +62,7 @@ const TESTIMONIALS: Testimonial[] = [
 
 function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
   return (
-    <div className="bg-[var(--background-container-color)] p-6 rounded-lg shadow-lg flex flex-col">
+    <div className="bg-[var(--background-container-color)] p-6 rounded-lg shadow-lg flex flex-col transform transition-transform hover:scale-105">
       <div className="flex items-center mb-4">
         <Image
           src={avatar}
@@ -98,7 +98,10 @@ export default function TestimonialsPage() {
       <header className="bg-[var(--background-primary-color)] text-white">
         <div className="container mx-auto px-6 flex items-center justify-between py-8">
           {/* Home no extremo esquerdo */}
-          <Link href="/" className="hover:opacity-80 transition-opacity">
+          <Link
+            href="/"
+            className="hover:opacity-90 transition-opacity transform transition-transform hover:scale-110"
+          >
             <Image src="/leftPointer.png" alt="Home" height={42} width={42} />
           </Link>
 
@@ -114,7 +117,10 @@ export default function TestimonialsPage() {
           </div>
 
           {/* Login no extremo direito */}
-          <Link href="/login" className="hover:opacity-80 transition-opacity">
+          <Link
+            href="/login"
+            className="hover:opacity-90 transition-opacity transform transition-transform hover:scale-110"
+          >
             <Image src="/profile.png" alt="Login" height={42} width={42} />
           </Link>
         </div>
