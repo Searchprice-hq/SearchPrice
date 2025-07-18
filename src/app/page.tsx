@@ -8,6 +8,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -18,10 +19,12 @@ export default function Home() {
       {/* Header */}
       <header className="flex items-center justify-between bg-[var(--background-primary-color)] px-3 py-3">
         <div className="flex items-center gap-2">
-          <img
+          <Image
             src="/searchpriceLogo.png"
             alt="logo"
-            className="h-14 w-auto ml-6"
+            width={56}
+            height={56}
+            className="ml-6"
           />
           <h2 className="text-white font-semibold">Search Price</h2>
         </div>
@@ -52,13 +55,24 @@ export default function Home() {
             onClick={toggleTheme}
             className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
           >
-            <img src="/halfMoonWhite.png" alt="Alterar tema" className="w-8" />
+            <Image
+              src="/halfMoonWhite.png"
+              alt="Alterar tema"
+              width={32}
+              height={32}
+            />
           </button>
           <button
             onClick={() => router.push("/login")}
             className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
           >
-            <img src="/profile.png" alt="Perfil" className="w-9 mr-4" />
+            <Image
+              src="/profile.png"
+              alt="Perfil"
+              width={36}
+              height={36}
+              className="mr-4"
+            />
           </button>
         </div>
       </header>
@@ -67,7 +81,7 @@ export default function Home() {
       <main className="bg-[var(--background-secondary-color)] flex flex-col items-center w-full flex-1">
         {/* WhatsApp Button */}
         <button className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[var(--green-100)] text-[var(--white)] font-bold rounded-full w-56 px-4 py-2 transition-transform duration-200 hover:scale-105">
-          <img src="/whatsapp.png" alt="WhatsApp" className="w-12" />
+          <Image src="/whatsapp.png" alt="WhatsApp" width={48} height={48} />
           Conversar com os fundadores
         </button>
 
@@ -97,21 +111,24 @@ export default function Home() {
         {/* Section 2: Tabela de Marketplaces */}
         <section className="w-full pb-8 bg-[var(--background-primary-color)]">
           <div className="flex justify-center">
-            <img
+            <Image
               src="/marketplacesTable.png"
               alt="Comparativo Marketplaces"
-              className="mt-12 w-[55rem] rounded-md shadow-[0_0_0.6rem_var(--white)]"
+              width={880}
+              height={480}
+              className="mt-12 rounded-md shadow-[0_0_0.6rem_var(--white)]"
             />
           </div>
           <div className="flex justify-center mt-8">
             <div className="flex justify-between items-center w-[27rem]">
-              <img
+              <Image
                 src="/magnifyingGlass.png"
                 alt="Lupa"
-                className="w-[3.5rem]"
+                width={56}
+                height={56}
               />
-              <img src="/pointer.png" alt="Pointer" className="w-[3.5rem]" />
-              <img src="/star.png" alt="Estrela" className="w-[3.5rem]" />
+              <Image src="/pointer.png" alt="Pointer" width={56} height={56} />
+              <Image src="/star.png" alt="Estrela" width={56} height={56} />
             </div>
           </div>
           <div className="flex justify-center mt-2">
@@ -140,16 +157,13 @@ export default function Home() {
                   isEven ? "flex-row-reverse" : "flex-row"
                 }`}
               >
-                {/* imagem */}
-                <img
+                <Image
                   src={`/article${i}.png`}
                   alt={`Artigo ${i}`}
-                  className={`mt-6 w-[18rem] rounded-xl ${
-                    isEven ? "ml-8" : "mr-8"
-                  }`}
+                  width={288}
+                  height={288}
+                  className={`mt-6 rounded-xl ${isEven ? "ml-8" : "mr-8"}`}
                 />
-
-                {/* texto */}
                 <div className="mt-5 flex flex-col w-[24rem]">
                   <h4 className="text-[var(--third-color)] text-base font-medium">
                     {i === 1
@@ -158,7 +172,6 @@ export default function Home() {
                       ? "FIQUE SEMPRE UM PASSO À FRENTE!"
                       : "TOME DECISÕES BASEADAS EM DADOS!"}
                   </h4>
-
                   <h2 className="text-[var(--white-to-primary)] text-xl font-medium mt-2">
                     {i === 1 &&
                       "Compare a lucratividade de vários produtos em vários marketplaces com um clique"}

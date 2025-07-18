@@ -1,13 +1,21 @@
 // src/app/dashboard/page.tsx
 "use client";
 
-import React, { useState, useEffect, FormEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  FormEvent,
+  ChangeEvent,
+} from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchProducts } from "@/services/productService";
 import type { Product } from "@/models/Product";
 
-const FILTER_OPTIONS = [
+type FilterOption = "" | "price" | "shipping" | "productCode";
+
+const FILTER_OPTIONS: { value: FilterOption; label: string }[] = [
   { value: "", label: "— Todos —" },
   { value: "price", label: "Preço (menor → maior)" },
   { value: "shipping", label: "Tipo de Frete" },
@@ -20,48 +28,49 @@ export default function DashboardPage() {
   const router = useRouter();
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [filter, setFilter] = useState<
-    "price" | "shipping" | "productCode" | ""
-  >("");
+  const [filter, setFilter] = useState<FilterOption>("");
   const [dataFilter, setDataFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Busca produtos, permitindo overrides para reset
-  async function loadProducts(
-    filterArg: "price" | "shipping" | "productCode" | "" = filter,
-    dataFilterArg: string = dataFilter
-  ) {
-    setLoading(true);
-    setError(null);
-    try {
-      const list = await fetchProducts(
-        filterArg || undefined,
-        dataFilterArg || undefined
-      );
-      setProducts(Array.isArray(list) ? list : []);
-    } catch (err: any) {
-      setError(err.message);
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const loadProducts = useCallback(
+    async (filterArg?: FilterOption, dataFilterArg?: string) => {
+      setLoading(true);
+      setError(null);
+      try {
+        // convert "" → undefined so it matches the fetchProducts signature
+        const filterParam = filterArg === "" ? undefined : filterArg;
+        const dataFilterParam =
+          dataFilterArg === "" ? undefined : dataFilterArg;
+
+        const list = await fetchProducts(filterParam, dataFilterParam);
+        setProducts(Array.isArray(list) ? list : []);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError(String(err));
+        }
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    loadProducts();
-  }, []);
+    loadProducts(filter, dataFilter);
+  }, [loadProducts, filter, dataFilter]);
 
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    loadProducts();
+    loadProducts(filter, dataFilter);
   }
 
   async function resetFilters() {
-    // limpa inputs
     setFilter("");
     setDataFilter("");
-    // recarrega sem filtros
     await loadProducts("", "");
   }
 
@@ -70,7 +79,6 @@ export default function DashboardPage() {
     router.push("/");
   }
 
-  // separa por marketplace
   const mercadoLivre = products.filter((p) =>
     p.marketplace.toLowerCase().includes("mercado")
   );
@@ -81,7 +89,6 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  // renderiza cada tabela
   function renderTable(title: string, items: Product[]) {
     return (
       <div key={title} className="mb-8">
@@ -178,7 +185,13 @@ export default function DashboardPage() {
               className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
               aria-label="Logout"
             >
-              <img src="/profile.png" alt="Logout" className="w-8 h-8" />
+              <Image
+                src="/profile.png"
+                alt="Logout"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+              />
             </button>
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-white text-red-600 font-bold text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
               Logout?
@@ -198,8 +211,8 @@ export default function DashboardPage() {
             <select
               className="rounded p-2 bg-[var(--white)]"
               value={filter}
-              onChange={(e) => {
-                setFilter(e.target.value as any);
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                setFilter(e.target.value as FilterOption);
                 setDataFilter("");
               }}
             >
@@ -248,15 +261,9 @@ export default function DashboardPage() {
 
           <div className="flex gap-2">
             <button
-              type="submit"
-              className="px-4 py-2 bg-[var(--primary-to-secondary)] text-white rounded hover:bg-[var(--secondary-to-third)] transition-transform duration-200 hover:scale-105"
-            >
-              Aplicar
-            </button>
-            <button
               type="button"
               onClick={resetFilters}
-              className="px-4 py-2 bg-[var(--yellow-200)] text-white rounded hover:bg-[var(--yellow-100)] transition-transform duration-200 hover:scale-105"
+              className="px-4 py-2 bg-[var(--primary-to-secondary)] text-white rounded hover:bg-[var(--secondary-to-third)]transition-transform duration-200 hover:scale-105"
             >
               Reset
             </button>
@@ -279,6 +286,7 @@ export default function DashboardPage() {
           </>
         )}
       </div>
+
       <footer className="bg-[var(--background-primary-color)] text-white w-full mt-auto px-8 py-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
         <p className="text-base">
           © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
