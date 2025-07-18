@@ -1,9 +1,11 @@
+// src/app/testimonials/page.tsx
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Depoimentos",
+  title: "Depoimentos • Search Price",
   description: "O que nossos usuários dizem sobre a Search Price",
 };
 
@@ -36,7 +38,6 @@ const TESTIMONIALS: Testimonial[] = [
     quote:
       "Os relatórios de tendência de preços são precisos e fáceis de usar. Uma virada de jogo para o meu negócio.",
   },
-  // Novos depoimentos:
   {
     avatar: "/team/lucas.jpg",
     name: "Lucas Santos",
@@ -93,15 +94,28 @@ export default function TestimonialsPage() {
   return (
     <main className="bg-gray-50 text-gray-800 min-h-screen">
       {/* Hero */}
-      <section className="bg-[var(--secondary-color)] text-white py-16">
-        <div className="container mx-auto px-6 text-center">
-          <h1 className="text-4xl font-bold mb-2">Depoimentos</h1>
-          <p className="max-w-2xl mx-auto">
-            Veja como a Search Price tem ajudado vendedores e empreendedores a
-            otimizarem suas vendas e lucros.
-          </p>
+      <header className="bg-[var(--secondary-color)] text-white">
+        <div className="container mx-auto px-6 flex items-center justify-between py-8">
+          {/* Home no extremo esquerdo */}
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Image src="/home.png" alt="Home" height={42} width={42} />
+          </Link>
+
+          {/* Título centralizado */}
+          <div className="text-center flex-1 mx-6">
+            <h1 className="text-4xl font-bold mb-2">Depoimentos</h1>
+            <p className="max-w-md mx-auto">
+              Veja como a Search Price tem ajudado vendedores e empreendedores a
+              otimizarem suas vendas e lucros.
+            </p>
+          </div>
+
+          {/* Login no extremo direito */}
+          <Link href="/login" className="hover:opacity-80 transition-opacity">
+            <Image src="/profile.png" alt="Login" height={42} width={42} />
+          </Link>
         </div>
-      </section>
+      </header>
 
       {/* Grid de depoimentos */}
       <section className="container mx-auto px-6 py-16">
@@ -121,9 +135,12 @@ export default function TestimonialsPage() {
           <p>
             Experimente a Search Price grátis por 14 dias e veja a diferença!
           </p>
-          <button className="mt-4 px-6 py-3 bg-white text-[var(--primary-color)] font-semibold rounded-lg hover:scale-105 transition-transform">
+          <Link
+            href="/signup"
+            className="mt-4 inline-block px-6 py-3 bg-white text-[var(--primary-color)] font-semibold rounded-lg hover:scale-105 transition-transform"
+          >
             Começar Agora
-          </button>
+          </Link>
         </div>
       </section>
     </main>
