@@ -1,3 +1,4 @@
+// src/hooks/useLogin.ts
 "use client";
 
 import { useState } from "react";
@@ -7,7 +8,7 @@ import type { LoginResponse } from "@/models/User";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleLogin = async (email: string, password: string) => {
@@ -26,22 +27,31 @@ export const useLogin = () => {
         })
       );
       router.push("/dashboard");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || "Usuário ou senha incorretos");
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err) || "Usuário ou senha incorretos");
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = async (email: string) => {
+  const handleForgotPassword = async (email: string): Promise<string> => {
     setError(null);
     setLoading(true);
     try {
       await forgotPassword(email);
       return "E‑mail de recuperação enviado com sucesso!";
-    } catch (err: any) {
-      return err.message || "Erro ao solicitar recuperação de senha";
+    } catch (err: unknown) {
+      console.error(err);
+      if (err instanceof Error) {
+        return err.message;
+      } else {
+        return String(err) || "Erro ao solicitar recuperação de senha";
+      }
     } finally {
       setLoading(false);
     }

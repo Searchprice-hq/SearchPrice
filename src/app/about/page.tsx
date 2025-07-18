@@ -59,28 +59,10 @@ function TeamMember({
         alt={name}
         width={96}
         height={96}
-        className="rounded-full mb-3 object-cover"
+        className="rounded-full mb-3 object-cover transition-transform hover:scale-110"
       />
       <h4 className="font-medium text-white">{name}</h4>
       <p className="text-sm text-white">{role}</p>
-    </div>
-  );
-}
-
-function InfoCard({
-  icon,
-  title,
-  children,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{children}</p>
     </div>
   );
 }
@@ -107,7 +89,7 @@ export default function AboutPage() {
         </Link>
 
         <div className="container mx-auto px-6 text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl text-[var(--third-to-primary)] font-bold">
+          <h1 className="text-4xl md:text-5xl text-[var(--third-to-white)] font-bold">
             Bem-vindo à Search Price
           </h1>
           <p className="max-w-2xl mx-auto text-lg">
@@ -126,7 +108,7 @@ export default function AboutPage() {
             <h1 className="text-4xl font-bold text-[var(--third-to-primary)] mb-4">
               Sobre a Search Price
             </h1>
-            <p className="text-[var(--white)] leading-relaxed">
+            <p className="text-[var(--white-to-primary)] leading-relaxed">
               Fundada em 2023 por um grupo de empreendedores apaixonados por
               e‑commerce, a Search Price surgiu para resolver o problema de
               coleta manual de dados de preços em diversos marketplaces. Desde
@@ -141,7 +123,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Missão
               </h2>
-              <p className="text-[var(--white)] leading-relaxed">
+              <p className="text-[var(--white-to-primary)] leading-relaxed">
                 Democratizar o acesso a dados de mercado, permitindo que
                 qualquer lojista ou empreendedor tome decisões estratégicas
                 baseadas em informações reais e atualizadas.
@@ -151,17 +133,17 @@ export default function AboutPage() {
               <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Visão
               </h2>
-              <p className="text-[var(--white)] leading-relaxed">
+              <p className="text-[var(--white-to-primary)] leading-relaxed">
                 Ser referência na América Latina em inteligência de preços,
                 oferecendo uma plataforma confiável e inovadora para comércio
                 eletrônico.
               </p>
             </div>
             <div>
-              <h2 className="text-2xl font-semibold text-[var(--secondary-color)] mb-2">
+              <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Valores
               </h2>
-              <p className="text-[var(--white)] leading-relaxed">
+              <p className="text-[var(--white-to-primary)] leading-relaxed">
                 Transparência, inovação contínua e foco no sucesso dos nossos
                 clientes são os pilares que guiam cada nova funcionalidade da
                 Search Price.
@@ -174,7 +156,7 @@ export default function AboutPage() {
       {/* Time de Fundadores */}
       <section className="py-16 bg-[var(--background-primary-color)]">
         <div className="container mx-auto px-6  text-center mb-8">
-          <h2 className="text-3xl text-[var(--secondary-color)] font-bold">
+          <h2 className="text-3xl text-[var(--third-to-white)] font-bold">
             Nosso Time
           </h2>
           <p className="text-white max-w-xl mx-auto">
@@ -214,7 +196,7 @@ export default function AboutPage() {
 
       {/* Redes Sociais */}
       <section className="container mx-auto px-6 py-16">
-        <h2 className="text-2xl font-semibold text-[var(--third-color)] text-center mb-8">
+        <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] text-center mb-8">
           Conecte-se Conosco
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 ">
@@ -244,7 +226,7 @@ export default function AboutPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[var(--background-primary-color)] text-white px-8 py-6 mt-auto text-center">
+      <footer className="bg-[var(--background-primary-color)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.
