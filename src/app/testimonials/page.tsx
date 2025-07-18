@@ -152,6 +152,13 @@ export default function TestimonialsPage() {
           </Link>
         </div>
       </section>
+      {/* Footer */}
+      <footer className="bg-[var(--background-secondary-color)] text-white px-8 py-6 mt-auto text-center">
+        <p className="text-base">
+          © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
+          reservados.
+        </p>
+      </footer>
     </main>
   );
 }
