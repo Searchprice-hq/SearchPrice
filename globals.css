@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #144750;
-  --secundary-color: #299c9c;
+  --secondary-color: #299c9c;
   --third-color: #41aaa3;
   --fourth-color: #4dd1c8;
   --white: #f8f8f8;
@@ -10,7 +10,7 @@
   --border-color: #333333;
   --background-input-color: #262626;
   --background-container-color: #202020;
-  --background-secundary-color: #1a1a1a;
+  --background-secondary-color: #1a1a1a;
   --background-primary-color: #111111;
   --dollar-bill-container: #e3f4f7;
 
@@ -19,16 +19,23 @@
 
   --light-black-to-gray: #1a1a1a;
   --black-to-light-gray: #1a1a1a;
+  --black-to-gray-50: #1a1a1a;
   --black-to-light-blue: #1a1a1a;
   --black-to-primary: #1a1a1a;
 
   --primary-to-white: #144750;
+  --primary-to-secondary: #144750;
+  --secondary-to-gray: #144750;
   --white-to-primary: #f8f8f8;
 
-  --secundary-to-white: #299c9c;
-  --secundary-to-primary: #299c9c;
+  --secondary-to-primary: #299c9c;
+  --secondary-to-third: #299c9c;
+  --secondary-to-fourth: #299c9c;
+  --secondary-to-white: #299c9c;
+  --secondary-to-gray: #299c9c;
 
   --third-to-primary: #41aaa3;
+  --third-to-secondary: #41aaa3;
   --third-to-fourth: #41aaa3;
   --third-to-white: #41aaa3;
 
@@ -48,18 +55,21 @@
   --green-400: #388e3c;
   --green-500: #2e7d32;
   --green-500-30-opacity: #2e7d324d;
+
+  --yellow-200: #ddbf3a;
+  --yellow-100: #f2d66b;
 }
 
 [data-theme="light"] {
   --primary-color: #144750;
-  --secundary-color: #278d8d;
+  --secondary-color: #278d8d;
   --third-color: #41aaa3;
   --fourth-color: #4dd1c8;
 
   --border-color: #b6b6b6;
   --background-input-color: #f8f8f8;
   --background-container-color: #f8f8f8;
-  --background-secundary-color: #f8f8f8;
+  --background-secondary-color: #f8f8f8;
   --background-primary-color: #144750;
 
   --gray: #dfdfdf;
@@ -69,19 +79,24 @@
   --black-to-light-blue: #dcf5f3;
   --black-to-white: #f8f8f8;
   --black-to-light-gray: #f0f0f0;
+  --black-to-gray-50: #f9fafb;
   --black-to-gray: #d1ddde;
   --black-to-primary: #144750;
 
   --primary-to-white: #f8f8f8;
+  --primary-to-secondary: #299c9c;
   --white-to-primary: #144750;
 
-  --secundary-to-primary: #144750;
-  --secundary-to-fourth: #4dd1c8;
-  --secundary-to-white: #f8f8f8;
+  --secondary-to-primary: #144750;
+  --secondary-to-third: #41aaa3;
+  --secondary-to-fourth: #4dd1c8;
+  --secondary-to-white: #f8f8f8;
+  --secondary-to-gray: #d1ddde;
 
   --third-to-primary: #144750;
-  --third-to-white: #f8f8f8;
+  --third-to-secondary: #299c9c;
   --third-to-fourth: #4dd1c8;
+  --third-to-white: #f8f8f8;
 
   --green-to-white: #f8f8f8;
   --danger-to-white: #f8f8f8;

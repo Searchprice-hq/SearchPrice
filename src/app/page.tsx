@@ -33,7 +33,10 @@ export default function Home() {
             >
               Sobre
             </li>
-            <li className="text-[var(--white)] cursor-pointer transition-transform duration-200 hover:scale-110 hover:rounded-md">
+            <li
+              className="text-[var(--white)] cursor-pointer transition-transform duration-200 hover:scale-110 hover:rounded-md"
+              onClick={() => router.push("/testimonials")}
+            >
               Depoimentos
             </li>
             <li className="text-[var(--white)] cursor-pointer transition-transform duration-200 hover:scale-110 hover:rounded-md">
@@ -46,7 +49,7 @@ export default function Home() {
             onClick={toggleTheme}
             className="bg-transparent border-none cursor-pointer transition-transform duration-200 hover:scale-110"
           >
-            <img src="/halfMoonWhite.png" alt="Tema" className="w-8" />
+            <img src="/halfMoonWhite.png" alt="Alterar tema" className="w-8" />
           </button>
           <button
             onClick={() => router.push("/login")}
@@ -58,7 +61,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="bg-[var(--background-secundary-color)] flex flex-col items-center w-full flex-1">
+      <main className="bg-[var(--background-secondary-color)] flex flex-col items-center w-full flex-1">
         {/* WhatsApp Button */}
         <button className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[var(--green-100)] text-[var(--white)] font-bold rounded-full w-56 px-4 py-2 transition-transform duration-200 hover:scale-105">
           <img src="/whatsapp.png" alt="WhatsApp" className="w-12" />
@@ -81,7 +84,7 @@ export default function Home() {
             </h1>
             <button
               onClick={() => router.push("/register")}
-              className="bg-[var(--primary-color)] text-[var(--white)] px-8 py-4 rounded-md font-semibold text-base transition-transform duration-200 hover:scale-105 hover:bg-[var(--secundary-color)]"
+              className="bg-[var(--primary-color)] text-[var(--white)] px-8 py-4 rounded-md font-semibold text-base transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]"
             >
               Quero economizar meu tempo
             </button>
@@ -182,10 +185,10 @@ export default function Home() {
               Comece a economizar tempo hoje
             </h3>
             <div className="flex justify-between gap-4 w-[32rem]">
-              <button className="px-8 py-3 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secundary-color)]">
+              <button className="px-8 py-3 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]">
                 Iniciar teste grátis
               </button>
-              <button className="px-4 py-3 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secundary-color)]">
+              <button className="px-4 py-3 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]">
                 Conversar com os fundadores
               </button>
             </div>
@@ -216,7 +219,7 @@ export default function Home() {
               ].map((txt) => (
                 <div
                   key={txt}
-                  className="flex items-center bg-[var(--background-secundary-color)]"
+                  className="flex items-center bg-[var(--background-secondary-color)]"
                 >
                   <img
                     src="/dollarBill.png"
@@ -244,14 +247,14 @@ export default function Home() {
           </p>
           <button
             onClick={() => router.push("/register")}
-            className="mt-8 px-6 py-4 bg-[var(--primary-to-white)] text-[var(--white-to-primary)] rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secundary-color)]"
+            className="mt-8 px-6 py-4 bg-[var(--primary-to-white)] text-[var(--white-to-primary)] rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-to-white)]"
           >
             Quero ser um membro fundador
           </button>
         </section>
 
         {/* Section 7: FAQs */}
-        <section className="w-full py-8 bg-[var(--background-secundary-color)]">
+        <section className="w-full py-8 bg-[var(--background-secondary-color)]">
           <h1 className="ml-12 mb-4 text-[1.5rem] text-[var(--white-to-primary)]">
             Perguntas frequentes:
           </h1>
@@ -290,7 +293,7 @@ export default function Home() {
                   borderWidth: "1.5px",
                   color: "var(--white-to-primary)",
                 }}
-                className="w-[95%] border rounded-2xl dark:border-[var(--secundary-color)]"
+                className="w-[95%] border rounded-2xl dark:border-[var(--secondary-color)]"
               >
                 <AccordionSummary
                   expandIcon={
@@ -309,11 +312,11 @@ export default function Home() {
         </section>
 
         {/* Section 8: Contato */}
-        <section className="w-full flex flex-col items-center justify-center h-64 pb-4 bg-[var(--background-secundary-color)]">
+        <section className="w-full flex flex-col items-center justify-center h-64 pb-4 bg-[var(--background-secondary-color)]">
           <h1 className="mb-4 text-[1.75rem] text-[var(--white-to-primary)]">
             Ainda restam dúvidas?
           </h1>
-          <button className="px-8 py-4 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secundary-color)]">
+          <button className="px-8 py-4 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]">
             Entre em contato com os fundadores
           </button>
         </section>
