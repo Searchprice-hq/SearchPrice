@@ -13,31 +13,31 @@ const SOCIALS = [
   {
     name: "Facebook",
     href: "https://facebook.com/searchprice",
-    icon: "/icons/facebook.svg",
+    icon: "/facebook.png",
     color: "text-blue-600",
   },
   {
     name: "Instagram",
     href: "https://instagram.com/searchprice",
-    icon: "/icons/instagram.svg",
+    icon: "/instagram.png",
     color: "text-pink-500",
   },
   {
     name: "LinkedIn",
     href: "https://linkedin.com/company/searchprice",
-    icon: "/icons/linkedin.svg",
+    icon: "/linkedin.png",
     color: "text-blue-700",
   },
   {
-    name: "Twitter",
-    href: "https://twitter.com/searchprice",
-    icon: "/icons/twitter.svg",
+    name: "X (Twitter)",
+    href: "https://x.com/searchprice",
+    icon: "/x.png",
     color: "text-blue-400",
   },
   {
     name: "YouTube",
     href: "https://youtube.com/searchprice",
-    icon: "/icons/youtube.svg",
+    icon: "/youtube.png",
     color: "text-red-600",
   },
 ];
@@ -89,9 +89,25 @@ export default function AboutPage() {
   return (
     <main className="bg-[var(--black-to-gray-50)] flex flex-col min-h-screen">
       {/* 1. Hero / Apresentação */}
-      <section className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white py-20">
+      <section className="relative bg-[var(--background-primary-color)] text-white py-16">
+        {/* Botão Home no canto superior esquerdo */}
+        <Link
+          href="/"
+          className="absolute top-4 left-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+        >
+          <Image src="/leftPointer.png" alt="Home" width={40} height={40} />
+        </Link>
+
+        {/* Botão Login no canto superior direito */}
+        <Link
+          href="/login"
+          className="absolute top-4 right-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+        >
+          <Image src="/profile.png" alt="Login" width={40} height={40} />
+        </Link>
+
         <div className="container mx-auto px-6 text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold">
+          <h1 className="text-4xl md:text-5xl text-[var(--third-to-primary)] font-bold">
             Bem-vindo à Search Price
           </h1>
           <p className="max-w-2xl mx-auto text-lg">
@@ -107,7 +123,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 grid gap-12 md:grid-cols-2">
           {/* Coluna 1: Sobre */}
           <div>
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl font-bold text-[var(--third-to-primary)] mb-4">
               Sobre a Search Price
             </h1>
             <p className="text-[var(--white)] leading-relaxed">
@@ -122,7 +138,7 @@ export default function AboutPage() {
           {/* Coluna 2: Missão, Visão e Valores */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-[var(--secondary-color)] mb-2">
+              <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Missão
               </h2>
               <p className="text-[var(--white)] leading-relaxed">
@@ -132,7 +148,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div>
-              <h2 className="text-2xl font-semibold text-[var(--secondary-color)] mb-2">
+              <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Visão
               </h2>
               <p className="text-[var(--white)] leading-relaxed">
@@ -171,44 +187,44 @@ export default function AboutPage() {
           <TeamMember
             name="Gerson Boing Carvalho"
             role="CEO & Cofundador"
-            avatar="/gersonBoing.jpg"
+            avatar="/man4.png"
           />
           <TeamMember
             name="Priscilla Barbosa Moni"
             role="CTO & Cofundadora"
-            avatar="/priscillaMoni.jpg"
+            avatar="/woman1.png"
           />
           <TeamMember
-            name="Rogerio Rodrigues"
-            role="Head de Produto"
-            avatar="/RogerRodrigues.jpg"
+            name="Rogerio Rodrigues da Silva"
+            role="Cloud System Administrator"
+            avatar="/man1.png"
           />
           <TeamMember
             name="Patrick Meirelles"
-            role="COO"
-            avatar="/PatrickMeirelles.jpg"
+            role="Backend Developer"
+            avatar="/man3.png"
           />
           <TeamMember
             name="Victor Augusto Barbosa Moni"
-            role="Lead de Dados"
-            avatar="/victorMoni.jpg"
+            role="Frontend Developer"
+            avatar="/man2.png"
           />
         </div>
       </section>
 
       {/* Redes Sociais */}
       <section className="container mx-auto px-6 py-16">
-        <h2 className="text-2xl font-semibold text-center mb-8">
+        <h2 className="text-2xl font-semibold text-[var(--third-color)] text-center mb-8">
           Conecte-se Conosco
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 ">
           {SOCIALS.map(({ name, href, icon, color }) => (
             <Link
               key={name}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center p-6 bg-[var(--white)] rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200"
+              className="flex flex-col items-center p-6 bg-[var(--white)] rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 transition-transform hover:scale-110"
             >
               <div className={`w-12 h-12 mb-4 ${color}`}>
                 <Image
