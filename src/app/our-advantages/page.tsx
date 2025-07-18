@@ -1,5 +1,6 @@
-// src/app/about/page.tsx
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +8,6 @@ export const metadata: Metadata = {
   description: "Os principais benefícios da Search Price",
 };
 
-// Componente para os cards de info
 function InfoCard({
   icon,
   title,
@@ -18,15 +18,14 @@ function InfoCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+    <div className="bg-[var(--background-container-color)] rounded-lg shadow-md p-6 flex flex-col items-center text-center">
       <div className="text-4xl mb-4">{icon}</div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{children}</p>
+      <p className="text-[var(--white-to-primary)]">{children}</p>
     </div>
   );
 }
 
-// Componente para estatísticas
 function StatCard({ value, label }: { value: string | number; label: string }) {
   return (
     <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white rounded-lg p-6 text-center">
@@ -38,19 +37,38 @@ function StatCard({ value, label }: { value: string | number; label: string }) {
 
 export default function OurAdvantagesPage() {
   return (
-    <main className="bg-gray-50 text-gray-900 min-h-screen">
-      {/* 1. Hero / Apresentação */}
-      <section className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white py-20">
-        <div className="container mx-auto px-6 text-center space-y-6 md:space-y-8">
-          <h1 className="text-4xl md:text-5xl font-bold">
-            Estratégia de preços com inteligência de mercado
-          </h1>
-          <p className="max-w-2xl mx-auto text-lg leading-relaxed">
-            Na Search Price, oferecemos uma plataforma completa que agrega e
-            analisa dados de múltiplos marketplaces em um só lugar, permitindo
-            que você acompanhe tendências, ajuste ofertas e maximize sua
-            lucratividade de forma simples e rápida.
-          </p>
+    <main className="bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] min-h-screen">
+      {/* Hero: botões fixos nos cantos */}
+      <section className="relative bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white">
+        {/* Botão Home no canto superior esquerdo */}
+        <Link
+          href="/"
+          className="absolute top-4 left-4 flex-shrink-0 hover:opacity-80 transition-opacity"
+        >
+          <Image src="/leftPointer.png" alt="Home" width={40} height={40} />
+        </Link>
+
+        {/* Botão Login no canto superior direito */}
+        <Link
+          href="/login"
+          className="absolute top-4 right-4 flex-shrink-0 hover:opacity-80 transition-opacity"
+        >
+          <Image src="/profile.png" alt="Login" width={40} height={40} />
+        </Link>
+
+        {/* Conteúdo do Hero centralizado com padding top reduzido e largura maior */}
+        <div className="container mx-auto px-6 flex items-center justify-center pt-12 pb-14">
+          <div className="text-center max-w-6xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Estratégia de preços com inteligência de mercado
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg leading-relaxed">
+              Na Search Price, oferecemos uma plataforma completa que agrega e
+              analisa dados de múltiplos marketplaces em um só lugar, permitindo
+              que você acompanhe tendências, ajuste ofertas e maximize sua
+              lucratividade de forma simples e rápida.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -89,29 +107,31 @@ export default function OurAdvantagesPage() {
         </div>
       </section>
 
-      {/* 4. Como Funciona */}
+      {/* 4. Como Funciona em Card */}
       <section className="py-16">
-        <div className="container mx-auto px-6 max-w-3xl space-y-4 text-center">
-          <h2 className="text-3xl font-bold text-[var(--secondary-color)]">
-            Como Funciona
-          </h2>
-          <p className="text-gray-700 leading-relaxed">
-            Basta inserir o código do produto ou pesquisar por categoria, e a
-            Search Price retorna uma análise completa de preços, estoque, vendas
-            e avaliações, tudo em segundos. Com filtros avançados, você refina
-            os resultados e exporta relatórios detalhados para tomar decisões
-            embasadas.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            Nossa infraestrutura em nuvem garante alta performance e
-            escalabilidade, enquanto nosso motor de filtragem avançada lhe
-            proporciona a visão mais precisa do mercado.
-          </p>
+        <div className="container mx-auto px-6 flex justify-center">
+          <div className="bg-[var(--background-container-color)] rounded-lg shadow-lg p-8 max-w-3xl w-full">
+            <h2 className="text-3xl font-bold text-[var(--secondary-color)] text-center mb-4">
+              Como Funciona
+            </h2>
+            <p className="text-[var(--white-to-primary)] leading-relaxed mb-4">
+              Basta inserir o código do produto ou pesquisar por categoria, e a
+              Search Price retorna uma análise completa de preços, estoque,
+              vendas e avaliações, tudo em segundos. Com filtros avançados, você
+              refina os resultados e exporta relatórios detalhados para tomar
+              decisões embasadas.
+            </p>
+            <p className="text-[var(--white-to-primary)] leading-relaxed">
+              Nossa infraestrutura em nuvem garante alta performance e
+              escalabilidade, enquanto nosso motor de filtragem avançada lhe
+              proporciona a visão mais precisa do mercado.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* 5. FAQ resumido */}
-      <section className="py-16 bg-[var(--background-primary-color)] text-[var(--secondary-color)]">
+      <section className="py-16 bg-[var(--background-primary-color)] text-[var(--third-color)]">
         <div className="container mx-auto px-6 max-w-2xl">
           <h2 className="text-3xl font-bold text-center mb-6">
             Perguntas Frequentes
