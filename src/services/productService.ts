@@ -1,14 +1,11 @@
 import type { Product } from "@/models/Product";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
-
 function getHeaders() {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
   return {
     "Content-Type": "application/json",
-    "x-api-key": API_KEY,
+    "x-api-key": "m7fLLNkHUuKrUaKkYbJcTi8o154u81ze",
     ...(token && { Authorization: `Bearer ${token}` }),
   };
 }
@@ -28,9 +25,7 @@ export async function fetchProducts(
   }
 
   const url =
-    params.toString().length > 0
-      ? `${API_BASE_URL}/products?${params}`
-      : `${API_BASE_URL}/products`;
+    params.toString().length > 0 ? `/api/products?${params}` : `/api/products`;
 
   const res = await fetch(url, { headers: getHeaders() });
   if (!res.ok) {

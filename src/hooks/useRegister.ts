@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerUser } from "@/lib/api";
+import { registerUser } from "@/services/authService";
 import type { User } from "@/models/User";
 
 interface PasswordRequirement {

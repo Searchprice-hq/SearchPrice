@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginUser, forgotPassword } from "@/lib/api";
+import { loginUser, forgotPassword } from "@/services/authService";
 import type { LoginResponse } from "@/models/User";
 
 export const useLogin = () => {

@@ -1,11 +1,9 @@
 import type { User, LoginResponse } from "@/models/User";
 
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
-
 function getDefaultHeaders() {
   return {
     "Content-Type": "application/json",
-    "x-api-key": API_KEY,
+    "x-api-key": "m7fLLNkHUuKrUaKkYbJcTi8o154u81ze",
   };
 }
 

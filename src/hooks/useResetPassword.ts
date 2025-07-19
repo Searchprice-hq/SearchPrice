@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { resetPassword } from "@/lib/api";
+import { resetPassword } from "@/services/authService";
 
 export function useResetPassword() {
   const [error, setError] = useState<string | null>(null);
