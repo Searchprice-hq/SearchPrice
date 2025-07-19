@@ -1,6 +1,5 @@
 import type { User, LoginResponse } from "@/models/User";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
 
 function getDefaultHeaders() {
@@ -14,7 +13,7 @@ export async function loginUser(
   email: string,
   password: string
 ): Promise<LoginResponse> {
-  const res = await fetch(`${API_BASE_URL}/user/login`, {
+  const res = await fetch(`/api/user/login`, {
     method: "POST",
     headers: getDefaultHeaders(),
     body: JSON.stringify({ email, password }),
@@ -36,7 +35,7 @@ export async function registerUser(
   password: string,
   document: string
 ): Promise<User> {
-  const res = await fetch(`${API_BASE_URL}/user/register`, {
+  const res = await fetch(`/api/user/register`, {
     method: "POST",
     headers: getDefaultHeaders(),
     body: JSON.stringify({ fullName, email, password, document }),
@@ -51,7 +50,7 @@ export async function registerUser(
 }
 
 export async function forgotPassword(email: string): Promise<void> {
-  const res = await fetch(`${API_BASE_URL}/email/forgot-password`, {
+  const res = await fetch(`/api/email/forgot-password`, {
     method: "POST",
     headers: getDefaultHeaders(),
     body: JSON.stringify({ email }),
@@ -68,7 +67,7 @@ export async function resetPassword(
   token: string,
   password: string
 ): Promise<void> {
-  const res = await fetch(`${API_BASE_URL}/email/reset-password`, {
+  const res = await fetch(`/api/email/reset-password`, {
     method: "POST",
     headers: getDefaultHeaders(),
     body: JSON.stringify({ email, token, password }),
