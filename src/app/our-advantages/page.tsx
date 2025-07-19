@@ -18,7 +18,7 @@ function InfoCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[var(--background-container-color)] rounded-lg shadow-md p-6 flex flex-col items-center text-center transform transition-transform hover:scale-105">
+    <div className="bg-[var(--background-container)] rounded-lg shadow-md p-6 flex flex-col items-center text-center transform transition-transform hover:scale-105">
       <div className="text-4xl mb-4">{icon}</div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-[var(--white-to-primary)]">{children}</p>
@@ -28,7 +28,7 @@ function InfoCard({
 
 function StatCard({ value, label }: { value: string | number; label: string }) {
   return (
-    <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white rounded-lg p-6 text-center transform transition-transform hover:scale-105">
+    <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white rounded-lg p-6 text-center transform transition-transform hover:scale-105">
       <p className="text-3xl font-bold">{value}</p>
       <p className="uppercase mt-1 text-sm">{label}</p>
     </div>
@@ -39,7 +39,7 @@ export default function OurAdvantagesPage() {
   return (
     <main className="bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] min-h-screen">
       {/* Hero: botões fixos nos cantos */}
-      <section className="relative bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white">
+      <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
         {/* Botão Home no canto superior esquerdo */}
         <Link
           href="/"
@@ -99,7 +99,7 @@ export default function OurAdvantagesPage() {
       </section>
 
       {/* 3. Estatísticas rápidas */}
-      <section className="py-16 bg-[var(--background-primary-color)] text-white">
+      <section className="py-16 bg-[var(--background-primary)] text-white">
         <div className="container mx-auto px-6 grid gap-6 md:grid-cols-3">
           <StatCard value="10K+" label="Consultas realizadas" />
           <StatCard value="3" label="Marketplaces suportados" />
@@ -110,8 +110,8 @@ export default function OurAdvantagesPage() {
       {/* 4. Como Funciona em Card */}
       <section className="py-16">
         <div className="container mx-auto px-6 flex justify-center">
-          <div className="bg-[var(--background-container-color)] rounded-lg shadow-lg p-8 max-w-3xl w-full transform transition-transform hover:scale-105">
-            <h2 className="text-3xl font-bold text-[var(--secondary-color)] text-center mb-4">
+          <div className="bg-[var(--background-container)] rounded-lg shadow-lg p-8 max-w-3xl w-full transform transition-transform hover:scale-105">
+            <h2 className="text-3xl font-bold text-[var(--secondary)] text-center mb-4">
               Como Funciona
             </h2>
             <p className="text-[var(--white-to-primary)] leading-relaxed mb-4">
@@ -131,7 +131,7 @@ export default function OurAdvantagesPage() {
       </section>
 
       {/* 5. FAQ resumido */}
-      <section className="py-16 bg-[var(--background-primary-color)] text-[var(--third-color)]">
+      <section className="py-16 bg-[var(--background-primary)] text-[var(--third)]">
         <div className="container mx-auto px-6 max-w-2xl">
           <h2 className="text-3xl font-bold text-center mb-6">
             Perguntas Frequentes

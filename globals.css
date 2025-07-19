@@ -1,39 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --primary-color: #144750;
-  --secondary-color: #299c9c;
-  --third-color: #41aaa3;
-  --fourth-color: #4dd1c8;
+  --primary: #144750;
+  --secondary: #299c9c;
+  --third: #41aaa3;
+  --fourth: #4dd1c8;
   --white: #f8f8f8;
+  --border: #333333;
 
-  --border-color: #333333;
-  --background-input-color: #262626;
-  --background-container-color: #202020;
-  --background-secondary-color: #1a1a1a;
-  --background-primary-color: #111111;
-  --dollar-bill-container: #e3f4f7;
+  --background-input: #262626;
+  --background-container: #202020;
+  --background-secondary: #1a1a1a;
+  --background-primary: #111111;
 
   --black-to-white: #202020;
   --black-to-gray: #111111;
 
+  --black-to-primary: #1a1a1a;
+  --black-to-secondary: #1a1a1a;
+  --black-to-light-blue: #1a1a1a;
   --light-black-to-gray: #1a1a1a;
   --black-to-light-gray: #1a1a1a;
   --black-to-gray-50: #1a1a1a;
-  --black-to-light-blue: #1a1a1a;
-  --black-to-primary: #1a1a1a;
-  --black-to-secondary: #1a1a1a;
 
-  --primary-to-white: #144750;
   --primary-to-secondary: #144750;
-  --secondary-to-gray: #144750;
+  --primary-to-white: #144750;
   --white-to-primary: #f8f8f8;
 
   --secondary-to-primary: #299c9c;
   --secondary-to-third: #299c9c;
   --secondary-to-fourth: #299c9c;
-  --secondary-to-white: #299c9c;
   --secondary-to-gray: #299c9c;
+  --secondary-to-white: #299c9c;
 
   --third-to-primary: #41aaa3;
   --third-to-secondary: #41aaa3;
@@ -43,47 +41,44 @@
   --green-to-white: #388e3c;
   --danger-to-white: #f75a68;
 
-  --transparent-to-green: transparent;
-  --transparent-to-danger: transparent;
-
   --danger: #f75a68;
   --danger-hover: #ff7b87;
 
-  --gray-100: #808080;
   --green-100: #47ce57;
   --green-200: #51be55;
   --green-300: #4caf50;
   --green-400: #388e3c;
-  --green-500: #2e7d32;
-  --green-500-30-opacity: #2e7d324d;
 
   --yellow-200: #ddbf3a;
   --yellow-100: #f2d66b;
+
+  --gray-100: #808080;
+  --dollar-bill-container: #e3f4f7;
 }
 
 [data-theme="light"] {
-  --primary-color: #144750;
-  --secondary-color: #278d8d;
-  --third-color: #41aaa3;
-  --fourth-color: #4dd1c8;
-
-  --border-color: #b6b6b6;
-  --background-input-color: #f8f8f8;
-  --background-container-color: #f8f8f8;
-  --background-secondary-color: #f8f8f8;
-  --background-primary-color: #144750;
+  --primary: #144750;
+  --secondary: #278d8d;
+  --third: #41aaa3;
+  --fourth: #4dd1c8;
+  --border: #b6b6b6;
 
   --gray: #dfdfdf;
   --light-gray: #f0f0f0;
-  --light-black-to-gray: #d1ddde;
 
+  --background-input: #f8f8f8;
+  --background-container: #f8f8f8;
+  --background-secondary: #f8f8f8;
+  --background-primary: #144750;
+
+  --black-to-primary: #144750;
+  --black-to-secondary: #299c9c;
   --black-to-light-blue: #dcf5f3;
-  --black-to-white: #f8f8f8;
   --black-to-light-gray: #f0f0f0;
   --black-to-gray-50: #f9fafb;
   --black-to-gray: #d1ddde;
-  --black-to-primary: #144750;
-  --black-to-secondary: #299c9c;
+  --light-black-to-gray: #d1ddde;
+  --black-to-white: #f8f8f8;
 
   --primary-to-white: #f8f8f8;
   --primary-to-secondary: #299c9c;
@@ -102,9 +97,6 @@
 
   --green-to-white: #f8f8f8;
   --danger-to-white: #f8f8f8;
-
-  --transparent-to-green: #388e3c;
-  --transparent-to-danger: #f75a68;
 }
 
 body {
