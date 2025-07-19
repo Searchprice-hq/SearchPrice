@@ -1,4 +1,3 @@
-// src/app/about/page.tsx
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,7 +41,6 @@ const SOCIALS = [
   },
 ];
 
-// Componente para membros do time
 function TeamMember({
   name,
   role,
@@ -70,17 +68,14 @@ function TeamMember({
 export default function AboutPage() {
   return (
     <main className="bg-[var(--black-to-gray-50)] flex flex-col min-h-screen">
-      {/* 1. Hero / Apresentação */}
-      <section className="relative bg-[var(--background-primary-color)] text-white py-16">
-        {/* Botão Home no canto superior esquerdo */}
+      {/* Hero / Apresentação */}
+      <section className="relative bg-[var(--background-primary)] text-white py-16">
         <Link
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
           <Image src="/leftPointer.png" alt="Home" width={40} height={40} />
         </Link>
-
-        {/* Botão Login no canto superior direito */}
         <Link
           href="/login"
           className="absolute top-4 right-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
@@ -101,7 +96,7 @@ export default function AboutPage() {
       </section>
 
       {/* História, Missão, Visão e Valores em duas colunas */}
-      <section className="py-16 bg-[var(--background-secondary-color)]">
+      <section className="py-16 bg-[var(--background-secondary)]">
         <div className="container mx-auto px-6 grid gap-12 md:grid-cols-2">
           {/* Coluna 1: Sobre */}
           <div>
@@ -154,7 +149,7 @@ export default function AboutPage() {
       </section>
 
       {/* Time de Fundadores */}
-      <section className="py-16 bg-[var(--background-primary-color)]">
+      <section className="py-16 bg-[var(--background-primary)]">
         <div className="container mx-auto px-6  text-center mb-8">
           <h2 className="text-3xl text-[var(--third-to-white)] font-bold">
             Nosso Time
@@ -217,16 +212,14 @@ export default function AboutPage() {
                   className="object-contain"
                 />
               </div>
-              <span className="font-medium text-[var(--primary-color)]">
-                {name}
-              </span>
+              <span className="font-medium text-[var(--primary)]">{name}</span>
             </Link>
           ))}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[var(--background-primary-color)] text-white px-8 py-8 mt-auto text-center">
+      <footer className="bg-[var(--background-primary)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.

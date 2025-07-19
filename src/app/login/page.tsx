@@ -31,16 +31,15 @@ export default function LoginPage() {
       setForgotStatus("Informe seu e‑mail primeiro.");
       return;
     }
-    // envia o código
+
     const msg = await handleForgotPassword(email);
     setForgotStatus(msg);
-    // redireciona para página de reset com email na query
     router.push(`/reset-password?email=${encodeURIComponent(email)}`);
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-[var(--black-to-primary)]">
-      <div className="bg-[var(--background-container-color)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary-color)]">
+      <div className="bg-[var(--background-container)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary)]">
         <Image
           src="/searchpriceLogo.png"
           alt="SearchPrice Logo"
@@ -61,7 +60,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
-              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
+              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
             />
             <input
               type="password"
@@ -70,7 +69,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
-              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
+              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
             />
           </div>
 
@@ -84,7 +83,7 @@ export default function LoginPage() {
             type="button"
             onClick={onForgotPassword}
             disabled={loading}
-            className="self-end text-xs text-[var(--secondary-to-primary)] hover:text-[var(--third-color)]"
+            className="self-end text-xs text-[var(--secondary-to-primary)] hover:text-[var(--third)]"
           >
             Esqueceu sua senha?
           </button>
@@ -98,14 +97,14 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl disabled:opacity-50"
+              className="bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl disabled:opacity-50"
             >
               Entrar
             </button>
           </div>
         </form>
 
-        <div className="w-full max-w-sm border-t border-[var(--border-color)] mt-8" />
+        <div className="w-full max-w-sm border-t border-[var(--border)] mt-8" />
 
         <div className="w-full max-w-sm flex flex-col items-center gap-4 mt-8">
           <button

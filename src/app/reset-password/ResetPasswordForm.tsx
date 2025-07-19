@@ -37,7 +37,7 @@ export default function ResetPasswordForm({
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[var(--black-to-primary)] p-4">
-      <div className="bg-[var(--background-container-color)] p-8 w-full max-w-md rounded-xl border-2 border-[var(--primary-color)]">
+      <div className="bg-[var(--background-container)] p-8 w-full max-w-md rounded-xl border-2 border-[var(--primary)]">
         <h1 className="text-2xl font-semibold text-center mb-4 text-[var(--white-to-primary)]">
           Redefinir Senha
         </h1>
@@ -53,7 +53,7 @@ export default function ResetPasswordForm({
             onChange={(e) => setEmail(e.target.value)}
             required
             disabled={loading}
-            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input-color)] border border-[var(--border-color)] text-[var(--white-to-primary)] outline-none"
+            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
           <input
             type="text"
@@ -62,7 +62,7 @@ export default function ResetPasswordForm({
             onChange={(e) => setToken(e.target.value)}
             required
             disabled={loading}
-            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input-color)] border border-[var(--border-color)] text-[var(--white-to-primary)] outline-none"
+            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
           <input
             type="password"
@@ -71,7 +71,7 @@ export default function ResetPasswordForm({
             onChange={(e) => setPassword(e.target.value)}
             required
             disabled={loading}
-            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input-color)] border border-[var(--border-color)] text-[var(--white-to-primary)] outline-none"
+            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
           <input
             type="password"
@@ -80,7 +80,7 @@ export default function ResetPasswordForm({
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             disabled={loading}
-            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input-color)] border border-[var(--border-color)] text-[var(--white-to-primary)] outline-none"
+            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
 
           {error && <p className="text-[var(--danger)] text-sm">{error}</p>}
@@ -90,8 +90,8 @@ export default function ResetPasswordForm({
             disabled={!isFormValid || loading}
             className={`w-full h-12 mt-2 text-white rounded-xl transition ${
               isFormValid && !loading
-                ? "bg-[var(--primary-color)] hover:bg-[var(--secondary-color)]"
-                : "bg-[var(--primary-color)] opacity-50 cursor-not-allowed"
+                ? "bg-[var(--primary)] hover:bg-[var(--secondary)]"
+                : "bg-[var(--primary)] opacity-50 cursor-not-allowed"
             }`}
           >
             {loading ? "Redefinindo..." : "Redefinir Senha"}

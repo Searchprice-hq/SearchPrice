@@ -58,7 +58,7 @@ export default function Register() {
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-[var(--black-to-primary)]">
-      <div className="bg-[var(--background-container-color)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary-color)]">
+      <div className="bg-[var(--background-container)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary)]">
         <Image
           src="/searchpriceLogo.png"
           alt="logo"
@@ -73,7 +73,7 @@ export default function Register() {
               placeholder="Nome completo"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
               disabled={loading}
             />
 
@@ -82,7 +82,7 @@ export default function Register() {
               placeholder="CPF ou CNPJ"
               value={document}
               onChange={(e) => setDocument(e.target.value.replace(/\D/g, ""))}
-              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
               disabled={loading}
             />
             {!docValid && document.length > 0 && (
@@ -96,7 +96,7 @@ export default function Register() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
               disabled={loading}
             />
 
@@ -110,7 +110,7 @@ export default function Register() {
                 onBlur={() => {
                   if (!password || isValidPassword) setShowPasswordRules(false);
                 }}
-                className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+                className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
                 disabled={loading}
               />
               {showPasswordRules && !isValidPassword && (
@@ -143,7 +143,7 @@ export default function Register() {
                   if (passwordsMatch || !confirmPassword)
                     setShowConfirmError(false);
                 }}
-                className="border border-[var(--border-color)] rounded-xl bg-[var(--background-input-color)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+                className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
                 disabled={loading}
               />
               {showConfirmError && !passwordsMatch && (
@@ -158,7 +158,7 @@ export default function Register() {
             <p className="text-[var(--danger)] text-sm mt-4">{error}</p>
           )}
 
-          <div className="w-full max-w-sm border-t border-[var(--border-color)] mt-8" />
+          <div className="w-full max-w-sm border-t border-[var(--border)] mt-8" />
 
           <button
             type="submit"

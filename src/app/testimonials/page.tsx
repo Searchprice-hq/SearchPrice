@@ -62,7 +62,7 @@ const TESTIMONIALS: Testimonial[] = [
 
 function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
   return (
-    <div className="bg-[var(--background-container-color)] p-6 rounded-lg shadow-lg flex flex-col transform transition-transform hover:scale-105">
+    <div className="bg-[var(--background-container)] p-6 rounded-lg shadow-lg flex flex-col transform transition-transform hover:scale-105">
       <div className="flex items-center mb-4">
         <Image
           src={avatar}
@@ -95,7 +95,7 @@ export default function TestimonialsPage() {
   return (
     <main className="bg-[var(--black-to-light-blue)] min-h-screen">
       {/* Hero */}
-      <header className="relative bg-[var(--background-primary-color)] text-white">
+      <header className="relative bg-[var(--background-primary)] text-white">
         {/* Home no extremo esquerdo */}
         <Link
           href="/"
@@ -134,7 +134,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[var(--background-primary-color)] ] text-white py-12">
+      <section className="bg-[var(--background-primary)] ] text-white py-12">
         <div className="container mx-auto px-6 text-center space-y-4">
           <h2 className="text-2xl font-semibold text-[var(--third-to-white)]">
             Quer ser nosso próximo caso de sucesso?
@@ -144,7 +144,7 @@ export default function TestimonialsPage() {
           </p>
           <Link
             href="/signup"
-            className="mt-4 inline-block px-6 py-3 bg-white text-[var(--primary-color)] font-semibold rounded-lg hover:scale-105 transition-transform"
+            className="mt-4 inline-block px-6 py-3 bg-white text-[var(--primary)] font-semibold rounded-lg hover:scale-105 transition-transform"
           >
             Começar Agora
           </Link>

@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col min-h-screen">
       {/* Header */}
-      <header className="flex items-center justify-between bg-[var(--background-primary-color)] px-3 py-3">
+      <header className="flex items-center justify-between bg-[var(--background-primary)] px-3 py-3">
         <div className="flex items-center gap-2">
           <Image
             src="/searchpriceLogo.png"
@@ -78,7 +78,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="bg-[var(--background-secondary-color)] flex flex-col items-center w-full flex-1">
+      <main className="bg-[var(--background-secondary)] flex flex-col items-center w-full flex-1">
         {/* WhatsApp Button */}
         <button className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[var(--green-100)] text-[var(--white)] font-bold rounded-full w-56 px-4 py-2 transition-transform duration-200 hover:scale-105">
           <Image src="/whatsapp.png" alt="WhatsApp" width={48} height={48} />
@@ -101,7 +101,7 @@ export default function Home() {
             </h1>
             <button
               onClick={() => router.push("/register")}
-              className="bg-[var(--primary-color)] text-[var(--white)] px-8 py-4 rounded-md font-semibold text-base transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]"
+              className="bg-[var(--primary)] text-[var(--white)] px-8 py-4 rounded-md font-semibold text-base transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
             >
               Quero economizar meu tempo
             </button>
@@ -109,7 +109,7 @@ export default function Home() {
         </section>
 
         {/* Section 2: Tabela de Marketplaces */}
-        <section className="w-full pb-8 bg-[var(--background-primary-color)]">
+        <section className="w-full pb-8 bg-[var(--background-primary)]">
           <div className="flex justify-center">
             <Image
               src="/marketplacesTable.png"
@@ -165,7 +165,7 @@ export default function Home() {
                   className={`mt-6 rounded-xl ${isEven ? "ml-8" : "mr-8"}`}
                 />
                 <div className="mt-5 flex flex-col w-[24rem]">
-                  <h4 className="text-[var(--third-color)] text-base font-medium">
+                  <h4 className="text-[var(--third)] text-base font-medium">
                     {i === 1
                       ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
                       : i === 2
@@ -201,10 +201,10 @@ export default function Home() {
               Comece a economizar tempo hoje
             </h3>
             <div className="flex justify-between gap-4 w-[32rem]">
-              <button className="px-8 py-3 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]">
+              <button className="px-8 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]">
                 Iniciar teste grátis
               </button>
-              <button className="px-4 py-3 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]">
+              <button className="px-4 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]">
                 Conversar com os fundadores
               </button>
             </div>
@@ -216,7 +216,7 @@ export default function Home() {
           <div className="mx-auto text-center w-[49rem] my-4 -mb-6">
             <p className="text-[2rem] font-medium text-[var(--white-to-primary)]">
               Somos a{" "}
-              <span className="text-[var(--third-color)] font-bold">
+              <span className="text-[var(--third)] font-bold">
                 sua melhor alternativa
               </span>{" "}
               de economizar seu tempo com busca de produtos que faturam
@@ -235,7 +235,7 @@ export default function Home() {
               ].map((txt) => (
                 <div
                   key={txt}
-                  className="flex items-center bg-[var(--background-secondary-color)]"
+                  className="flex items-center bg-[var(--background-secondary)]"
                 >
                   <Image
                     src="/dollarBill.png"
@@ -255,7 +255,7 @@ export default function Home() {
         </section>
 
         {/* Section 6: Convite Membro */}
-        <section className="w-full bg-[var(--background-primary-color)] flex flex-col items-center text-center py-12 mb-10">
+        <section className="w-full bg-[var(--background-primary)] flex flex-col items-center text-center py-12 mb-10">
           <h1 className="text-2xl text-white">
             Seja um membro fundador da Search Price
           </h1>
@@ -272,7 +272,7 @@ export default function Home() {
         </section>
 
         {/* Section 7: FAQs */}
-        <section className="w-full py-8 bg-[var(--background-secondary-color)]">
+        <section className="w-full py-8 bg-[var(--background-secondary)]">
           <h1 className="ml-12 mb-4 text-[1.5rem] text-[var(--white-to-primary)]">
             Perguntas frequentes:
           </h1>
@@ -311,7 +311,7 @@ export default function Home() {
                   borderWidth: "1.5px",
                   color: "var(--white-to-primary)",
                 }}
-                className="w-[95%] border rounded-2xl dark:border-[var(--secondary-color)]"
+                className="w-[95%] border rounded-2xl dark:border-[var(--secondary)]"
               >
                 <AccordionSummary
                   expandIcon={
@@ -330,16 +330,16 @@ export default function Home() {
         </section>
 
         {/* Section 8: Contato */}
-        <section className="w-full flex flex-col items-center justify-center h-64 pb-4 bg-[var(--background-secondary-color)]">
+        <section className="w-full flex flex-col items-center justify-center h-64 pb-4 bg-[var(--background-secondary)]">
           <h1 className="mb-4 text-[1.75rem] text-[var(--white-to-primary)]">
             Ainda restam dúvidas?
           </h1>
-          <button className="px-8 py-4 bg-[var(--primary-color)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-color)]">
+          <button className="px-8 py-4 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]">
             Entre em contato com os fundadores
           </button>
         </section>
       </main>
-      <footer className="bg-[var(--background-primary-color)] text-white w-full mt-auto px-8 py-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+      <footer className="bg-[var(--background-primary)] text-white w-full mt-auto px-8 py-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
         <p className="text-base">
           © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.
