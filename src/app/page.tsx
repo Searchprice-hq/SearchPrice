@@ -40,7 +40,7 @@ export default function Home() {
             ].map((item) => (
               <li
                 key={item.href}
-                className="text-white text-xl cursor-pointer hover:scale-110 transition py-1 [-webkit-tap-highlight-color:transparent] "
+                className="text-white text-lg cursor-pointer hover:scale-110 transition py-1 [-webkit-tap-highlight-color:transparent] "
                 onClick={() => router.push(item.href)}
               >
                 {item.label}
@@ -74,7 +74,7 @@ export default function Home() {
       {/* Main Content*/}
       <main className="flex-1">
         {/* WhatsApp Button */}
-        <button className="fixed bottom-6 right-6 text-xl z-50 flex items-center gap-2 bg-[var(--green-100)] text-[var(--white)] font-bold rounded-full w-60 px-4 py-2 transition-transform duration-200 hover:scale-105 [-webkit-tap-highlight-color:transparent]">
+        <button className="fixed bottom-6 right-6 text-base z-50 flex items-center gap-2 bg-[var(--green-100)] text-[var(--white)] font-bold rounded-full w-60 px-4 py-2 transition-transform duration-200 hover:scale-105 [-webkit-tap-highlight-color:transparent]">
           <Image src="/whatsapp.png" alt="WhatsApp" width={38} height={38} />
           Conversar com os fundadores
         </button>
@@ -233,7 +233,7 @@ export default function Home() {
         {/* Section 5: Grid de Recursos e Comparativo */}
         <section className="py-8 bg-[var(--background-secondary)]">
           <div className="container flex justify-center mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
-            <p className="w-10/14 text-2xl sm:text-3xl lg:text-4xl font-medium text-[var(--white-to-primary)]">
+            <p className="w-10/14 text-2xl mt-2 sm:text-3xl lg:text-4xl font-medium text-[var(--white-to-primary)]">
               Somos a{" "}
               <span className="text-[var(--third)] font-bold">
                 sua melhor alternativa
@@ -243,7 +243,7 @@ export default function Home() {
           </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-6 flex flex-col lg:flex-row justify-center items-start">
             {/* Tópicos */}
-            <div className="grid grid-rows-5 gap-2 lg:mt-22 w-full lg:w-1/4">
+            <div className="grid grid-rows-5 gap-2 lg:mt-18 w-full lg:w-1/4">
               {[
                 "Análise de mercado em tempo real",
                 "Calculadora de lucro integrada",
@@ -269,7 +269,7 @@ export default function Home() {
               ))}
             </div>
             {/* Comparativo */}
-            <div className="w-full lg:w-2/5 sm:mt-0 lg:-mt-2">
+            <div className="w-full lg:w-2/5 sm:mt-0 lg:-mt-6">
               <Grid />
             </div>
           </div>
@@ -295,12 +295,12 @@ export default function Home() {
         </section>
 
         {/* Section 7: FAQs */}
-        <section className="bg-[var(--background-secondary)] py-8">
+        <section className="bg-[var(--background-secondary)] py-4">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-semibold text-[var(--white-to-primary)] mb-6">
               Perguntas frequentes:
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-2">
               {[
                 {
                   q: "O que é a Search Price?",
@@ -355,7 +355,7 @@ export default function Home() {
         </section>
 
         {/* Section 8: Contato */}
-        <section className="bg-[var(--background-secondary)] flex flex-col items-center justify-center py-12">
+        <section className="bg-[var(--background-secondary)] flex flex-col items-center justify-center py-8 pb-14">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--white-to-primary)] mb-4">
               Ainda restam dúvidas?
