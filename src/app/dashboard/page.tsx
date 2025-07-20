@@ -53,28 +53,23 @@ export default function DashboardPage() {
     if (filter && filter !== "productCode") {
       loadProducts(filter, dataFilter);
     } else if (!filter) {
-      // sem filtro, busca tudo
       loadProducts();
     }
   }, [filter, dataFilter, loadProducts]);
 
-  // Atualiza termo de busca por nome
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  // Atualiza filtro genérico (price/shipping/productCode)
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value as FilterOption);
     setDataFilter("");
   };
 
-  // Atualiza valor do filtro ean (mas não chama backend)
   const handleEANChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDataFilter(e.target.value);
   };
 
-  // Reset geral
   const resetFilters = () => {
     setFilter("");
     setDataFilter("");
@@ -82,15 +77,12 @@ export default function DashboardPage() {
     loadProducts();
   };
 
-  // Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
   };
 
-  // Filtragem local combinada:
-  // 1) Se for EAN, filtrar productCode por startsWith(dataFilter)
-  // 2) Depois filtrar por nome
+  // Filtragem local combinada
   let productsToDisplay = products;
   if (filter === "productCode" && dataFilter.trim() !== "") {
     productsToDisplay = productsToDisplay.filter((p) =>
@@ -98,8 +90,9 @@ export default function DashboardPage() {
     );
   }
   if (searchTerm.trim() !== "") {
+    const term = searchTerm.trim().toLowerCase();
     productsToDisplay = productsToDisplay.filter((p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+      p.name.toLowerCase().startsWith(term)
     );
   }
 
@@ -114,73 +107,78 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  const renderTable = (title: string, items: Product[]) => (
-    <div key={title} className="mb-8">
-      <h2 className="text-xl font-semibold text-[var(--white)] mb-2">
-        {title}
-      </h2>
-      <div className="bg-[var(--white)] shadow rounded-lg overflow-hidden">
-        <table className="w-full table-auto">
-          <thead className="bg-[var(--secondary-to-third)]">
-            <tr className="border-b border-gray-700">
-              {[
-                "Imagem",
-                "Nome",
-                "Preço",
-                "Frete",
-                "Disponível",
-                "Vendidos",
-                "Vendedor",
-                "Código EAN",
-                "Visitas no Último Mês",
-                "Visualizações",
-              ].map((col) => (
-                <th
-                  key={col}
-                  className="px-4 py-2 text-sm font-medium text-[var(--white)] whitespace-nowrap text-center"
-                >
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-700">
-            {items.map((p) => (
-              <tr key={p.id} className="hover:bg-[var(--secondary-to-third)]">
-                <td className="px-4 py-2 text-center">
-                  <Image
-                    src={p.image}
-                    alt={p.name}
-                    width={48}
-                    height={48}
-                    className="object-cover rounded"
-                  />
-                </td>
-                <td className="px-4 py-2 text-center">{p.name}</td>
-                <td className="px-4 py-2 text-center">
-                  {p.price.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </td>
-                <td className="px-4 py-2 text-center capitalize">
-                  {p.shipping}
-                </td>
-                <td className="px-4 py-2 text-center">{p.amountAvailable}</td>
-                <td className="px-4 py-2 text-center">{p.amountSold}</td>
-                <td className="px-4 py-2 text-center">{p.sellerName}</td>
-                <td className="px-4 py-2 text-center">{p.productCode}</td>
-                <td className="px-4 py-2 text-center">
-                  {p.amountVisitsLastMonth}
-                </td>
-                <td className="px-4 py-2 text-center">{p.amountReviews}</td>
+  // Só renderiza quando existir pelo menos um item
+  const renderTable = (title: string, items: Product[]) => {
+    if (items.length === 0) return null;
+
+    return (
+      <div key={title} className="mb-8">
+        <h2 className="text-xl font-semibold text-[var(--white)] mb-2">
+          {title}
+        </h2>
+        <div className="bg-[var(--white)] shadow rounded-lg overflow-hidden">
+          <table className="w-full table-auto">
+            <thead className="bg-[var(--secondary-to-third)]">
+              <tr className="border-b border-gray-700">
+                {[
+                  "Imagem",
+                  "Nome",
+                  "Preço",
+                  "Frete",
+                  "Disponível",
+                  "Vendidos",
+                  "Vendedor",
+                  "Código EAN",
+                  "Visitas no Último Mês",
+                  "Visualizações",
+                ].map((col) => (
+                  <th
+                    key={col}
+                    className="px-4 py-2 text-sm font-medium text-[var(--white)] whitespace-nowrap text-center"
+                  >
+                    {col}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-700">
+              {items.map((p) => (
+                <tr key={p.id} className="hover:bg-[var(--secondary-to-third)]">
+                  <td className="px-4 py-2 text-center">
+                    <Image
+                      src={p.image}
+                      alt={p.name}
+                      width={48}
+                      height={48}
+                      className="object-cover rounded"
+                    />
+                  </td>
+                  <td className="px-4 py-2 text-center">{p.name}</td>
+                  <td className="px-4 py-2 text-center">
+                    {p.price.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </td>
+                  <td className="px-4 py-2 text-center capitalize">
+                    {p.shipping}
+                  </td>
+                  <td className="px-4 py-2 text-center">{p.amountAvailable}</td>
+                  <td className="px-4 py-2 text-center">{p.amountSold}</td>
+                  <td className="px-4 py-2 text-center">{p.sellerName}</td>
+                  <td className="px-4 py-2 text-center">{p.productCode}</td>
+                  <td className="px-4 py-2 text-center">
+                    {p.amountVisitsLastMonth}
+                  </td>
+                  <td className="px-4 py-2 text-center">{p.amountReviews}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="bg-[var(--black-to-primary)] min-h-screen">
@@ -272,15 +270,17 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Feedback */}
-        {loading && <p className="text-[var(--white)]">Carregando…</p>}
-        {error && <p className="text-red-500 mb-4">❌ {error}</p>}
-        {!loading && !error && productsToDisplay.length === 0 && (
-          <p className="text-[var(--white)]">Nenhum produto encontrado.</p>
-        )}
+        {/* Feedback / Nenhum produto */}
+        {loading ? (
+          <p className="text-[var(--white)]">Carregando…</p>
+        ) : error ? (
+          <p className="text-red-500 mb-4">❌ {error}</p>
+        ) : productsToDisplay.length === 0 ? (
+          <p className="text-[var(--white)] mb-4">Nenhum produto encontrado.</p>
+        ) : null}
 
-        {/* Tabelas */}
-        {!loading && !error && (
+        {/* Tabelas por marketplace */}
+        {!loading && !error && productsToDisplay.length > 0 && (
           <>
             {renderTable("Mercado Livre", mercadoLivre)}
             {renderTable("Amazon", amazon)}
@@ -289,7 +289,7 @@ export default function DashboardPage() {
         )}
       </div>
 
-      <footer className="bg-[var(--background-primary)] text-white w-full px-8 py-8 text-center">
+      <footer className="bg-[var(--dark-black-to-secondary)] text-white w-full px-8 py-8 text-center">
         © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
         reservados.
       </footer>
