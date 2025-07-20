@@ -55,14 +55,18 @@ export default function Home() {
 
         {/* MENU DESKTOP/ TABLET — absolutizado e centralizado */}
         <nav className="hidden sm:block absolute inset-x-0 top-1/2 transform -translate-y-1/2">
-          <ul className="flex justify-center gap-8">
-            {["Sobre", "Depoimentos", "Nossos diferenciais"].map((label) => (
+          <ul className="flex justify-center gap-20">
+            {[
+              { label: "Sobre", href: "/about" },
+              { label: "Depoimentos", href: "/testimonials" },
+              { label: "Nossos diferenciais", href: "/our-advantages" },
+            ].map((item) => (
               <li
-                key={label}
+                key={item.href}
                 className="text-white text-lg cursor-pointer hover:scale-110 transition"
-                onClick={() => router.push(`/${label.toLowerCase()}`)}
+                onClick={() => router.push(item.href)}
               >
-                {label}
+                {item.label}
               </li>
             ))}
           </ul>
@@ -192,34 +196,34 @@ export default function Home() {
             ${isEven ? "md:flex-row-reverse" : ""}
           `}
                 >
-                  {/* Imagem: full no mobile, 1/2 em sm, 2/5 em md+ */}
-                  <div className="w-full sm:w-1/2 md:w-2/5 mx-auto">
+                  {/* Imagem */}
+                  <div className="w-full flex justify-center sm:w-1/2 md:w-2/5 mx-auto">
                     <Image
                       src={`/article${i}.png`}
                       alt={`Artigo ${i}`}
-                      width={400}
-                      height={300}
-                      className="w-full h-auto rounded-xl"
+                      width={300}
+                      height={200}
+                      className="sm:w-1/2 md:w-3/4 lg:w-full h-auto rounded-xl"
                     />
                   </div>
 
-                  {/* Texto: ocupa resto do espaço */}
+                  {/* Texto */}
                   <div className="w-full sm:w-1/2 md:w-3/5 space-y-4 text-justify">
-                    <h4 className="text-[var(--third)] font-medium text-lg sm:text-lg">
+                    <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
                       {i === 1
                         ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
                         : i === 2
                         ? "FIQUE SEMPRE UM PASSO À FRENTE!"
                         : "TOME DECISÕES BASEADAS EM DADOS!"}
                     </h4>
-                    <h2 className="text-[var(--white-to-primary)] font-semibold text-xl sm:text-xl">
+                    <h2 className="text-[var(--white-to-primary)] font-semibold text-lg sm:text-xl">
                       {i === 1 &&
                         "Compare a lucratividade de vários produtos em vários marketplaces com um clique"}
                       {i === 2 &&
                         "Precificação inteligente para dominar o mercado"}
                       {i === 3 && "Dados precisos para impulsionar seu negócio"}
                     </h2>
-                    <p className="text-[var(--third-to-primary)] text-base sm:text-md">
+                    <p className="text-[var(--third-to-primary)] text-base sm:text-base">
                       {i === 1 &&
                         "A Search Price permite que você encontre os preços mais competitivos em diversos marketplaces com apenas alguns cliques. Chega de perder horas navegando em diferentes sites - agora você pode obter as informações que precisa instantaneamente, economizando um tempo valioso que pode ser dedicado a fazer crescer seu negócio."}
                       {i === 2 &&
@@ -287,7 +291,7 @@ export default function Home() {
                     alt="Ícone"
                     width={40}
                     height={40}
-                    className="bg-[var(--dollar-bill-container)] rounded-full p-2"
+                    className="bg-[var(--dollar-bill-container)] rounded-full p-2 "
                   />
                   <p className="ml-3 text-[var(--white-to-primary)] font-medium">
                     {txt}
@@ -296,7 +300,7 @@ export default function Home() {
               ))}
             </div>
             {/* Comparativo */}
-            <div className="w-full lg:w-2/5 sm:mt-0 lg:-mt-6">
+            <div className="w-full lg:w-2/5 sm:mt-0 lg:-mt-7">
               <Grid />
             </div>
           </div>
