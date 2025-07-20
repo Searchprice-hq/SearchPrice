@@ -74,7 +74,7 @@ export default function Home() {
 
         {/* MENU MOBILE — empilha logo+botões acima e esse nav abaixo */}
         <nav className="sm:hidden mt-4">
-          <ul className="flex flex-col items-center gap-2">
+          <ul className="flex flex-col items-center ">
             {["Sobre", "Depoimentos", "Nossos diferenciais"].map((label) => (
               <li
                 key={label}
@@ -115,7 +115,7 @@ export default function Home() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <video
               src="/video.mp4"
-              className="w-full max-w-4xl mx-auto rounded-md mb-8"
+              className="w-full max-w-4xl h-70 mx-auto rounded-md mb-8"
               controls
               loop
             />
