@@ -264,7 +264,7 @@ export default function Home() {
         {/* Section 5: Grid de Recursos e Comparativo */}
         <section className="py-8 bg-[var(--background-secondary)]">
           <div className="container flex justify-center mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
-            <p className="w-10/14 text-2xl mt-2 sm:text-3xl lg:text-4xl font-medium text-[var(--white-to-primary)]">
+            <p className="w-13/14 text-2xl mt-2 sm:text-3xl lg:text-4xl font-medium text-[var(--white-to-primary)]">
               Somos a{" "}
               <span className="text-[var(--third)] font-bold">
                 sua melhor alternativa
