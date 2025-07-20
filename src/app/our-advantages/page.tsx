@@ -114,14 +114,14 @@ export default function OurAdvantagesPage() {
             <h2 className="text-3xl font-bold text-[var(--secondary)] text-center mb-4">
               Como Funciona
             </h2>
-            <p className="text-[var(--white-to-primary)] leading-relaxed mb-4">
+            <p className="text-[var(--white-to-primary)] text-center leading-relaxed mb-4">
               Basta inserir o código do produto ou pesquisar por categoria, e a
               Search Price retorna uma análise completa de preços, estoque,
               vendas e avaliações, tudo em segundos. Com filtros avançados, você
               refina os resultados e exporta relatórios detalhados para tomar
               decisões embasadas.
             </p>
-            <p className="text-[var(--white-to-primary)] leading-relaxed">
+            <p className="text-[var(--white-to-primary)] text-center leading-relaxed">
               Nossa infraestrutura em nuvem garante alta performance e
               escalabilidade, enquanto nosso motor de filtragem avançada lhe
               proporciona a visão mais precisa do mercado.

@@ -97,7 +97,7 @@ export default function AboutPage() {
             <h1 className="text-4xl font-bold text-[var(--third-to-primary)] mb-4">
               Sobre a Search Price
             </h1>
-            <p className="text-[var(--white-to-primary)] leading-relaxed">
+            <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
               Fundada em 2023 por um grupo de empreendedores apaixonados por
               e‑commerce, a Search Price surgiu para resolver o problema de
               coleta manual de dados de preços em diversos marketplaces. Desde
@@ -112,7 +112,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Missão
               </h2>
-              <p className="text-[var(--white-to-primary)] leading-relaxed">
+              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
                 Democratizar o acesso a dados de mercado, permitindo que
                 qualquer lojista ou empreendedor tome decisões estratégicas
                 baseadas em informações reais e atualizadas.
@@ -122,7 +122,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Visão
               </h2>
-              <p className="text-[var(--white-to-primary)] leading-relaxed">
+              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
                 Ser referência na América Latina em inteligência de preços,
                 oferecendo uma plataforma confiável e inovadora para comércio
                 eletrônico.
@@ -132,7 +132,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
                 Valores
               </h2>
-              <p className="text-[var(--white-to-primary)] leading-relaxed">
+              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
                 Transparência, inovação contínua e foco no sucesso dos nossos
                 clientes são os pilares que guiam cada nova funcionalidade da
                 Search Price.

@@ -74,14 +74,18 @@ export default function Home() {
 
         {/* MENU MOBILE — empilha logo+botões acima e esse nav abaixo */}
         <nav className="sm:hidden mt-4">
-          <ul className="flex flex-col items-center ">
-            {["Sobre", "Depoimentos", "Nossos diferenciais"].map((label) => (
+          <ul className="flex flex-col text-center">
+            {[
+              { label: "Nossos diferenciais", href: "/our-advantages" },
+              { label: "Depoimentos", href: "/testimonials" },
+              { label: "Sobre", href: "/about" },
+            ].map((item) => (
               <li
-                key={label}
+                key={item.href}
                 className="text-white text-lg cursor-pointer hover:scale-110 transition py-1"
-                onClick={() => router.push(`/${label.toLowerCase()}`)}
+                onClick={() => router.push(item.href)}
               >
-                {label}
+                {item.label}
               </li>
             ))}
           </ul>
@@ -115,7 +119,7 @@ export default function Home() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <video
               src="/video.mp4"
-              className="w-full max-w-4xl h-70 mx-auto rounded-md mb-8"
+              className="w-full max-w-4xl sm:h-60 md:h-auto mx-auto rounded-md mb-8"
               controls
               loop
             />
