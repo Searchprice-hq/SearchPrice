@@ -1,12 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Depoimentos",
-  description: "O que nossos usuários dizem sobre a Search Price",
-};
 
 interface Testimonial {
   avatar: string;
@@ -95,7 +89,7 @@ export default function TestimonialsPage() {
   return (
     <main className="bg-[var(--black-to-light-blue)] min-h-screen">
       {/* Hero */}
-      <header className="relative bg-[var(--background-primary)] text-white">
+      <header className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
         {/* Home no extremo esquerdo */}
         <Link
           href="/"
@@ -113,8 +107,8 @@ export default function TestimonialsPage() {
         </Link>
 
         {/* Conteúdo centralizado */}
-        <div className="container mx-auto px-6 text-center py-8">
-          <h1 className="text-4xl font-bold mb-2 text-[var(--third-to-white)]">
+        <div className="container mx-auto px-6 text-center py-10">
+          <h1 className="text-4xl font-bold mb-2 text-[var(--white)]">
             Depoimentos
           </h1>
           <p className="max-w-md mx-auto">
@@ -134,16 +128,16 @@ export default function TestimonialsPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[var(--background-primary)] ] text-white py-12">
+      <section className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-12">
         <div className="container mx-auto px-6 text-center space-y-4">
-          <h2 className="text-2xl font-semibold text-[var(--third-to-white)]">
+          <h2 className="text-2xl font-semibold text-[var(--white)]">
             Quer ser nosso próximo caso de sucesso?
           </h2>
           <p>
             Experimente a Search Price grátis por 14 dias e veja a diferença!
           </p>
           <Link
-            href="/signup"
+            href="/register"
             className="mt-4 inline-block px-6 py-3 bg-white text-[var(--primary)] font-semibold rounded-lg hover:scale-105 transition-transform"
           >
             Começar Agora

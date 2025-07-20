@@ -1,12 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Sobre • Search Price",
-  description: "Conheça a história, missão e time da Search Price",
-};
 
 const SOCIALS = [
   {
@@ -59,8 +53,8 @@ function TeamMember({
         height={96}
         className="rounded-full mb-3 object-cover transition-transform hover:scale-110"
       />
-      <h4 className="font-medium text-white">{name}</h4>
-      <p className="text-sm text-white">{role}</p>
+      <h4 className="font-medium text-white text-center">{name}</h4>
+      <p className="text-sm text-white text-center">{role}</p>
     </div>
   );
 }
@@ -69,7 +63,7 @@ export default function AboutPage() {
   return (
     <main className="bg-[var(--black-to-gray-50)] flex flex-col min-h-screen">
       {/* Hero / Apresentação */}
-      <section className="relative bg-[var(--background-primary)] text-white py-16">
+      <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-16">
         <Link
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
@@ -84,7 +78,7 @@ export default function AboutPage() {
         </Link>
 
         <div className="container mx-auto px-6 text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl text-[var(--third-to-white)] font-bold">
+          <h1 className="text-4xl md:text-5xl text-[var(--white)] font-bold">
             Bem-vindo à Search Price
           </h1>
           <p className="max-w-2xl mx-auto text-lg">
@@ -149,11 +143,9 @@ export default function AboutPage() {
       </section>
 
       {/* Time de Fundadores */}
-      <section className="py-16 bg-[var(--background-primary)]">
+      <section className="py-16 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
         <div className="container mx-auto px-6  text-center mb-8">
-          <h2 className="text-3xl text-[var(--third-to-white)] font-bold">
-            Nosso Time
-          </h2>
+          <h2 className="text-3xl text-[var(--white)] font-bold">Nosso Time</h2>
           <p className="text-white max-w-xl mx-auto">
             Um grupo diverso de desenvolvedores, analistas e estrategistas
             dedicados a transformar dados em resultados reais para nossos
@@ -219,7 +211,7 @@ export default function AboutPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[var(--background-primary)] text-white px-8 py-8 mt-auto text-center">
+      <footer className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
           reservados.
