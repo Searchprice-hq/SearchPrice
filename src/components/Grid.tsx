@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
-export function ComparisonGrid() {
+export function Grid() {
   const headers = ["Search Price", "Google", "Chat GPT", "Avantpro"];
 
   const features = Array.from({ length: 5 }, (_, row) =>
@@ -31,9 +31,9 @@ export function ComparisonGrid() {
         const headerClasses = clsx(
           "flex items-center justify-center p-2 rounded-md border-2",
           {
-            "bg-[var(--black-to-primary)] text-white border-[var(--secondary-to-primary)]":
+            "bg-[var(--black-to-primary)] text-sm text-white border-[var(--secondary-to-primary)]":
               isFirst,
-            "bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] border-white":
+            "bg-[var(--black-to-light-blue)] text-sm text-[var(--white-to-primary)] border-white":
               !isFirst,
           }
         );

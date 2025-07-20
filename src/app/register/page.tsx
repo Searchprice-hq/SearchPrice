@@ -62,9 +62,9 @@ export default function Register() {
         <Image
           src="/searchpriceLogo.png"
           alt="logo"
-          className="mb-8 w-1/5 max-w-xs h-auto"
-          width={90}
-          height={90}
+          className="mb-8"
+          width={80}
+          height={80}
         />
         <form onSubmit={onSubmit} className="w-full flex flex-col items-center">
           <div className="w-full max-w-sm flex flex-col gap-6">
