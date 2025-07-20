@@ -48,35 +48,30 @@ export default function DashboardPage() {
     []
   );
 
-  // Ao montar e sempre que filter ou dataFilter mudarem (exceto EAN), recarrega
+  // Atualiza listagem sempre que muda filtro ou dataFilter
   useEffect(() => {
     if (filter && filter !== "productCode") {
       loadProducts(filter, dataFilter);
-    } else if (!filter) {
+    } else {
       loadProducts();
     }
   }, [filter, dataFilter, loadProducts]);
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  // Handlers
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
-  };
-
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value as FilterOption);
     setDataFilter("");
   };
-
-  const handleEANChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleEANChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDataFilter(e.target.value);
-  };
-
   const resetFilters = () => {
     setFilter("");
     setDataFilter("");
     setSearchTerm("");
     loadProducts();
   };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
@@ -107,7 +102,7 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  // Só renderiza quando existir pelo menos um item
+  // Renderiza tabela somente se houver itens
   const renderTable = (title: string, items: Product[]) => {
     if (items.length === 0) return null;
 
@@ -117,64 +112,71 @@ export default function DashboardPage() {
           {title}
         </h2>
         <div className="bg-[var(--white)] shadow rounded-lg overflow-hidden">
-          <table className="w-full table-auto">
-            <thead className="bg-[var(--secondary-to-third)]">
-              <tr className="border-b border-gray-700">
-                {[
-                  "Imagem",
-                  "Nome",
-                  "Preço",
-                  "Frete",
-                  "Disponível",
-                  "Vendidos",
-                  "Vendedor",
-                  "Código EAN",
-                  "Visitas no Último Mês",
-                  "Visualizações",
-                ].map((col) => (
-                  <th
-                    key={col}
-                    className="px-4 py-2 text-sm font-medium text-[var(--white)] whitespace-nowrap text-center"
-                  >
-                    {col}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-700">
-              {items.map((p) => (
-                <tr key={p.id} className="hover:bg-[var(--secondary-to-third)]">
-                  <td className="px-4 py-2 text-center">
-                    <Image
-                      src={p.image}
-                      alt={p.name}
-                      width={48}
-                      height={48}
-                      className="object-cover rounded"
-                    />
-                  </td>
-                  <td className="px-4 py-2 text-center">{p.name}</td>
-                  <td className="px-4 py-2 text-center">
-                    {p.price.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </td>
-                  <td className="px-4 py-2 text-center capitalize">
-                    {p.shipping}
-                  </td>
-                  <td className="px-4 py-2 text-center">{p.amountAvailable}</td>
-                  <td className="px-4 py-2 text-center">{p.amountSold}</td>
-                  <td className="px-4 py-2 text-center">{p.sellerName}</td>
-                  <td className="px-4 py-2 text-center">{p.productCode}</td>
-                  <td className="px-4 py-2 text-center">
-                    {p.amountVisitsLastMonth}
-                  </td>
-                  <td className="px-4 py-2 text-center">{p.amountReviews}</td>
+          <div className="overflow-x-auto">
+            <table className="min-w-max w-full table-auto">
+              <thead className="bg-[var(--secondary-to-third)]">
+                <tr className="border-b border-gray-700">
+                  {[
+                    "Imagem",
+                    "Nome",
+                    "Preço",
+                    "Frete",
+                    "Disponível",
+                    "Vendidos",
+                    "Vendedor",
+                    "Código EAN",
+                    "Visitas no Último Mês",
+                    "Visualizações",
+                  ].map((col) => (
+                    <th
+                      key={col}
+                      className="px-4 py-2 text-sm font-medium text-[var(--white)] whitespace-nowrap text-center"
+                    >
+                      {col}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-700">
+                {items.map((p) => (
+                  <tr
+                    key={p.id}
+                    className="hover:bg-[var(--secondary-to-third)]"
+                  >
+                    <td className="px-4 py-2 text-center">
+                      <Image
+                        src={p.image}
+                        alt={p.name}
+                        width={48}
+                        height={48}
+                        className="object-cover rounded"
+                      />
+                    </td>
+                    <td className="px-4 py-2 text-center">{p.name}</td>
+                    <td className="px-4 py-2 text-center">
+                      {p.price.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </td>
+                    <td className="px-4 py-2 text-center capitalize">
+                      {p.shipping}
+                    </td>
+                    <td className="px-4 py-2 text-center">
+                      {p.amountAvailable}
+                    </td>
+                    <td className="px-4 py-2 text-center">{p.amountSold}</td>
+                    <td className="px-4 py-2 text-center">{p.sellerName}</td>
+                    <td className="px-4 py-2 text-center">{p.productCode}</td>
+                    <td className="px-4 py-2 text-center">
+                      {p.amountVisitsLastMonth}
+                    </td>
+                    <td className="px-4 py-2 text-center">{p.amountReviews}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
@@ -279,7 +281,7 @@ export default function DashboardPage() {
           <p className="text-[var(--white)] mb-4">Nenhum produto encontrado.</p>
         ) : null}
 
-        {/* Tabelas por marketplace */}
+        {/* Tabelas com scroll */}
         {!loading && !error && productsToDisplay.length > 0 && (
           <>
             {renderTable("Mercado Livre", mercadoLivre)}
