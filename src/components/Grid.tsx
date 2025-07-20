@@ -31,9 +31,9 @@ export function Grid() {
         const headerClasses = clsx(
           "flex items-center justify-center p-2 rounded-md border-2",
           {
-            "bg-[var(--black-to-primary)] text-sm text-white border-[var(--secondary-to-primary)]":
+            "bg-[var(--black-to-primary)] text-sm text-center text-white border-[var(--secondary-to-primary)]":
               isFirst,
-            "bg-[var(--black-to-light-blue)] text-sm text-[var(--white-to-primary)] border-white":
+            "bg-[var(--black-to-light-blue)] text-sm text-center text-[var(--white-to-primary)] border-white":
               !isFirst,
           }
         );

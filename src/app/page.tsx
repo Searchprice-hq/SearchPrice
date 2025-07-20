@@ -17,66 +17,93 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* HEADER */}
-      <header
-        className="
-    bg-[var(--background-primary)]
-    px-4 sm:px-6 lg:px-8 py-6
-    flex flex-col sm:flex-row items-center gap-4
-  "
-      >
-        {/* LOGO */}
-        <div className="flex items-center gap-2">
-          <Image src="/searchpriceLogo.png" alt="logo" width={50} height={50} />
-          <h2 className="text-white font-semibold text-xl">Search Price</h2>
+      <header className="relative bg-[var(--background-primary)] px-4 sm:px-6 lg:px-8 py-4">
+        {/* Linha principal: logo à esquerda e botões à direita */}
+        <div className="flex items-center justify-between">
+          {/* LOGO */}
+          <div className="flex items-center gap-2">
+            <Image
+              src="/searchpriceLogo.png"
+              alt="logo"
+              width={50}
+              height={50}
+            />
+            <h2 className="text-white font-semibold text-xl">Search Price</h2>
+          </div>
+
+          {/* BOTÕES */}
+          <div className="flex items-center gap-6">
+            <button
+              onClick={toggleTheme}
+              className="focus:outline-none transition-transform duration-200 hover:scale-110"
+            >
+              <Image
+                src="/halfMoonWhite.png"
+                alt="Alterar tema"
+                width={36}
+                height={36}
+              />
+            </button>
+            <button
+              onClick={() => router.push("/login")}
+              className="focus:outline-none transition-transform duration-200 hover:scale-110"
+            >
+              <Image src="/profile.png" alt="Perfil" width={40} height={40} />
+            </button>
+          </div>
         </div>
 
-        {/* NAV CENTRALIZADO */}
-        <nav className="w-full sm:w-auto sm:mx-auto">
-          <ul className="flex flex-col sm:flex-row items-center gap-2 sm:gap-20 text-center">
-            {[
-              { label: "Sobre", href: "/about" },
-              { label: "Depoimentos", href: "/testimonials" },
-              { label: "Nossos diferenciais", href: "/our-advantages" },
-            ].map((item) => (
+        {/* MENU DESKTOP/ TABLET — absolutizado e centralizado */}
+        <nav className="hidden sm:block absolute inset-x-0 top-1/2 transform -translate-y-1/2">
+          <ul className="flex justify-center gap-8">
+            {["Sobre", "Depoimentos", "Nossos diferenciais"].map((label) => (
               <li
-                key={item.href}
-                className="text-white text-lg cursor-pointer hover:scale-110 transition py-1 [-webkit-tap-highlight-color:transparent] "
-                onClick={() => router.push(item.href)}
+                key={label}
+                className="text-white text-lg cursor-pointer hover:scale-110 transition"
+                onClick={() => router.push(`/${label.toLowerCase()}`)}
               >
-                {item.label}
+                {label}
               </li>
             ))}
           </ul>
         </nav>
 
-        {/* BOTÕES NO CANTO DIREITO */}
-        <div className="flex items-center gap-6">
-          <button
-            onClick={toggleTheme}
-            className="focus:outline-none transition-transform duration-200 hover:scale-110 [-webkit-tap-highlight-color:transparent]"
-          >
-            <Image
-              src="/halfMoonWhite.png"
-              alt="Alterar tema"
-              width={36}
-              height={36}
-            />
-          </button>
-          <button
-            onClick={() => router.push("/login")}
-            className="focus:outline-none transition-transform duration-200 hover:scale-110 [-webkit-tap-highlight-color:transparent]"
-          >
-            <Image src="/profile.png" alt="Perfil" width={40} height={40} />
-          </button>
-        </div>
+        {/* MENU MOBILE — empilha logo+botões acima e esse nav abaixo */}
+        <nav className="sm:hidden mt-4">
+          <ul className="flex flex-col items-center gap-2">
+            {["Sobre", "Depoimentos", "Nossos diferenciais"].map((label) => (
+              <li
+                key={label}
+                className="text-white text-lg cursor-pointer hover:scale-110 transition py-1"
+                onClick={() => router.push(`/${label.toLowerCase()}`)}
+              >
+                {label}
+              </li>
+            ))}
+          </ul>
+        </nav>
       </header>
 
       {/* Main Content*/}
       <main className="flex-1">
         {/* WhatsApp Button */}
-        <button className="fixed bottom-6 right-6 text-base z-50 flex items-center gap-2 bg-[var(--green-100)] text-[var(--white)] font-bold rounded-full w-60 px-4 py-2 transition-transform duration-200 hover:scale-105 [-webkit-tap-highlight-color:transparent]">
-          <Image src="/whatsapp.png" alt="WhatsApp" width={38} height={38} />
-          Conversar com os fundadores
+        <button
+          className="
+    fixed bottom-6 right-6 z-50
+    flex items-center justify-center
+    bg-[var(--green-100)]
+    sm:w-14 sm:h-14
+    rounded-full
+    p-3
+    md:w-58 md:h-16 lg:w-58 lg:h-16 sm:px-4 sm:py-4
+    transition-transform duration-200 hover:scale-105
+    [-webkit-tap-highlight-color:transparent]
+  "
+        >
+          <Image src="/whatsapp.png" alt="WhatsApp" width={30} height={30} />
+          <span className="hidden sm:inline ml-2 text-[var(--white)] font-bold">
+            Conversar com os fundadores
+          </span>
         </button>
 
         {/* Section 1: Vídeo + CTA */}
@@ -213,15 +240,15 @@ export default function Home() {
             <h3 className="text-[var(--white-to-primary)] text-xl sm:text-2xl">
               Comece a economizar tempo hoje
             </h3>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <div className="flex justify-center gap-4">
               <button
-                className="w-full sm:w-auto px-8 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
+                className="w-40 sm:w-auto px-8 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
                 onClick={() => router.push("/register")}
               >
                 Iniciar teste grátis
               </button>
               <button
-                className="w-full sm:w-auto px-4 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
+                className="w-40 sm:w-auto px-4 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
                 onClick={() => router.push("/register")}
               >
                 Conversar com os fundadores
