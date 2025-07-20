@@ -74,11 +74,11 @@ export default function Home() {
 
         {/* MENU MOBILE — empilha logo+botões acima e esse nav abaixo */}
         <nav className="sm:hidden mt-4">
-          <ul className="flex flex-col text-center">
+          <ul className="flex flex-col text-left">
             {[
-              { label: "Nossos diferenciais", href: "/our-advantages" },
-              { label: "Depoimentos", href: "/testimonials" },
-              { label: "Sobre", href: "/about" },
+              { label: "• Nossos diferenciais", href: "/our-advantages" },
+              { label: "• Depoimentos", href: "/testimonials" },
+              { label: "• Sobre", href: "/about" },
             ].map((item) => (
               <li
                 key={item.href}
@@ -119,7 +119,7 @@ export default function Home() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <video
               src="/video.mp4"
-              className="w-full max-w-4xl sm:h-60 md:h-auto mx-auto rounded-md mb-8"
+              className="w-full max-w-4xl sm:h-70 md:h-auto mx-auto rounded-md mb-8"
               controls
               loop
             />
