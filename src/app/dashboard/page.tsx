@@ -20,6 +20,7 @@ const SHIP_OPTIONS = ["Prime", "Normal", "Flex", "Full", "Express"];
 export default function DashboardPage() {
   const router = useRouter();
 
+  // Estados de dados e filtros
   const [products, setProducts] = useState<Product[]>([]);
   const [filter, setFilter] = useState<FilterOption>("");
   const [dataFilter, setDataFilter] = useState("");
@@ -27,16 +28,25 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Carrega produtos do backend (para price e shipping)
+  // Estado para o produto selecionado (modal)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  // Função para carregar produtos
   const loadProducts = useCallback(
     async (filterArg?: FilterOption, dataFilterArg?: string) => {
       setLoading(true);
       setError(null);
+
       try {
-        const list = await fetchProducts(
-          filterArg !== "" ? filterArg : undefined,
-          dataFilterArg && dataFilterArg !== "" ? dataFilterArg : undefined
-        );
+        // Se filterArg for "" ou undefined -> undefined, senão seu valor ("price", "shipping" ou "productCode")
+        const filterQuery = filterArg || undefined;
+        // Se dataFilterArg for vazio ou só espaços -> undefined, senão o próprio valor
+        const codeQuery =
+          dataFilterArg && dataFilterArg.trim() !== ""
+            ? dataFilterArg
+            : undefined;
+
+        const list = await fetchProducts(filterQuery, codeQuery);
         setProducts(Array.isArray(list) ? list : []);
       } catch (err: unknown) {
         setProducts([]);
@@ -48,7 +58,7 @@ export default function DashboardPage() {
     []
   );
 
-  // Atualiza listagem sempre que muda filtro ou dataFilter
+  // Recarrega quando filtro muda
   useEffect(() => {
     if (filter && filter !== "productCode") {
       loadProducts(filter, dataFilter);
@@ -57,7 +67,7 @@ export default function DashboardPage() {
     }
   }, [filter, dataFilter, loadProducts]);
 
-  // Handlers
+  // Handlers de UI
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -77,17 +87,18 @@ export default function DashboardPage() {
     router.push("/");
   };
 
-  // Filtragem local combinada
+  // Filtragem local
   let productsToDisplay = products;
   if (filter === "productCode" && dataFilter.trim() !== "") {
+    const term = dataFilter.trim().toLowerCase();
     productsToDisplay = productsToDisplay.filter((p) =>
-      p.productCode.startsWith(dataFilter)
+      p.productCode.toLowerCase().includes(term)
     );
   }
   if (searchTerm.trim() !== "") {
     const term = searchTerm.trim().toLowerCase();
     productsToDisplay = productsToDisplay.filter((p) =>
-      p.name.toLowerCase().startsWith(term)
+      p.name.toLowerCase().includes(term)
     );
   }
 
@@ -102,10 +113,9 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  // Renderiza tabela somente se houver itens
+  // Função de renderização de tabela
   const renderTable = (title: string, items: Product[]) => {
     if (items.length === 0) return null;
-
     return (
       <div key={title} className="mb-8">
         <h2 className="text-xl font-semibold text-[var(--white)] mb-2">
@@ -141,7 +151,8 @@ export default function DashboardPage() {
                 {items.map((p) => (
                   <tr
                     key={p.id}
-                    className="hover:bg-[var(--secondary-to-third)]"
+                    onClick={() => setSelectedProduct(p)}
+                    className="hover:bg-[var(--secondary-to-third)] cursor-pointer"
                   >
                     <td className="px-4 py-2 text-center">
                       <Image
@@ -272,7 +283,7 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Feedback / Nenhum produto */}
+        {/* Feedback */}
         {loading ? (
           <p className="text-[var(--white)]">Carregando…</p>
         ) : error ? (
@@ -281,7 +292,7 @@ export default function DashboardPage() {
           <p className="text-[var(--white)] mb-4">Nenhum produto encontrado.</p>
         ) : null}
 
-        {/* Tabelas com scroll */}
+        {/* Tabelas */}
         {!loading && !error && productsToDisplay.length > 0 && (
           <>
             {renderTable("Mercado Livre", mercadoLivre)}
@@ -290,6 +301,73 @@ export default function DashboardPage() {
           </>
         )}
       </div>
+
+      {/* Modal de detalhes */}
+      {selectedProduct && (
+        <div
+          onClick={() => setSelectedProduct(null)}
+          className="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-2xl p-6 max-w-lg w-full relative"
+          >
+            <button
+              onClick={() => setSelectedProduct(null)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl"
+            >
+              &times;
+            </button>
+            <div className="flex flex-col items-center gap-4">
+              <Image
+                src={selectedProduct.image}
+                alt={selectedProduct.name}
+                width={120}
+                height={120}
+                className="rounded"
+              />
+              <h3 className="text-2xl text-center font-semibold">
+                {selectedProduct.name}
+              </h3>
+              <p>
+                <span className="font-semibold">Preço:</span>{" "}
+                {selectedProduct.price.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </p>
+              <p>
+                <span className="font-semibold">Frete: </span>
+                {selectedProduct.shipping}
+              </p>
+              <p>
+                <span className="font-semibold">Disponível: </span>
+                {selectedProduct.amountAvailable}
+              </p>
+              <p>
+                <span className="font-semibold">Vendidos: </span>
+                {selectedProduct.amountSold}
+              </p>
+              <p>
+                <span className="font-semibold">Vendedor: </span>
+                {selectedProduct.sellerName}
+              </p>
+              <p>
+                <span className="font-semibold">EAN: </span>
+                {selectedProduct.productCode}
+              </p>
+              <p>
+                <span className="font-semibold">Visitas no mês: </span>
+                {selectedProduct.amountVisitsLastMonth}
+              </p>
+              <p>
+                <span className="font-semibold">Avaliações: </span>
+                {selectedProduct.amountReviews}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className="bg-[var(--dark-black-to-secondary)] text-white w-full px-8 py-8 text-center">
         © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
