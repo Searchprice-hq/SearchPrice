@@ -18,7 +18,7 @@ const SOCIALS = [
   {
     name: "LinkedIn",
     href: "https://linkedin.com/searchprice",
-    icon: "/linkedin.png",
+    icon: "/linkedin-icon.png",
     color: "text-blue-700",
   },
   {
