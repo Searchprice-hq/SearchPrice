@@ -1,4 +1,4 @@
-import ResetPasswordForm from "./ResetPasswordForm";
+import ResetPasswordForm from "@/components/ResetPasswordForm";
 
 type SearchParamsType = {
   email?: string | string[];

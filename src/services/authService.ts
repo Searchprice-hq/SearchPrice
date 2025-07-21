@@ -30,15 +30,45 @@ export async function registerUser(
   password: string,
   document: string
 ): Promise<User> {
-  const res = await fetch(`/api/user/register`, {
+  const res = await fetch("/api/user/register", {
     method: "POST",
     headers: getDefaultHeaders(),
-    body: JSON.stringify({ fullName, email, password, document }),
+    body: JSON.stringify({
+      fullName,
+      email: email.trim(),
+      password,
+      document: document.trim(),
+    }),
   });
 
   if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    throw new Error(err?.message || "Erro ao registrar usuário");
+    const errBody: any = await res.json().catch(() => ({}));
+
+    if (Array.isArray(errBody.errors)) {
+      const uniqueErrors = errBody.errors.filter(
+        (e: any) => e.rule === "database.unique"
+      );
+      const fields = uniqueErrors.map((e: any) => e.field);
+
+      const hasEmail = fields.includes("email");
+      const hasDoc = fields.includes("document");
+
+      if (hasEmail && hasDoc) {
+        throw new Error("E-mail e documento já cadastrados");
+      }
+      if (hasEmail) {
+        throw new Error("E-mail já cadastrado");
+      }
+      if (hasDoc) {
+        throw new Error("Documento já cadastrado");
+      }
+
+      if (errBody.errors.length > 0) {
+        throw new Error(errBody.errors[0].message);
+      }
+    }
+
+    throw new Error(errBody.message || "Erro ao registrar usuário");
   }
 
   return res.json();
