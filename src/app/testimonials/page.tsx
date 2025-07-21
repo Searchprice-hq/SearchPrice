@@ -80,7 +80,9 @@ function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
           </div>
         </div>
       </div>
-      <p className="text-[var(--white-to-primary)] flex-1">“{quote}”</p>
+      <p className="text-[var(--white-to-primary)] text-justify flex-1">
+        “{quote}”
+      </p>
     </div>
   );
 }
@@ -108,7 +110,7 @@ export default function TestimonialsPage() {
 
         {/* Conteúdo centralizado */}
         <div className="container mx-auto px-6 text-center py-10">
-          <h1 className="text-4xl font-bold mb-2 text-[var(--white)]">
+          <h1 className="text-4xl font-bold mb-2 mt-6 sm:mt-0 text-[var(--white)]">
             Depoimentos
           </h1>
           <p className="max-w-md mx-auto">

@@ -90,8 +90,8 @@ export default function ResetPasswordForm({
             disabled={!isFormValid || loading}
             className={`w-full h-12 mt-2 text-white rounded-xl transition ${
               isFormValid && !loading
-                ? "bg-[var(--primary)] hover:bg-[var(--secondary)]"
-                : "bg-[var(--primary)] opacity-50 cursor-not-allowed"
+                ? "bg-[var(--green-400)] hover:bg-[var(--green-200)]"
+                : "bg-[var(--green-400)] opacity-50 cursor-not-allowed"
             }`}
           >
             {loading ? "Redefinindo..." : "Redefinir Senha"}

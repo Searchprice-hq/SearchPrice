@@ -68,7 +68,7 @@ export default function AboutPage() {
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
-          <Image src="/leftPointer.png" alt="Home" width={40} height={40} />
+          <Image src="/left-pointer.png" alt="Home" width={40} height={40} />
         </Link>
         <Link
           href="/login"
@@ -81,7 +81,7 @@ export default function AboutPage() {
           <h1 className="text-4xl md:text-5xl text-[var(--white)] font-bold">
             Bem-vindo à Search Price
           </h1>
-          <p className="max-w-2xl mx-auto text-lg">
+          <p className="max-w-2xl mx-auto text-lg text-center">
             Nossa missão é simplificar a busca e análise de preços em múltiplos
             marketplaces, entregando dados precisos e insights valiosos em tempo
             real.
@@ -143,9 +143,11 @@ export default function AboutPage() {
       </section>
 
       {/* Time de Fundadores */}
-      <section className="py-16 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
-        <div className="container mx-auto px-6  text-center mb-8">
-          <h2 className="text-3xl text-[var(--white)] font-bold">Nosso Time</h2>
+      <section className="py-8 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
+        <div className="container mx-auto px-6  text-center mb-6">
+          <h2 className="text-3xl text-[var(--white)] font-bold py-4">
+            Nosso Time
+          </h2>
           <p className="text-white max-w-xl mx-auto">
             Um grupo diverso de desenvolvedores, analistas e estrategistas
             dedicados a transformar dados em resultados reais para nossos
@@ -156,27 +158,27 @@ export default function AboutPage() {
           <TeamMember
             name="Gerson Boing Carvalho"
             role="CEO & Cofundador"
-            avatar="/man4.png"
+            avatar="/gerson-boing.png"
           />
           <TeamMember
             name="Priscilla Barbosa Moni"
             role="CTO & Cofundadora"
-            avatar="/woman1.png"
+            avatar="/priscilla-barbosa.png"
           />
           <TeamMember
             name="Rogerio Rodrigues da Silva"
             role="Cloud System Administrator"
-            avatar="/man1.png"
+            avatar="/rogerio-silva.png"
           />
           <TeamMember
             name="Patrick Meirelles"
             role="Backend Developer"
-            avatar="/man3.png"
+            avatar="/patrick-meirelles.png"
           />
           <TeamMember
             name="Victor Augusto Barbosa Moni"
             role="Frontend Developer"
-            avatar="/man2.png"
+            avatar="/victor-moni.png"
           />
         </div>
       </section>

@@ -23,7 +23,7 @@ export default function Home() {
           {/* LOGO */}
           <div className="flex items-center gap-2">
             <Image
-              src="/searchpriceLogo.png"
+              src="/searchprice-logo.png"
               alt="logo"
               width={50}
               height={50}
@@ -38,7 +38,7 @@ export default function Home() {
               className="focus:outline-none transition-transform duration-200 hover:scale-110"
             >
               <Image
-                src="/halfMoonWhite.png"
+                src="/half-moon.png"
                 alt="Alterar tema"
                 width={36}
                 height={36}
@@ -139,7 +139,7 @@ export default function Home() {
         <section className="bg-[var(--background-primary)] py-10">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <Image
-              src="/marketplacesTable.png"
+              src="/marketplaces-table.png"
               alt="Comparativo Marketplaces"
               width={800}
               height={700}
@@ -148,7 +148,7 @@ export default function Home() {
             <div className="flex justify-center mt-8">
               <div className="flex justify-between items-center w-[20rem] sm:w-[27rem]">
                 <Image
-                  src="/magnifyingGlass.png"
+                  src="/magnifying-glass.png"
                   alt="Lupa"
                   width={56}
                   height={56}
@@ -276,9 +276,9 @@ export default function Home() {
               de economizar seu tempo com busca de produtos que faturam
             </p>
           </div>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-6 flex flex-col lg:flex-row justify-center items-start">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-6 flex flex-col lg:flex-row justify-center items-center">
             {/* Tópicos */}
-            <div className="grid grid-rows-5 gap-2 lg:mt-18 w-full lg:w-1/4">
+            <div className="grid grid-rows-5 gap-2 w-full lg:mt-16  justify-center lg:w-2/5 xl:w-1/3">
               {[
                 "Análise de mercado em tempo real",
                 "Calculadora de lucro integrada",
@@ -291,7 +291,7 @@ export default function Home() {
                   className="flex items-center bg-[var(--background-secondary)] p-2 rounded-lg"
                 >
                   <Image
-                    src="/dollarBill.png"
+                    src="/dollar-bill.png"
                     alt="Ícone"
                     width={40}
                     height={40}
@@ -304,7 +304,7 @@ export default function Home() {
               ))}
             </div>
             {/* Comparativo */}
-            <div className="w-full lg:w-2/5 sm:mt-0 lg:-mt-7">
+            <div className="sm:mt-0 lg:-mt-10 sm:w-3/4 sm:justify-center lg:w-2/5 xl:w-1/3">
               <Grid />
             </div>
           </div>

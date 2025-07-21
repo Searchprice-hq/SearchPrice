@@ -45,7 +45,7 @@ export default function OurAdvantagesPage() {
           href="/"
           className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
-          <Image src="/leftPointer.png" alt="Home" width={40} height={40} />
+          <Image src="/left-pointer.png" alt="Home" width={40} height={40} />
         </Link>
 
         {/* Botão Login no canto superior direito */}
@@ -59,7 +59,7 @@ export default function OurAdvantagesPage() {
         {/* Conteúdo do Hero centralizado com padding top reduzido e largura maior */}
         <div className="container mx-auto px-6 flex items-center justify-center pt-12 pb-14">
           <div className="text-center max-w-6xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="mt-4 sm:mt-4 md:mt-0 text-4xl md:text-5xl font-bold mb-4">
               Estratégia de preços com inteligência de mercado
             </h1>
             <p className="max-w-2xl mx-auto text-lg leading-relaxed">
@@ -114,14 +114,14 @@ export default function OurAdvantagesPage() {
             <h2 className="text-3xl font-bold text-[var(--secondary)] text-center mb-4">
               Como Funciona
             </h2>
-            <p className="text-[var(--white-to-primary)] text-center leading-relaxed mb-4">
+            <p className="text-[var(--white-to-primary)] text-justify text-center leading-relaxed mb-4">
               Basta inserir o código do produto ou pesquisar por categoria, e a
               Search Price retorna uma análise completa de preços, estoque,
               vendas e avaliações, tudo em segundos. Com filtros avançados, você
               refina os resultados e exporta relatórios detalhados para tomar
               decisões embasadas.
             </p>
-            <p className="text-[var(--white-to-primary)] text-center leading-relaxed">
+            <p className="text-[var(--white-to-primary)] text-justify text-center leading-relaxed">
               Nossa infraestrutura em nuvem garante alta performance e
               escalabilidade, enquanto nosso motor de filtragem avançada lhe
               proporciona a visão mais precisa do mercado.

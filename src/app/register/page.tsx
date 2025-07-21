@@ -60,7 +60,7 @@ export default function Register() {
     <div className="flex justify-center items-center min-h-screen p-4 bg-[var(--black-to-primary)]">
       <div className="bg-[var(--background-container)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary)]">
         <Image
-          src="/searchpriceLogo.png"
+          src="/searchprice-logo.png"
           alt="logo"
           className="mb-8"
           width={80}
