@@ -9,7 +9,7 @@ export function Grid() {
       const cellClasses = clsx(
         "flex items-center justify-center rounded-md text-base border-2",
         {
-          "bg-[var(--light-black-to-gray)] text-white border-[var(--secondary-to-gray)]":
+          "bg-[var(--black-to-gray-100)] text-white border-[var(--secondary-to-gray)]":
             symbol === "✅",
           "bg-[var(--black-to-light-gray)] border-white": symbol !== "✅",
         }
@@ -25,7 +25,6 @@ export function Grid() {
 
   return (
     <div className="grid grid-rows-6 grid-cols-4 gap-4 mt-12 h-[22rem]">
-      {/* Cabeçalho */}
       {headers.map((label, idx) => {
         const isFirst = idx === 0;
         const headerClasses = clsx(
@@ -44,8 +43,6 @@ export function Grid() {
           </div>
         );
       })}
-
-      {/* Linhas de checks/crosses */}
       {features}
     </div>
   );

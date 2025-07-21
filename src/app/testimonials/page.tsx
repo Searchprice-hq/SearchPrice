@@ -70,7 +70,6 @@ function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
             {name}
           </h3>
           <p className="text-sm text-[var(--white-to-primary)]">{role}</p>
-          {/* cinco estrelas em unicode */}
           <div className="flex items-center mt-1 space-x-1">
             {[...Array(5)].map((_, i) => (
               <span key={i} className="text-yellow-400 text-sm">
@@ -90,17 +89,13 @@ function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
 export default function TestimonialsPage() {
   return (
     <main className="bg-[var(--black-to-light-blue)] min-h-screen">
-      {/* Hero */}
       <header className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
-        {/* Home no extremo esquerdo */}
         <Link
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transform hover:scale-110"
         >
           <Image src="/left-pointer.png" alt="Home" width={42} height={42} />
         </Link>
-
-        {/* Login no extremo direito */}
         <Link
           href="/login"
           className="absolute top-4 right-4 hover:opacity-90 transition-opacity transform hover:scale-110"
@@ -108,7 +103,6 @@ export default function TestimonialsPage() {
           <Image src="/profile.png" alt="Login" width={42} height={42} />
         </Link>
 
-        {/* Conteúdo centralizado */}
         <div className="container mx-auto px-6 text-center py-10">
           <h1 className="text-4xl font-bold mb-2 mt-6 sm:mt-0 text-[var(--white)]">
             Depoimentos
@@ -120,7 +114,6 @@ export default function TestimonialsPage() {
         </div>
       </header>
 
-      {/* Grid de depoimentos */}
       <section className="container mx-auto px-6 py-16">
         <div className="grid gap-8 md:grid-cols-3">
           {TESTIMONIALS.map((t) => (
@@ -129,7 +122,6 @@ export default function TestimonialsPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-12">
         <div className="container mx-auto px-6 text-center space-y-4">
           <h2 className="text-2xl font-semibold text-[var(--white)]">
@@ -146,7 +138,7 @@ export default function TestimonialsPage() {
           </Link>
         </div>
       </section>
-      {/* Footer */}
+
       <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base text-[var(--white-to-primary)]">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos

@@ -10,10 +10,6 @@ function getHeaders() {
   };
 }
 
-/**
- * Busca produtos. Se não passar `filter`, retorna todos.
- * Já desembrulha eventuais wrappers { status, data }.
- */
 export async function fetchProducts(
   filter?: "price" | "marketplace" | "shipping" | "productCode",
   dataFilter?: string
@@ -34,10 +30,7 @@ export async function fetchProducts(
   }
 
   const payload = await res.json();
-  // Se já for array, retorna direto
   if (Array.isArray(payload)) return payload;
-  // Se vir embrulhado em { data: [...] }
   if (payload.data && Array.isArray(payload.data)) return payload.data;
-  // Senão
   throw new Error("Formato de resposta inesperado");
 }

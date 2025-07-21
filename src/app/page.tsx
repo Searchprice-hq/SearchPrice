@@ -16,11 +16,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* HEADER */}
-      <header className="relative bg-[var(--background-primary)] px-4 sm:px-6 lg:px-8 py-4">
-        {/* Linha principal: logo à esquerda e botões à direita */}
+      <header className="relative bg-[var(--dark-black-to-primary)] px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
-          {/* LOGO */}
           <div className="flex items-center gap-2">
             <Image
               src="/searchprice-logo.png"
@@ -30,8 +27,6 @@ export default function Home() {
             />
             <h2 className="text-white font-semibold text-xl">Search Price</h2>
           </div>
-
-          {/* BOTÕES */}
           <div className="flex items-center gap-6">
             <button
               onClick={toggleTheme}
@@ -53,7 +48,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* MENU DESKTOP/ TABLET — absolutizado e centralizado */}
         <nav className="hidden lg:block absolute inset-x-0 top-1/2 transform -translate-y-1/2">
           <ul className="flex justify-center gap-20">
             {[
@@ -72,7 +66,6 @@ export default function Home() {
           </ul>
         </nav>
 
-        {/* MENU MOBILE — empilha logo+botões acima e esse nav abaixo */}
         <nav className="lg:hidden mt-4">
           <ul className="flex flex-col text-left">
             {[
@@ -92,29 +85,14 @@ export default function Home() {
         </nav>
       </header>
 
-      {/* Main Content*/}
       <main className="flex-1">
-        {/* WhatsApp Button */}
-        <button
-          className="
-    fixed bottom-6 right-6 z-50
-    flex items-center justify-center
-    bg-[var(--green-100)]
-    sm:w-14 sm:h-14
-    rounded-full
-    p-3
-    md:w-58 md:h-16 lg:w-58 lg:h-16 sm:px-4 sm:py-4
-    transition-transform duration-200 hover:scale-105
-    [-webkit-tap-highlight-color:transparent]
-  "
-        >
+        <button className="fixed bottom-6 right-6 z-50 flex items-center justify-center bg-[var(--green-100)] sm:w-14 sm:h-14 rounded-full p-3 md:w-58 md:h-16 lg:w-58 lg:h-16 sm:px-4 sm:py-4 transition-transform duration-200 hover:scale-105">
           <Image src="/whatsapp.png" alt="WhatsApp" width={30} height={30} />
           <span className="hidden sm:inline ml-2 text-[var(--white)] font-bold">
             Conversar com os fundadores
           </span>
         </button>
 
-        {/* Section 1: Vídeo + CTA */}
         <section className="bg-[var(--background-secondary)] py-10 sm:py-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <video
@@ -135,8 +113,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 2: Tabela de Marketplaces */}
-        <section className="bg-[var(--background-primary)] py-10">
+        <section className="bg-[var(--dark-black-to-primary)] py-10">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <Image
               src="/marketplaces-table.png"
@@ -170,7 +147,6 @@ export default function Home() {
                 />
               </div>
             </div>
-
             <div className="flex justify-center mt-2">
               <div className="flex justify-between w-[22rem] sm:w-[31rem] text-center">
                 <p className="w-[6rem] sm:w-[8rem] text-[var(--third-to-fourth)] text-base sm:text-xl">
@@ -187,7 +163,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 3: Artigos */}
         <section className="py-8 bg-[var(--background-secondary)]">
           <div className="mx-auto px-4 sm:px-6 lg:px-8 space-y-6 max-w-3xl">
             {[1, 2, 3].map((i) => {
@@ -242,7 +217,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 4: Chamada Cinza */}
         <section className="bg-[var(--black-to-gray)] py-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
             <h3 className="text-[var(--white-to-primary)] text-xl sm:text-2xl">
@@ -265,7 +239,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 5: Grid de Recursos e Comparativo */}
         <section className="py-8 bg-[var(--background-secondary)]">
           <div className="container flex justify-center mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
             <p className="w-13/14 text-2xl mt-2 sm:text-3xl lg:text-4xl font-medium text-[var(--white-to-primary)]">
@@ -277,7 +250,6 @@ export default function Home() {
             </p>
           </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-6 flex flex-col lg:flex-row justify-center items-center">
-            {/* Tópicos */}
             <div className="grid grid-rows-5 gap-2 w-full lg:mt-16  justify-center lg:w-2/5 xl:w-1/3">
               {[
                 "Análise de mercado em tempo real",
@@ -303,15 +275,13 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            {/* Comparativo */}
             <div className="sm:mt-0 lg:-mt-10 sm:w-3/4 sm:justify-center lg:w-2/5 xl:w-1/3">
               <Grid />
             </div>
           </div>
         </section>
 
-        {/* Section 6: Convite Membro */}
-        <section className="bg-[var(--background-primary)] flex flex-col items-center text-center py-12">
+        <section className="bg-[var(--dark-black-to-primary)] flex flex-col items-center text-center py-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
               Seja um membro fundador da Search Price
@@ -329,7 +299,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 7: FAQs */}
         <section className="bg-[var(--background-secondary)] py-4">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-semibold text-[var(--white-to-primary)] mb-6">
@@ -389,7 +358,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 8: Contato */}
         <section className="bg-[var(--background-secondary)] flex flex-col items-center justify-center py-8 pb-14">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--white-to-primary)] mb-4">
@@ -405,8 +373,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* FOOTER */}
-      <footer className="bg-[var(--background-primary)] text-white py-8">
+      <footer className="bg-[var(--dark-black-to-primary)] text-white py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
           <p className="text-base">
             © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os

@@ -6,16 +6,16 @@ export interface User {
   phone: string;
   groupId: number;
   role: string;
-  createdAt: string; // ISO 8601
-  updatedAt: string | null; // ISO 8601 ou null
+  createdAt: string;
+  updatedAt: string | null;
 }
 
 export interface LoginResponse {
   token: {
-    token: string; // string de autenticação
-    name: string; // nome da token (geralmente email)
-    type: string; // tipo de token (e.g. "bearer")
-    expiresAt: string; // ISO 8601
+    token: string;
+    name: string;
+    type: string;
+    expiresAt: string;
   };
   id: number;
   fullName: string | null;

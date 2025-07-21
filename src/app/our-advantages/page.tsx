@@ -38,17 +38,13 @@ function StatCard({ value, label }: { value: string | number; label: string }) {
 export default function OurAdvantagesPage() {
   return (
     <main className="bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] min-h-screen">
-      {/* Hero: botões fixos nos cantos */}
       <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
-        {/* Botão Home no canto superior esquerdo */}
         <Link
           href="/"
           className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
           <Image src="/left-pointer.png" alt="Home" width={40} height={40} />
         </Link>
-
-        {/* Botão Login no canto superior direito */}
         <Link
           href="/login"
           className="absolute top-4 right-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
@@ -56,7 +52,6 @@ export default function OurAdvantagesPage() {
           <Image src="/profile.png" alt="Login" width={40} height={40} />
         </Link>
 
-        {/* Conteúdo do Hero centralizado com padding top reduzido e largura maior */}
         <div className="container mx-auto px-6 flex items-center justify-center pt-12 pb-14">
           <div className="text-center max-w-6xl mx-auto">
             <h1 className="mt-4 sm:mt-4 md:mt-0 text-4xl md:text-5xl font-bold mb-4">
@@ -72,7 +67,6 @@ export default function OurAdvantagesPage() {
         </div>
       </section>
 
-      {/* 2. Cinco grandes pilares */}
       <section className="py-16">
         <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           <InfoCard icon="🔍" title="Busca Unificada">
@@ -98,8 +92,7 @@ export default function OurAdvantagesPage() {
         </div>
       </section>
 
-      {/* 3. Estatísticas rápidas */}
-      <section className="py-16 bg-[var(--background-primary)] text-white">
+      <section className="py-16 bg-[var(--dark-black-to-primary)] text-white">
         <div className="container mx-auto px-6 grid gap-6 md:grid-cols-3">
           <StatCard value="10K+" label="Consultas realizadas" />
           <StatCard value="3" label="Marketplaces suportados" />
@@ -107,7 +100,6 @@ export default function OurAdvantagesPage() {
         </div>
       </section>
 
-      {/* 4. Como Funciona em Card */}
       <section className="py-16">
         <div className="container mx-auto px-6 flex justify-center">
           <div className="bg-[var(--background-container)] rounded-lg shadow-lg p-8 max-w-3xl w-full transform transition-transform hover:scale-105">
@@ -130,8 +122,7 @@ export default function OurAdvantagesPage() {
         </div>
       </section>
 
-      {/* 5. FAQ resumido */}
-      <section className="py-16 bg-[var(--background-primary)] text-[var(--third)]">
+      <section className="py-16 bg-[var(--dark-black-to-primary)] text-[var(--third)]">
         <div className="container mx-auto px-6 max-w-2xl">
           <h2 className="text-3xl font-bold text-center mb-6">
             Perguntas Frequentes
@@ -167,7 +158,7 @@ export default function OurAdvantagesPage() {
           </ul>
         </div>
       </section>
-      {/* Footer */}
+
       <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base text-[var(--white-to-primary)]">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos

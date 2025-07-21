@@ -1,4 +1,3 @@
-// src/hooks/useRegister.ts
 "use client";
 
 import { useState } from "react";
@@ -31,7 +30,6 @@ export const useRegister = () => {
     password === confirmPassword && confirmPassword.length > 0;
 
   const validateDocument = (value: string) => {
-    // apenas números, length 11 (CPF) ou 14 (CNPJ)
     return /^(\d{11}|\d{14})$/.test(value);
   };
 

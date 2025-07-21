@@ -62,7 +62,6 @@ function TeamMember({
 export default function AboutPage() {
   return (
     <main className="bg-[var(--black-to-gray-50)] flex flex-col min-h-screen">
-      {/* Hero / Apresentação */}
       <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-16">
         <Link
           href="/"
@@ -89,10 +88,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* História, Missão, Visão e Valores em duas colunas */}
       <section className="py-16 bg-[var(--background-secondary)]">
         <div className="container mx-auto px-6 grid gap-12 md:grid-cols-2">
-          {/* Coluna 1: Sobre */}
           <div>
             <h1 className="text-4xl font-bold text-[var(--third-to-primary)] mb-4">
               Sobre a Search Price
@@ -106,7 +103,7 @@ export default function AboutPage() {
               ajudando milhares de lojistas a otimizar suas estratégias.
             </p>
           </div>
-          {/* Coluna 2: Missão, Visão e Valores */}
+
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
@@ -142,7 +139,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Time de Fundadores */}
       <section className="py-8 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
         <div className="container mx-auto px-6  text-center mb-6">
           <h2 className="text-3xl text-[var(--white)] font-bold py-4">
@@ -183,7 +179,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Redes Sociais */}
       <section className="container mx-auto px-6 py-16">
         <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] text-center mb-8">
           Conecte-se Conosco
@@ -212,7 +207,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white px-8 py-8 mt-auto text-center">
         <p className="text-base">
           © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos

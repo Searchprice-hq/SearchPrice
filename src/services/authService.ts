@@ -19,11 +19,8 @@ export async function loginUser(
 
   const body = await res.json();
   if (!res.ok) {
-    // body pode ter message ou errors
     throw new Error(body.message || "Erro ao efetuar login");
   }
-
-  // descompacta o data do helper
   return body.data as LoginResponse;
 }
 

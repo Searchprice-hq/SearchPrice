@@ -20,7 +20,6 @@ const SHIP_OPTIONS = ["Prime", "Normal", "Flex", "Full", "Express"];
 export default function DashboardPage() {
   const router = useRouter();
 
-  // estados de dados e filtros
   const [products, setProducts] = useState<Product[]>([]);
   const [filter, setFilter] = useState<FilterOption>("");
   const [dataFilter, setDataFilter] = useState("");
@@ -28,10 +27,8 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // estado para o produto selecionado (modal)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // bloquear/desbloquear scroll do body quando o modal abre/fecha
   useEffect(() => {
     if (selectedProduct) {
       document.body.style.overflow = "hidden";
@@ -40,7 +37,6 @@ export default function DashboardPage() {
     }
   }, [selectedProduct]);
 
-  // função para carregar produtos
   const loadProducts = useCallback(
     async (filterArg?: FilterOption, dataFilterArg?: string) => {
       setLoading(true);
@@ -65,7 +61,6 @@ export default function DashboardPage() {
     []
   );
 
-  // recarrega quando filtro muda
   useEffect(() => {
     if (filter && filter !== "productCode") {
       loadProducts(filter, dataFilter);
@@ -74,7 +69,6 @@ export default function DashboardPage() {
     }
   }, [filter, dataFilter, loadProducts]);
 
-  // handlers de UI
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -94,7 +88,6 @@ export default function DashboardPage() {
     router.push("/");
   };
 
-  // filtragem local
   let productsToDisplay = products;
   if (filter === "productCode" && dataFilter.trim() !== "") {
     const term = dataFilter.trim().toLowerCase();
@@ -109,7 +102,6 @@ export default function DashboardPage() {
     );
   }
 
-  // separação por marketplace
   const mercadoLivre = productsToDisplay.filter((p) =>
     p.marketplace.toLowerCase().includes("mercado")
   );
@@ -120,7 +112,6 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  // renderização de cada tabela
   const renderTable = (title: string, items: Product[]) => {
     if (items.length === 0) return null;
     return (
@@ -203,7 +194,6 @@ export default function DashboardPage() {
   return (
     <div className="bg-[var(--black-to-primary)] min-h-screen">
       <div className="p-8">
-        {/* header */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-[var(--white)]">
             Dashboard de Produtos
@@ -216,7 +206,6 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* busca */}
         <div className="mb-4">
           <input
             type="text"
@@ -227,7 +216,6 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* filtros */}
         <div className="flex flex-wrap gap-4 mb-6 items-end">
           <div>
             <label className="block mb-1 text-sm text-[var(--white)]">
@@ -290,7 +278,6 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* feedback */}
         {loading ? (
           <p className="text-[var(--white)]">Carregando…</p>
         ) : error ? (
@@ -299,7 +286,6 @@ export default function DashboardPage() {
           <p className="text-[var(--white)] mb-4">Nenhum produto encontrado.</p>
         ) : null}
 
-        {/* tabelas */}
         {!loading && !error && productsToDisplay.length > 0 && (
           <>
             {renderTable("Mercado Livre", mercadoLivre)}
@@ -309,7 +295,6 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* modal de detalhes */}
       {selectedProduct && (
         <div
           onClick={() => setSelectedProduct(null)}

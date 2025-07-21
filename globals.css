@@ -11,19 +11,19 @@
   --background-input: #262626;
   --background-container: #202020;
   --background-secondary: #1a1a1a;
-  --background-primary: #111111;
 
+  --dark-black-to-primary: #111111;
   --dark-black-to-secondary: #111111;
 
-  --black-to-white: #202020;
   --black-to-gray: #111111;
+  --black-to-gray-50: #1a1a1a;
+  --black-to-gray-100: #1a1a1a;
+  --black-to-light-gray: #1a1a1a;
 
   --black-to-primary: #1a1a1a;
   --black-to-secondary: #1a1a1a;
   --black-to-light-blue: #1a1a1a;
-  --light-black-to-gray: #1a1a1a;
-  --black-to-light-gray: #1a1a1a;
-  --black-to-gray-50: #1a1a1a;
+  --black-to-white: #202020;
 
   --primary-to-secondary: #144750;
   --primary-to-white: #144750;
@@ -71,17 +71,18 @@
   --background-input: #f8f8f8;
   --background-container: #f8f8f8;
   --background-secondary: #f8f8f8;
-  --background-primary: #144750;
 
+  --dark-black-to-primary: #144750;
   --dark-black-to-secondary: #299c9c;
+
+  --black-to-gray: #d1ddde;
+  --black-to-gray-50: #f9fafb;
+  --black-to-gray-100: #d1ddde;
+  --black-to-light-gray: #f0f0f0;
 
   --black-to-primary: #144750;
   --black-to-secondary: #299c9c;
   --black-to-light-blue: #dcf5f3;
-  --black-to-light-gray: #f0f0f0;
-  --black-to-gray-50: #f9fafb;
-  --black-to-gray: #d1ddde;
-  --light-black-to-gray: #d1ddde;
   --black-to-white: #f8f8f8;
 
   --primary-to-white: #f8f8f8;
