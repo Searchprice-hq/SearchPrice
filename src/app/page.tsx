@@ -187,7 +187,7 @@ export default function Home() {
                   </div>
 
                   {/* Texto */}
-                  <div className="sm:w-3/4 w-3/4 space-y-4 text-justify">
+                  <div className="w-7/8 sm:w-2/3 space-y-4 text-justify">
                     <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
                       {i === 1
                         ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
