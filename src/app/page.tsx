@@ -54,7 +54,7 @@ export default function Home() {
         </div>
 
         {/* MENU DESKTOP/ TABLET — absolutizado e centralizado */}
-        <nav className="hidden sm:block absolute inset-x-0 top-1/2 transform -translate-y-1/2">
+        <nav className="hidden lg:block absolute inset-x-0 top-1/2 transform -translate-y-1/2">
           <ul className="flex justify-center gap-20">
             {[
               { label: "Sobre", href: "/about" },
@@ -73,7 +73,7 @@ export default function Home() {
         </nav>
 
         {/* MENU MOBILE — empilha logo+botões acima e esse nav abaixo */}
-        <nav className="sm:hidden mt-4">
+        <nav className="lg:hidden mt-4">
           <ul className="flex flex-col text-left">
             {[
               { label: "• Nossos diferenciais", href: "/our-advantages" },
@@ -115,11 +115,11 @@ export default function Home() {
         </button>
 
         {/* Section 1: Vídeo + CTA */}
-        <section className="bg-[var(--background-secondary)] py-12">
+        <section className="bg-[var(--background-secondary)] py-10 sm:py-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <video
               src="/video.mp4"
-              className="w-full max-w-4xl sm:h-70 md:h-auto mx-auto rounded-md mb-8"
+              className="w-full max-w-4xl h-auto mx-auto rounded-md mb-8"
               controls
               loop
             />
@@ -142,8 +142,8 @@ export default function Home() {
               src="/marketplacesTable.png"
               alt="Comparativo Marketplaces"
               width={800}
-              height={600}
-              className="block mx-auto rounded-md shadow-lg mb-6"
+              height={700}
+              className="block mx-auto h-auto rounded-md shadow-lg mb-6"
             />
             <div className="flex justify-center mt-8">
               <div className="flex justify-between items-center w-[20rem] sm:w-[27rem]">
@@ -207,12 +207,12 @@ export default function Home() {
                       alt={`Artigo ${i}`}
                       width={300}
                       height={200}
-                      className="sm:w-1/2 md:w-3/4 lg:w-full h-auto rounded-xl"
+                      className="w-3/6 sm:w-1/2 sm:w-full h-auto rounded-xl"
                     />
                   </div>
 
                   {/* Texto */}
-                  <div className="w-full sm:w-1/2 md:w-3/5 space-y-4 text-justify">
+                  <div className="lg:w-full w-1/2 space-y-4 text-justify">
                     <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
                       {i === 1
                         ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
