@@ -207,12 +207,12 @@ export default function Home() {
                       alt={`Artigo ${i}`}
                       width={300}
                       height={200}
-                      className="w-3/6 sm:w-1/2 sm:w-full h-auto rounded-xl"
+                      className="w-3/4 sm:w-full h-auto rounded-xl"
                     />
                   </div>
 
                   {/* Texto */}
-                  <div className="lg:w-full w-1/2 space-y-4 text-justify">
+                  <div className="sm:w-1/2 w-3/4 space-y-4 text-justify">
                     <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
                       {i === 1
                         ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"

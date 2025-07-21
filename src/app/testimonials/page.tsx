@@ -97,7 +97,7 @@ export default function TestimonialsPage() {
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transform hover:scale-110"
         >
-          <Image src="/leftPointer.png" alt="Home" width={42} height={42} />
+          <Image src="/left-pointer.png" alt="Home" width={42} height={42} />
         </Link>
 
         {/* Login no extremo direito */}
