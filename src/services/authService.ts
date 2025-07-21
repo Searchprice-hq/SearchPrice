@@ -7,6 +7,17 @@ function getDefaultHeaders() {
   };
 }
 
+interface ErrorDetail {
+  message: string;
+  rule: string;
+  field: string;
+}
+
+interface ErrorResponse {
+  errors?: ErrorDetail[];
+  message?: string;
+}
+
 export async function loginUser(
   email: string,
   password: string
@@ -21,6 +32,7 @@ export async function loginUser(
   if (!res.ok) {
     throw new Error(body.message || "Erro ao efetuar login");
   }
+
   return body.data as LoginResponse;
 }
 
@@ -30,7 +42,7 @@ export async function registerUser(
   password: string,
   document: string
 ): Promise<User> {
-  const res = await fetch("/api/user/register", {
+  const res = await fetch(`/api/user/register`, {
     method: "POST",
     headers: getDefaultHeaders(),
     body: JSON.stringify({
@@ -42,13 +54,13 @@ export async function registerUser(
   });
 
   if (!res.ok) {
-    const errBody: any = await res.json().catch(() => ({}));
+    const errBody = (await res.json().catch(() => ({}))) as ErrorResponse;
 
-    if (Array.isArray(errBody.errors)) {
+    if (errBody.errors && Array.isArray(errBody.errors)) {
       const uniqueErrors = errBody.errors.filter(
-        (e: any) => e.rule === "database.unique"
+        (e) => e.rule === "database.unique"
       );
-      const fields = uniqueErrors.map((e: any) => e.field);
+      const fields = uniqueErrors.map((e) => e.field);
 
       const hasEmail = fields.includes("email");
       const hasDoc = fields.includes("document");
@@ -63,9 +75,7 @@ export async function registerUser(
         throw new Error("Documento já cadastrado");
       }
 
-      if (errBody.errors.length > 0) {
-        throw new Error(errBody.errors[0].message);
-      }
+      throw new Error(errBody.errors[0].message);
     }
 
     throw new Error(errBody.message || "Erro ao registrar usuário");
@@ -82,8 +92,10 @@ export async function forgotPassword(email: string): Promise<void> {
   });
 
   if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    throw new Error(err?.message || "Erro ao solicitar recuperação de senha");
+    const errBody = (await res.json().catch(() => ({}))) as ErrorResponse;
+    throw new Error(
+      errBody.message || "Erro ao solicitar recuperação de senha"
+    );
   }
 }
 
@@ -99,7 +111,7 @@ export async function resetPassword(
   });
 
   if (!res.ok) {
-    const body = await res.json().catch(() => null);
-    throw new Error(body?.message || "Erro ao redefinir senha");
+    const errBody = (await res.json().catch(() => ({}))) as ErrorResponse;
+    throw new Error(errBody.message || "Erro ao redefinir senha");
   }
 }
