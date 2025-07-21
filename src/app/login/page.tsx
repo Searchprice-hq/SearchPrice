@@ -97,7 +97,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl disabled:opacity-50"
+              className="bg-[var(--fifth)] hover:bg-[var(--secondary)] hover:scale-105 transition-transform duration-200 text-white h-14 px-6 rounded-xl disabled:opacity-50"
             >
               Entrar
             </button>
@@ -111,7 +111,7 @@ export default function LoginPage() {
             type="button"
             onClick={() => router.push("/register")}
             disabled={loading}
-            className="w-full bg-[var(--green-400)] hover:bg-[var(--green-200)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl border border-[var(--green-400)] disabled:opacity-50"
+            className="w-full bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl disabled:opacity-50"
           >
             Cadastre-se agora
           </button>
@@ -119,7 +119,7 @@ export default function LoginPage() {
             type="button"
             onClick={() => router.push("/")}
             disabled={loading}
-            className="w-full bg-[var(--danger)] hover:bg-[var(--danger-hover)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl border border-[var(--danger)] disabled:opacity-50"
+            className="w-full bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl  disabled:opacity-50"
           >
             Voltar
           </button>

@@ -1,4 +1,3 @@
-// src/app/dashboard/page.tsx
 "use client";
 
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
@@ -29,18 +28,15 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Trava scroll do body quando modal aberto
   useEffect(() => {
     document.body.style.overflow = selectedProduct ? "hidden" : "";
   }, [selectedProduct]);
 
-  // Carrega produtos via service
   const loadProducts = useCallback(
     async (filterArg?: FilterOption, dataFilterArg?: string) => {
       setLoading(true);
       setError(null);
       try {
-        // se vier "" ou undefined, passa undefined; senão, passa o filtro
         const filterQuery = filterArg || undefined;
         const codeQuery = dataFilterArg?.trim() || undefined;
 
@@ -56,7 +52,6 @@ export default function DashboardPage() {
     []
   );
 
-  // Sempre que filter/dataFilter mudam, recarrega
   useEffect(() => {
     if (filter && filter !== "productCode") {
       loadProducts(filter, dataFilter);
@@ -65,7 +60,6 @@ export default function DashboardPage() {
     }
   }, [filter, dataFilter, loadProducts]);
 
-  // Handlers de UI
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -74,18 +68,12 @@ export default function DashboardPage() {
   };
   const handleEANChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDataFilter(e.target.value);
-  const resetFilters = () => {
-    setFilter("");
-    setDataFilter("");
-    setSearchTerm("");
-    loadProducts();
-  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
   };
 
-  // Aplica busca por nome e filtro local
   let productsToDisplay = products;
   if (filter === "productCode" && dataFilter.trim() !== "") {
     const term = dataFilter.trim().toLowerCase();
@@ -110,7 +98,6 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  // Função de renderização da tabela
   const renderTable = (title: string, items: Product[]) => {
     if (items.length === 0) return null;
     return (
@@ -124,7 +111,7 @@ export default function DashboardPage() {
               <thead className="bg-[var(--secondary-to-third)]">
                 <tr className="border-b border-gray-700">
                   {[
-                    "Imagem",
+                    "Produtos",
                     "Nome",
                     "Preço",
                     "Frete",
@@ -194,14 +181,13 @@ export default function DashboardPage() {
 
   return (
     <div className="bg-[var(--black-to-primary)] min-h-screen flex flex-col">
-      {/* Conteúdo principal */}
       <main className="p-8 flex-grow">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-[var(--white)]">
             Dashboard de Produtos
           </h1>
           <button onClick={handleLogout} className="relative group">
-            <Image src="/profile.png" alt="Logout" width={40} height={40} />
+            <Image src="/logout.png" alt="Logout" width={60} height={60} />
             <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 bg-white text-red-600 text-sm rounded opacity-0 group-hover:opacity-100">
               Logout?
             </span>
@@ -270,14 +256,6 @@ export default function DashboardPage() {
               />
             </div>
           )}
-
-          <button
-            type="button"
-            onClick={resetFilters}
-            className="px-4 py-2 bg-[var(--primary-to-secondary)] text-white rounded hover:bg-[var(--secondary-to-third)] transition"
-          >
-            Reset
-          </button>
         </div>
 
         {loading ? (
@@ -295,11 +273,10 @@ export default function DashboardPage() {
         )}
       </main>
 
-      {/* Modal de detalhes */}
       {selectedProduct && (
         <div
           onClick={() => setSelectedProduct(null)}
-          className="fixed inset-0 w-full h-screen bg-gray-800/50 flex items-center justify-center z-50"
+          className="fixed inset-0 w-full h-screen bg-gray-800/50 flex items-center justify-center z-10"
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -362,7 +339,6 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Footer sempre no final */}
       <footer className="bg-[var(--dark-black-to-secondary)] text-white w-full px-8 py-8 text-center">
         © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
         reservados.

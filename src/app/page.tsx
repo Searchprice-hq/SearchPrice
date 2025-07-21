@@ -30,7 +30,7 @@ export default function Home() {
           <div className="flex items-center gap-6">
             <button
               onClick={toggleTheme}
-              className="focus:outline-none transition-transform duration-200 hover:scale-110"
+              className="focus:outline-none transition-transform duration-200 hover:scale-110 z-10"
             >
               <Image
                 src="/half-moon.png"
@@ -40,8 +40,10 @@ export default function Home() {
               />
             </button>
             <button
-              onClick={() => router.push("/login")}
-              className="focus:outline-none transition-transform duration-200 hover:scale-110"
+              onClick={() => {
+                router.push("/login");
+              }}
+              className="focus:outline-none transition-transform duration-200 hover:scale-110 z-10"
             >
               <Image src="/profile.png" alt="Perfil" width={40} height={40} />
             </button>
@@ -58,7 +60,9 @@ export default function Home() {
               <li
                 key={item.href}
                 className="text-white text-lg cursor-pointer hover:scale-110 transition"
-                onClick={() => router.push(item.href)}
+                onClick={() => {
+                  router.push(item.href);
+                }}
               >
                 {item.label}
               </li>
@@ -69,9 +73,9 @@ export default function Home() {
         <nav className="lg:hidden mt-4">
           <ul className="flex flex-col text-left">
             {[
-              { label: "• Sobre", href: "/about" },
-              { label: "• Depoimentos", href: "/testimonials" },
-              { label: "• Nossos diferenciais", href: "/our-advantages" },
+              { label: "- Sobre", href: "/about" },
+              { label: "- Depoimentos", href: "/testimonials" },
+              { label: "- Nossos diferenciais", href: "/our-advantages" },
             ].map((item) => (
               <li
                 key={item.href}
@@ -87,7 +91,7 @@ export default function Home() {
 
       <main className="flex-1">
         <button className="fixed bottom-6 right-6 z-50 flex items-center justify-center bg-[var(--green-100)] sm:w-14 sm:h-14 rounded-full p-3 md:w-58 md:h-16 lg:w-58 lg:h-16 sm:px-4 sm:py-4 transition-transform duration-200 hover:scale-105">
-          <Image src="/whatsapp.png" alt="WhatsApp" width={30} height={30} />
+          <Image src="/whatsapp.png" alt="WhatsApp" width={34} height={34} />
           <span className="hidden sm:inline ml-2 text-[var(--white)] font-bold">
             Conversar com os fundadores
           </span>

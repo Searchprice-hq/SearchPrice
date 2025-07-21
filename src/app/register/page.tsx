@@ -162,11 +162,11 @@ export default function Register() {
 
           <button
             type="submit"
-            className={`mt-8 h-14 w-full max-w-xs rounded-xl border flex items-center justify-center text-white transition-all duration-200
+            className={`mt-8 h-14 w-full max-w-xs rounded-xl flex items-center justify-center text-white transition-all duration-200
               ${
                 !isValidPassword || !passwordsMatch || !docValid || loading
-                  ? "bg-[var(--green-300)] border-[var(--green-400)] opacity-50 cursor-not-allowed"
-                  : "bg-[var(--green-400)] border-[var(--green-400)] hover:bg-[var(--green-200)] hover:scale-105"
+                  ? "bg-[var(--primary)] hover:bg-[var(--secondary)] opacity-50 cursor-not-allowed"
+                  : "bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105"
               }
             `}
             disabled={
@@ -181,7 +181,7 @@ export default function Register() {
           type="button"
           onClick={() => router.push("/login")}
           disabled={loading}
-          className="mt-6 h-14 w-full max-w-xs rounded-xl border bg-[var(--danger)] hover:bg-[var(--danger-hover)] hover:scale-105 transition-all duration-200 text-white"
+          className="mt-6 h-14 w-full max-w-xs rounded-xl  bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-all duration-200 text-white"
         >
           Voltar
         </button>
