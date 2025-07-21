@@ -20,7 +20,7 @@ const SHIP_OPTIONS = ["Prime", "Normal", "Flex", "Full", "Express"];
 export default function DashboardPage() {
   const router = useRouter();
 
-  // Estados de dados e filtros
+  // estados de dados e filtros
   const [products, setProducts] = useState<Product[]>([]);
   const [filter, setFilter] = useState<FilterOption>("");
   const [dataFilter, setDataFilter] = useState("");
@@ -28,19 +28,26 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Estado para o produto selecionado (modal)
+  // estado para o produto selecionado (modal)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Função para carregar produtos
+  // bloquear/desbloquear scroll do body quando o modal abre/fecha
+  useEffect(() => {
+    if (selectedProduct) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [selectedProduct]);
+
+  // função para carregar produtos
   const loadProducts = useCallback(
     async (filterArg?: FilterOption, dataFilterArg?: string) => {
       setLoading(true);
       setError(null);
 
       try {
-        // Se filterArg for "" ou undefined -> undefined, senão seu valor ("price", "shipping" ou "productCode")
         const filterQuery = filterArg || undefined;
-        // Se dataFilterArg for vazio ou só espaços -> undefined, senão o próprio valor
         const codeQuery =
           dataFilterArg && dataFilterArg.trim() !== ""
             ? dataFilterArg
@@ -58,7 +65,7 @@ export default function DashboardPage() {
     []
   );
 
-  // Recarrega quando filtro muda
+  // recarrega quando filtro muda
   useEffect(() => {
     if (filter && filter !== "productCode") {
       loadProducts(filter, dataFilter);
@@ -67,7 +74,7 @@ export default function DashboardPage() {
     }
   }, [filter, dataFilter, loadProducts]);
 
-  // Handlers de UI
+  // handlers de UI
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -87,7 +94,7 @@ export default function DashboardPage() {
     router.push("/");
   };
 
-  // Filtragem local
+  // filtragem local
   let productsToDisplay = products;
   if (filter === "productCode" && dataFilter.trim() !== "") {
     const term = dataFilter.trim().toLowerCase();
@@ -102,7 +109,7 @@ export default function DashboardPage() {
     );
   }
 
-  // Separação por marketplace
+  // separação por marketplace
   const mercadoLivre = productsToDisplay.filter((p) =>
     p.marketplace.toLowerCase().includes("mercado")
   );
@@ -113,7 +120,7 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  // Função de renderização de tabela
+  // renderização de cada tabela
   const renderTable = (title: string, items: Product[]) => {
     if (items.length === 0) return null;
     return (
@@ -196,7 +203,7 @@ export default function DashboardPage() {
   return (
     <div className="bg-[var(--black-to-primary)] min-h-screen">
       <div className="p-8">
-        {/* Header */}
+        {/* header */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-[var(--white)]">
             Dashboard de Produtos
@@ -209,7 +216,7 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Busca por nome */}
+        {/* busca */}
         <div className="mb-4">
           <input
             type="text"
@@ -220,7 +227,7 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* Filtros */}
+        {/* filtros */}
         <div className="flex flex-wrap gap-4 mb-6 items-end">
           <div>
             <label className="block mb-1 text-sm text-[var(--white)]">
@@ -283,7 +290,7 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Feedback */}
+        {/* feedback */}
         {loading ? (
           <p className="text-[var(--white)]">Carregando…</p>
         ) : error ? (
@@ -292,7 +299,7 @@ export default function DashboardPage() {
           <p className="text-[var(--white)] mb-4">Nenhum produto encontrado.</p>
         ) : null}
 
-        {/* Tabelas */}
+        {/* tabelas */}
         {!loading && !error && productsToDisplay.length > 0 && (
           <>
             {renderTable("Mercado Livre", mercadoLivre)}
@@ -302,11 +309,11 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* Modal de detalhes */}
+      {/* modal de detalhes */}
       {selectedProduct && (
         <div
           onClick={() => setSelectedProduct(null)}
-          className="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50"
+          className="fixed inset-0 w-full h-screen bg-gray-800/50 flex items-center justify-center z-50"
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -337,31 +344,31 @@ export default function DashboardPage() {
                 })}
               </p>
               <p>
-                <span className="font-semibold">Frete: </span>
+                <span className="font-semibold">Frete:</span>{" "}
                 {selectedProduct.shipping}
               </p>
               <p>
-                <span className="font-semibold">Disponível: </span>
+                <span className="font-semibold">Disponível:</span>{" "}
                 {selectedProduct.amountAvailable}
               </p>
               <p>
-                <span className="font-semibold">Vendidos: </span>
+                <span className="font-semibold">Vendidos:</span>{" "}
                 {selectedProduct.amountSold}
               </p>
               <p>
-                <span className="font-semibold">Vendedor: </span>
+                <span className="font-semibold">Vendedor:</span>{" "}
                 {selectedProduct.sellerName}
               </p>
               <p>
-                <span className="font-semibold">EAN: </span>
+                <span className="font-semibold">EAN:</span>{" "}
                 {selectedProduct.productCode}
               </p>
               <p>
-                <span className="font-semibold">Visitas no mês: </span>
+                <span className="font-semibold">Visitas no mês:</span>{" "}
                 {selectedProduct.amountVisitsLastMonth}
               </p>
               <p>
-                <span className="font-semibold">Avaliações: </span>
+                <span className="font-semibold">Avaliações:</span>{" "}
                 {selectedProduct.amountReviews}
               </p>
             </div>
