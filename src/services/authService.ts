@@ -29,9 +29,13 @@ export async function loginUser(
   });
 
   const body = await res.json();
-  if (!res.ok) {
-    throw new Error(body.message || "Erro ao efetuar login");
+  if (res.status === 400) {
+    throw new Error("Senha incorreta");
   }
+  if (res.status === 422) {
+    throw new Error("E-mail não cadastrado");
+  }
+  throw new Error(body.message || "Erro ao efetuar login");
 
   return body.data as LoginResponse;
 }
@@ -60,8 +64,8 @@ export async function registerUser(
       const uniqueErrors = errBody.errors.filter(
         (e) => e.rule === "database.unique"
       );
-      const fields = uniqueErrors.map((e) => e.field);
 
+      const fields = uniqueErrors.map((e) => e.field);
       const hasEmail = fields.includes("email");
       const hasDoc = fields.includes("document");
 
