@@ -120,7 +120,7 @@ export default function Home() {
               alt="Comparativo Marketplaces"
               width={800}
               height={700}
-              className="block mx-auto h-auto rounded-md shadow-lg mb-6"
+              className="block mx-auto h-auto w-auto rounded-md shadow-lg mb-6"
             />
             <div className="flex justify-center mt-8">
               <div className="flex justify-between items-center w-[20rem] sm:w-[27rem]">

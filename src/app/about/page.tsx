@@ -49,9 +49,9 @@ function TeamMember({
       <Image
         src={avatar}
         alt={name}
-        width={96}
-        height={96}
-        className="rounded-full mb-3 object-cover transition-transform hover:scale-110"
+        width={80}
+        height={80}
+        className="rounded-full mb-3 w-auto h-auto object-cover transition-transform hover:scale-110"
       />
       <h4 className="font-medium text-white text-center">{name}</h4>
       <p className="text-sm text-white text-center">{role}</p>

@@ -43,9 +43,9 @@ export default function LoginPage() {
         <Image
           src="/searchprice-logo.png"
           alt="SearchPrice Logo"
-          width={80}
-          height={80}
-          className="mb-8 max-w-[80%] h-auto"
+          width={90}
+          height={90}
+          className="mb-8 w-auto h-auto"
         />
 
         <form
