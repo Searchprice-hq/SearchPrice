@@ -69,9 +69,9 @@ export default function Home() {
         <nav className="lg:hidden mt-4">
           <ul className="flex flex-col text-left">
             {[
-              { label: "• Nossos diferenciais", href: "/our-advantages" },
-              { label: "• Depoimentos", href: "/testimonials" },
               { label: "• Sobre", href: "/about" },
+              { label: "• Depoimentos", href: "/testimonials" },
+              { label: "• Nossos diferenciais", href: "/our-advantages" },
             ].map((item) => (
               <li
                 key={item.href}

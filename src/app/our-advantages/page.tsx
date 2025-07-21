@@ -43,7 +43,7 @@ export default function OurAdvantagesPage() {
           href="/"
           className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
-          <Image src="/left-pointer.png" alt="Home" width={40} height={40} />
+          <Image src="/home.png" alt="Home" width={40} height={40} />
         </Link>
         <Link
           href="/login"

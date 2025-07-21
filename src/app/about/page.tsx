@@ -4,12 +4,6 @@ import Link from "next/link";
 
 const SOCIALS = [
   {
-    name: "Facebook",
-    href: "https://facebook.com/searchprice",
-    icon: "/facebook.png",
-    color: "text-blue-600",
-  },
-  {
     name: "Instagram",
     href: "https://instagram.com/searchprice",
     icon: "/instagram.png",
@@ -22,16 +16,10 @@ const SOCIALS = [
     color: "text-blue-700",
   },
   {
-    name: "X (Twitter)",
-    href: "https://x.com/searchprice",
-    icon: "/x.png",
-    color: "text-blue-400",
-  },
-  {
-    name: "YouTube",
-    href: "https://youtube.com/searchprice",
-    icon: "/youtube.png",
-    color: "text-red-600",
+    name: "WhatsApp",
+    href: "https://whatsapp.com/searchprice",
+    icon: "/whatsapp.png",
+    color: "text-green-500",
   },
 ];
 
@@ -67,7 +55,7 @@ export default function AboutPage() {
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
-          <Image src="/left-pointer.png" alt="Home" width={40} height={40} />
+          <Image src="/home.png" alt="Home" width={40} height={40} />
         </Link>
         <Link
           href="/login"
@@ -183,7 +171,7 @@ export default function AboutPage() {
         <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] text-center mb-8">
           Conecte-se Conosco
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 ">
           {SOCIALS.map(({ name, href, icon, color }) => (
             <Link
               key={name}
