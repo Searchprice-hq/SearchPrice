@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export interface MiniCalculatorProps {
   onCalc?: (sellPrice: number, calcResult: number) => void;
@@ -29,7 +30,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const [adType, setAdType] = useState("");
   const [calcResult, setCalcResult] = useState<number | null>(null);
 
-  // Recalcula sempre que um campo muda
   useEffect(() => {
     if (!sellPrice || !buyPrice || !logistics || !adType || !aliquot) {
       setCalcResult(null);
@@ -54,7 +54,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
   return (
     <>
-      {/* Botão para abrir */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
@@ -62,19 +61,23 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             fixed right-4 bottom-4 
             bg-[var(--black-to-primary)] h-20 text-white border border-white
             rounded-[20px] px-6 py-1 z-30
-            hover:bg-secondary active:scale-90 transition
+            transform transition-transform hover:scale-105 duration-200
           "
         >
-          <img src="/calculator.png" alt="Calculadora" width={50} height={60} />
+          <Image
+            src="/calculator.png"
+            alt="Calculadora"
+            width={45}
+            height={45}
+          />
         </button>
       )}
 
-      {/* Painel da calculadora */}
       {open && (
         <div
           className="
             fixed bottom-5 right-5 w-[240px] sm:w-[300px] 
-            bg-[var(--black-to-primary)]
+            bg-[var(--black-to-primary)] border border-white
             rounded-lg p-5 z-[1000]
           "
         >
@@ -89,7 +92,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
           </h2>
 
           <div className="space-y-4 mt-4">
-            {/* Sell Price */}
             <div>
               <label htmlFor="sell_price" className="block text-white">
                 Valor que deseja vender:
@@ -108,7 +110,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             </div>
             <hr className="border-[var(--gray-to-white)]" />
 
-            {/* Logistics */}
             <div>
               <select
                 value={logistics}
@@ -136,7 +137,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             </div>
             <hr className="border-[var(--gray-to-white)]" />
 
-            {/* Ad Type */}
             <div>
               <select
                 value={adType}
@@ -162,7 +162,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             </div>
             <hr className="border-[var(--gray-to-white)]" />
 
-            {/* Buy Price */}
             <div>
               <label htmlFor="buy_price" className="block text-white">
                 Custo de compra:
@@ -179,8 +178,8 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 "
               />
             </div>
+            <hr className="border-[var(--gray-to-white)]" />
 
-            {/* Aliquota */}
             <div>
               <label htmlFor="aliquot" className="block text-white">
                 Alíquota:
@@ -207,7 +206,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               </select>
             </div>
 
-            {/* Resultado */}
             {calcResult !== null && (
               <p id="calc-result" className="mt-4 text-white font-medium">
                 Lucro Total: {fmt(calcResult)}

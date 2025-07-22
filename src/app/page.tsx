@@ -21,6 +21,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <Image
               src="/searchprice-logo.png"
+              className="w-auto h-auto"
               alt="logo"
               width={50}
               height={50}

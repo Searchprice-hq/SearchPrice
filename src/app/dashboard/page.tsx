@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 "use client";
 
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
@@ -22,7 +21,6 @@ const SHIP_OPTIONS = ["Prime", "Normal", "Flex", "Full", "Express"];
 export default function DashboardPage() {
   const router = useRouter();
 
-  // Estados de dados e UI
   const [products, setProducts] = useState<Product[]>([]);
   const [filter, setFilter] = useState<FilterOption>("");
   const [dataFilter, setDataFilter] = useState("");
@@ -31,16 +29,13 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Novos estados vindos do MiniCalculator
   const [sellPrice, setSellPrice] = useState<number | null>(null);
   const [calcResult, setCalcResult] = useState<number | null>(null);
 
-  // Evita scroll do body quando modal aberto
   useEffect(() => {
     document.body.style.overflow = selectedProduct ? "hidden" : "";
   }, [selectedProduct]);
 
-  // Função para carregar produtos via service
   const loadProducts = useCallback(
     async (filterArg?: FilterOption, dataFilterArg?: string) => {
       setLoading(true);
@@ -61,7 +56,6 @@ export default function DashboardPage() {
     []
   );
 
-  // Carrega ao alterar filtro ou código
   useEffect(() => {
     if (filter && filter !== "productCode") {
       loadProducts(filter, dataFilter);
@@ -70,7 +64,6 @@ export default function DashboardPage() {
     }
   }, [filter, dataFilter, loadProducts]);
 
-  // Handlers de input
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -84,7 +77,6 @@ export default function DashboardPage() {
     router.push("/");
   };
 
-  // Filtra localmente por nome
   let productsToDisplay = products;
   if (filter === "productCode" && dataFilter.trim()) {
     const term = dataFilter.trim().toLowerCase();
@@ -99,7 +91,6 @@ export default function DashboardPage() {
     );
   }
 
-  // Separa por marketplace
   const mercadoLivre = productsToDisplay.filter((p) =>
     p.marketplace.toLowerCase().includes("mercado")
   );
@@ -110,7 +101,6 @@ export default function DashboardPage() {
     p.marketplace.toLowerCase().includes("shopee")
   );
 
-  // Renderiza cada tabela
   const renderTable = (title: string, items: Product[]) => {
     if (items.length === 0) return null;
     return (
@@ -144,7 +134,6 @@ export default function DashboardPage() {
               </thead>
               <tbody className="divide-y divide-gray-300">
                 {items.map((p) => {
-                  // Determina a cor da barra
                   let colorClass = "";
 
                   const price =
@@ -164,7 +153,6 @@ export default function DashboardPage() {
                       onClick={() => setSelectedProduct(p)}
                       className="hover:bg-gray-100 cursor-pointer"
                     >
-                      {/* Coluna da imagem com barra */}
                       <td className="px-4 py-2 relative">
                         <div
                           className={`absolute inset-y-0 left-0 w-3 rounded-r ${colorClass}`}
@@ -215,7 +203,6 @@ export default function DashboardPage() {
   return (
     <div className="bg-[var(--black-to-primary)] min-h-screen flex flex-col">
       <main className="p-8 flex-grow">
-        {/* Cabeçalho e busca */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-white">
             Dashboard de Produtos
@@ -228,7 +215,6 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Filtro por nome */}
         <div className="mb-4">
           <input
             type="text"
@@ -239,7 +225,6 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* Controles de filtro */}
         <div className="flex flex-wrap gap-4 mb-6 items-end">
           <div>
             <label className="block mb-1 text-sm text-white">
@@ -288,7 +273,6 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* Tabelas ou mensagens */}
         {loading ? (
           <p className="text-white">Carregando…</p>
         ) : error ? (
@@ -303,7 +287,6 @@ export default function DashboardPage() {
           </>
         )}
 
-        {/* MiniCalculadora */}
         <MiniCalculator
           onCalc={(sp, cr) => {
             setSellPrice(sp);
@@ -312,7 +295,6 @@ export default function DashboardPage() {
         />
       </main>
 
-      {/* Modal de detalhe */}
       {selectedProduct && (
         <div
           onClick={() => setSelectedProduct(null)}
@@ -328,7 +310,7 @@ export default function DashboardPage() {
             >
               &times;
             </button>
-            {/* Detalhes do produto */}
+
             <div className="flex flex-col items-center gap-4">
               <Image
                 src={selectedProduct.image}
@@ -378,7 +360,6 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Footer */}
       <footer className="bg-[var(--dark-black-to-secondary)] text-white text-center p-8">
         © 2024-2025 Search Price Soluções Tecnológicas LTDA.
       </footer>

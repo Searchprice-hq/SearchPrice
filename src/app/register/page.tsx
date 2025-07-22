@@ -57,7 +57,6 @@ export default function Register() {
   };
 
   const handleBack = () => {
-    // se houver histórico, volta; senão (ex: acesso direto), envia pro login
     if (window.history.length > 1) {
       router.back();
     } else {
@@ -71,9 +70,10 @@ export default function Register() {
         <Image
           src="/searchprice-logo.png"
           alt="logo"
-          className="mb-8"
+          className="w-auto h-auto mb-8"
           width={80}
           height={80}
+          priority
         />
         <form onSubmit={onSubmit} className="w-full flex flex-col items-center">
           <div className="w-full max-w-sm flex flex-col gap-6">
