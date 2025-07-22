@@ -41,21 +41,12 @@
   --third-to-fourth: #41aaa3;
   --third-to-white: #41aaa3;
 
-  --green-to-white: #388e3c;
-  --danger-to-white: #f75a68;
-
   --danger: #c93642;
   --danger-hover: #fc5b69;
 
   --green-100: #47ce57;
-  --green-200: #51be55;
-  --green-300: #4caf50;
-  --green-400: #388e3c;
-
-  --yellow-200: #ddbf3a;
-  --yellow-100: #f2d66b;
-
   --gray-100: #808080;
+
   --gray-to-white: #4b5563;
   --dollar-bill-container: #e3f4f7;
 }
@@ -101,9 +92,6 @@
   --third-to-secondary: #299c9c;
   --third-to-fourth: #4dd1c8;
   --third-to-white: #f8f8f8;
-
-  --green-to-white: #f8f8f8;
-  --danger-to-white: #f8f8f8;
 
   --gray-to-white: #f8f8f8;
 }
