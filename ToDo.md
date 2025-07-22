@@ -1,4 +1,2 @@
-- Ao clicar no botão "Quero economizar meu tempo" direcionar para tela de cadastro, e somente depois de clicar nele, ao clicar no voltar da tela de cadastro, ele volta para Home
 - ⁠Botão Falar com fundadores: Enviar uma mensagem diretamente ao Whatsapp
-- ⁠Ao registrar-se, coloquei apenas números no campo de CPF ou CNPJ e segue dizendo que é somente números
 - ⁠Faltou a calculadora, ainda devemos ter toda essa funcionalidade

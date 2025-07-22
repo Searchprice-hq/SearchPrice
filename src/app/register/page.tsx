@@ -96,7 +96,7 @@ export default function Register() {
             />
             {!docValid && document.length > 0 && (
               <p className="text-[var(--danger)] text-xs ml-1">
-                Digite apenas números
+                Digite um CPF ou CNPJ válido
               </p>
             )}
 

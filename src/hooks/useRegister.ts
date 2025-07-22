@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/services/authService";
 import type { User } from "@/models/User";
+import { validateDocument } from "@/helpers/validators";
 
 interface PasswordRequirement {
   regex: RegExp;
@@ -28,10 +29,6 @@ export const useRegister = () => {
 
   const checkPasswordsMatch = (password: string, confirmPassword: string) =>
     password === confirmPassword && confirmPassword.length > 0;
-
-  const validateDocument = (value: string) => {
-    return /^(\d{11}|\d{14})$/.test(value);
-  };
 
   const handleRegister = async (
     fullName: string,
