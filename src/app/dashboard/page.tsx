@@ -136,16 +136,16 @@ export default function DashboardPage() {
                 {items.map((p) => {
                   let colorClass = "";
 
-                  const price =
+                  const adPrice =
                     typeof p.price === "string" ? parseFloat(p.price) : p.price;
                   if (
                     sellPrice !== null &&
                     calcResult !== null &&
                     !Number.isNaN(calcResult)
                   ) {
-                    if (sellPrice < price && calcResult > 0) {
+                    if (sellPrice < adPrice && calcResult > 0) {
                       colorClass = "bg-green-500";
-                    } else if (sellPrice === price && calcResult > 0) {
+                    } else if (sellPrice === adPrice && calcResult > 0) {
                       colorClass = "bg-yellow-500";
                     } else {
                       colorClass = "bg-red-500";
