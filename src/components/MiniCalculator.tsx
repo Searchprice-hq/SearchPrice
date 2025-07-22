@@ -181,9 +181,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <hr className="border-[var(--gray-to-white)]" />
 
             <div>
-              <label htmlFor="aliquot" className="block text-white">
-                Alíquota:
-              </label>
               <select
                 value={aliquot}
                 onChange={(e) => setAliquot(e.target.value)}
@@ -194,7 +191,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 "
               >
                 <option value="" disabled>
-                  Selecione...
+                  Alíquota
                 </option>
                 <option value="0">0%</option>
                 <option value="0.04">4%</option>
