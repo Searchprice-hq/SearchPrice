@@ -138,7 +138,11 @@ export default function DashboardPage() {
 
                   const price =
                     typeof p.price === "string" ? parseFloat(p.price) : p.price;
-                  if (sellPrice !== null && calcResult !== null) {
+                  if (
+                    sellPrice !== null &&
+                    calcResult !== null &&
+                    !Number.isNaN(calcResult)
+                  ) {
                     if (sellPrice < price && calcResult > 0) {
                       colorClass = "bg-green-500";
                     } else if (sellPrice === price && calcResult > 0) {
@@ -154,9 +158,12 @@ export default function DashboardPage() {
                       className="hover:bg-gray-100 cursor-pointer"
                     >
                       <td className="px-4 py-2 relative">
-                        <div
-                          className={`absolute inset-y-0 left-0 w-3 rounded-r ${colorClass}`}
-                        />
+                        {/* só mostra a barra quando calcResult for válido */}
+                        {calcResult !== null && !Number.isNaN(calcResult) && (
+                          <div
+                            className={`absolute inset-y-0 left-0 w-3 rounded-r ${colorClass}`}
+                          />
+                        )}
                         <div className="flex justify-center items-center ml-2">
                           <Image
                             src={p.image}

@@ -205,7 +205,8 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             {calcResult !== null && (
               <p id="calc-result" className="mt-4 text-white font-medium">
-                Lucro Total: {fmt(calcResult)}
+                {calcResult >= 0 ? "Lucro Total:" : "Prejuízo Total:"}{" "}
+                {fmt(calcResult)}
               </p>
             )}
           </div>
