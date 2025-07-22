@@ -76,7 +76,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       {open && (
         <div
           className="
-            fixed bottom-5 right-5 w-[240px] sm:w-[300px] 
+            fixed bottom-5 right-5 w-[250px] sm:w-[300px] 
             bg-[var(--black-to-primary)] border border-white
             rounded-lg p-5 z-[1000]
           "

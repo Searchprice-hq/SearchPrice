@@ -210,7 +210,7 @@ export default function DashboardPage() {
           <button onClick={handleLogout} className="relative group">
             <Image
               src="/logout.png"
-              className="h-15 w-15"
+              className="h-13 w-13"
               alt="Logout"
               width={50}
               height={50}
@@ -303,16 +303,13 @@ export default function DashboardPage() {
 
       {selectedProduct && (
         <div
-          // backdrop sem scroll e fecha ao clicar fora
           onClick={() => setSelectedProduct(null)}
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-10"
         >
           <div
-            // impede o click interno de propagar pro backdrop
             onClick={(e) => e.stopPropagation()}
             className="relative bg-white rounded-2xl p-6 w-[350px] max-w-md"
           >
-            {/* Xizinho para fechar */}
             <button
               onClick={() => setSelectedProduct(null)}
               aria-label="Fechar"
