@@ -56,6 +56,15 @@ export default function Register() {
     await handleRegister(fullName, document, email, password, confirmPassword);
   };
 
+  const handleBack = () => {
+    // se houver histórico, volta; senão (ex: acesso direto), envia pro login
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/login");
+    }
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-[var(--black-to-primary)]">
       <div className="bg-[var(--background-container)] w-full max-w-md p-8 flex flex-col items-center rounded-xl border-2 border-[var(--primary)]">
@@ -179,7 +188,7 @@ export default function Register() {
 
         <button
           type="button"
-          onClick={() => router.push("/login")}
+          onClick={handleBack}
           disabled={loading}
           className="mt-6 h-14 w-full max-w-xs rounded-xl  bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-all duration-200 text-white"
         >
