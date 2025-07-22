@@ -208,7 +208,13 @@ export default function DashboardPage() {
             Dashboard de Produtos
           </h1>
           <button onClick={handleLogout} className="relative group">
-            <Image src="/logout.png" alt="Logout" width={60} height={60} />
+            <Image
+              src="/logout.png"
+              className="h-15 w-15"
+              alt="Logout"
+              width={50}
+              height={50}
+            />
             <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 bg-white text-red-600 text-sm rounded opacity-0 group-hover:opacity-100">
               Logout?
             </span>
@@ -297,18 +303,22 @@ export default function DashboardPage() {
 
       {selectedProduct && (
         <div
+          // backdrop sem scroll e fecha ao clicar fora
           onClick={() => setSelectedProduct(null)}
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-10"
         >
           <div
+            // impede o click interno de propagar pro backdrop
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl p-6 max-w-lg w-full"
+            className="relative bg-white rounded-2xl p-6 w-[350px] max-w-md"
           >
+            {/* Xizinho para fechar */}
             <button
               onClick={() => setSelectedProduct(null)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl"
+              aria-label="Fechar"
+              className="absolute top-5 right-5 text-gray-500 hover:text-gray-700 text-2xl leading-none"
             >
-              &times;
+              x
             </button>
 
             <div className="flex flex-col items-center gap-4">
@@ -319,7 +329,10 @@ export default function DashboardPage() {
                 height={120}
                 className="rounded"
               />
-              <h3 className="text-2xl font-semibold">{selectedProduct.name}</h3>
+              <h3 className="text-2xl text-center font-semibold">
+                {selectedProduct.name}
+              </h3>
+
               <p>
                 <span className="font-semibold">Preço:</span>{" "}
                 {selectedProduct.price.toLocaleString("pt-BR", {
