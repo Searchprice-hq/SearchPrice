@@ -315,7 +315,7 @@ export default function DashboardPage() {
               aria-label="Fechar"
               className="absolute top-5 right-5 text-gray-500 hover:text-gray-700 text-2xl leading-none"
             >
-              x
+              ✕
             </button>
 
             <div className="flex flex-col items-center gap-4">
