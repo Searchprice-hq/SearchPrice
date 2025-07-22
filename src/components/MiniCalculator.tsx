@@ -25,7 +25,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const [open, setOpen] = useState(false);
   const [sellPrice, setSellPrice] = useState("");
   const [buyPrice, setBuyPrice] = useState("");
-  const [aliquot, setAliquot] = useState("0.04");
+  const [aliquot, setAliquot] = useState("");
   const [logistics, setLogistics] = useState("");
   const [adType, setAdType] = useState("");
   const [calcResult, setCalcResult] = useState<number | null>(null);
