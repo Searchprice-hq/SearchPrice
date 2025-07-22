@@ -59,7 +59,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
         <button
           onClick={() => setOpen(true)}
           className="
-            fixed right-4 top-[90%]
+            fixed right-4 bottom-4 
             bg-[var(--black-to-primary)] h-20 text-white border border-white
             rounded-[20px] px-6 py-1 z-30
             hover:bg-secondary active:scale-90 transition
@@ -73,7 +73,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       {open && (
         <div
           className="
-            fixed bottom-5 right-5 w-[300px]
+            fixed bottom-5 right-5 w-[240px] sm:w-[300px] 
             bg-[var(--black-to-primary)]
             rounded-lg p-5 z-[1000]
           "
