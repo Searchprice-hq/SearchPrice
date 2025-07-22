@@ -190,7 +190,7 @@ export default function Register() {
           type="button"
           onClick={handleBack}
           disabled={loading}
-          className="mt-6 h-14 w-full max-w-xs rounded-xl  bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-all duration-200 text-white"
+          className="mt-6 h-14 w-full max-w-xs rounded-xl  bg-[var(--danger)] hover:bg-[var(--danger-hover)] hover:scale-105 transition-all duration-200 text-white"
         >
           Voltar
         </button>

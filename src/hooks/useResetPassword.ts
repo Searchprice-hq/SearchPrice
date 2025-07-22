@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { resetPassword, forgotPassword } from "@/services/authService";
+import { resetPassword } from "@/services/authService";
 
 export function useResetPassword() {
   const [error, setError] = useState<string | null>(null);
@@ -41,23 +41,5 @@ export function useResetPassword() {
     }
   };
 
-  const handleForgotPassword = async (email: string): Promise<string> => {
-    setError(null);
-    setLoading(true);
-    try {
-      await forgotPassword(email);
-      return "E‑mail de recuperação enviado com sucesso!";
-    } catch (err: unknown) {
-      console.error(err);
-      if (err instanceof Error) {
-        return err.message;
-      } else {
-        return String(err) || "Erro ao solicitar recuperação de senha";
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { handleReset, handleForgotPassword, error, loading };
+  return { handleReset, error, loading };
 }

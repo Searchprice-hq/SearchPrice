@@ -119,7 +119,7 @@ export default function LoginPage() {
             type="button"
             onClick={() => router.push("/")}
             disabled={loading}
-            className="w-full bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl  disabled:opacity-50"
+            className="w-full bg-[var(--danger)] hover:bg-[var(--danger-hover)] hover:scale-105 transition-all duration-200 text-white h-14 rounded-xl  disabled:opacity-50"
           >
             Voltar
           </button>
