@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchProducts } from "@/services/productService";
 import type { Product } from "@/models/Product";
+import MiniCalculator from "@/components/MiniCalculator";
 
 type FilterOption = "" | "price" | "shipping" | "productCode";
 
@@ -271,6 +272,7 @@ export default function DashboardPage() {
             {renderTable("Shopee", shopee)}
           </>
         )}
+        <MiniCalculator />
       </main>
 
       {selectedProduct && (
