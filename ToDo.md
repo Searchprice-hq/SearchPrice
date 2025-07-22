@@ -1,2 +1,1 @@
-- ⁠Botão Falar com fundadores: Enviar uma mensagem diretamente ao Whatsapp
 - ⁠Faltou a calculadora, ainda devemos ter toda essa funcionalidade
