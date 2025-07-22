@@ -208,7 +208,7 @@ export default function DashboardPage() {
             Dashboard de Produtos
           </h1>
           <button onClick={handleLogout} className="relative group">
-            <Image src="/logout.png" alt="Logout" width={50} height={50} />
+            <Image src="/logout.png" alt="Logout" width={60} height={60} />
             <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 bg-white text-red-600 text-sm rounded opacity-0 group-hover:opacity-100">
               Logout?
             </span>
