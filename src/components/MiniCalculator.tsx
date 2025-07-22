@@ -194,7 +194,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 "
               >
                 <option value="" disabled>
-                  Selecione uma alíquota
+                  Selecione...
                 </option>
                 <option value="0">0%</option>
                 <option value="0.04">4%</option>
