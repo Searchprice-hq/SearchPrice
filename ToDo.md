@@ -1,1 +1,0 @@
-- ⁠Faltou a calculadora, ainda devemos ter toda essa funcionalidade

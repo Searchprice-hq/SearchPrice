@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from "react";
 
+export interface MiniCalculatorProps {
+  onCalc?: (sellPrice: number, calcResult: number) => void;
+}
+
 const logisticsCosts: Record<string, number> = {
-  full: 10,
-  flex_and_places: 15,
-  collects: 5,
-  flex: 20,
-  own_logistics: 8,
+  prime: 10,
+  normal: 15,
+  flex: 5,
+  full: 20,
+  express: 8,
 };
 
 const adCosts: Record<string, number> = {
@@ -16,7 +20,7 @@ const adCosts: Record<string, number> = {
   free: 0,
 };
 
-export default function MiniCalculator() {
+export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const [open, setOpen] = useState(false);
   const [sellPrice, setSellPrice] = useState("");
   const [buyPrice, setBuyPrice] = useState("");
@@ -29,6 +33,7 @@ export default function MiniCalculator() {
   useEffect(() => {
     if (!sellPrice || !buyPrice || !logistics || !adType || !aliquot) {
       setCalcResult(null);
+      if (onCalc) onCalc(Number(sellPrice) || 0, NaN);
       return;
     }
     const sp = parseFloat(sellPrice);
@@ -38,7 +43,8 @@ export default function MiniCalculator() {
     const adCost = adCosts[adType] ?? 0;
     const result = sp - logCost - adCost - bp - sp * al;
     setCalcResult(result);
-  }, [sellPrice, buyPrice, logistics, adType, aliquot]);
+    if (onCalc) onCalc(sp, result);
+  }, [sellPrice, buyPrice, logistics, adType, aliquot, onCalc]);
 
   const fmt = (v: number) =>
     new Intl.NumberFormat("pt-BR", {
@@ -54,12 +60,12 @@ export default function MiniCalculator() {
           onClick={() => setOpen(true)}
           className="
             fixed right-4 top-[90%]
-            bg-[var(--black-to-secondary)] text-white border border-white
-            rounded-[20px] px-6 py-1 z-30 h-20
+            bg-[var(--black-to-primary)] h-20 text-white border border-white
+            rounded-[20px] px-6 py-1 z-30
             hover:bg-secondary active:scale-90 transition
           "
         >
-          <img src="/calculator.png" alt="Calculadora" width={50} height={50} />
+          <img src="/calculator.png" alt="Calculadora" width={50} height={60} />
         </button>
       )}
 
@@ -67,8 +73,9 @@ export default function MiniCalculator() {
       {open && (
         <div
           className="
-            fixed bottom-5 right-5 w-[270px]
-            bg-[var(--black-to-secondary)] rounded-lg p-5 z-[1000]
+            fixed bottom-5 right-5 w-[300px]
+            bg-[var(--black-to-primary)]
+            rounded-lg p-5 z-[1000]
           "
         >
           <button
@@ -82,44 +89,44 @@ export default function MiniCalculator() {
           </h2>
 
           <div className="space-y-4 mt-4">
+            {/* Sell Price */}
             <div>
               <label htmlFor="sell_price" className="block text-white">
                 Valor que deseja vender:
               </label>
               <input
-                id="sell_price"
                 type="number"
                 value={sellPrice}
                 onChange={(e) => setSellPrice(e.target.value)}
                 placeholder="50"
                 className="
                   w-full rounded-lg p-2
-                  bg-[var(--input)] text-white placeholder:text-gray-400
+                  bg-[var(--black-to-primary)] text-white placeholder:text-gray-300
                   focus:outline-none
                 "
               />
             </div>
-            <hr className="border-gray-600" />
+            <hr className="border-[var(--gray-to-white)]" />
 
+            {/* Logistics */}
             <div>
               <select
-                id="logistic_type"
                 value={logistics}
                 onChange={(e) => setLogistics(e.target.value)}
                 className="
                   w-full rounded-lg p-2
-                  bg-[var(--input)] text-gray-400
+                  bg-[var(--black-to-primary)] text-white
                   focus:outline-none
                 "
               >
                 <option value="" disabled>
                   Logística
                 </option>
-                <option value="full">Full</option>
-                <option value="flex_and_places">Flex e Places</option>
-                <option value="collects">Coletas</option>
+                <option value="prime">Prime</option>
+                <option value="normal">Normal</option>
                 <option value="flex">Flex</option>
-                <option value="own_logistics">Própria Logística</option>
+                <option value="full">Full</option>
+                <option value="express">Express</option>
               </select>
               {logistics && (
                 <p className="mt-2 text-white text-sm">
@@ -127,16 +134,16 @@ export default function MiniCalculator() {
                 </p>
               )}
             </div>
-            <hr className="border-gray-600" />
+            <hr className="border-[var(--gray-to-white)]" />
 
+            {/* Ad Type */}
             <div>
               <select
-                id="ad_type"
                 value={adType}
                 onChange={(e) => setAdType(e.target.value)}
                 className="
                   w-full rounded-lg p-2
-                  bg-[var(--input)] text-gray-400
+                  bg-[var(--black-to-primary)] text-white
                   focus:outline-none
                 "
               >
@@ -153,40 +160,44 @@ export default function MiniCalculator() {
                 </p>
               )}
             </div>
-            <hr className="border-gray-600" />
+            <hr className="border-[var(--gray-to-white)]" />
 
-            {/* Buy Price e Aliquota */}
+            {/* Buy Price */}
             <div>
               <label htmlFor="buy_price" className="block text-white">
                 Custo de compra:
               </label>
               <input
-                id="buy_price"
                 type="number"
                 value={buyPrice}
                 onChange={(e) => setBuyPrice(e.target.value)}
                 placeholder="12,5"
                 className="
                   w-full rounded-lg p-2
-                  bg-input text-white placeholder:text-gray-400
+                  bg-[var(--black-to-primary)] text-white placeholder:text-gray-300
                   focus:outline-none
                 "
               />
             </div>
+
+            {/* Aliquota */}
             <div>
               <label htmlFor="aliquot" className="block text-white">
                 Alíquota:
               </label>
               <select
-                id="aliquot"
                 value={aliquot}
                 onChange={(e) => setAliquot(e.target.value)}
                 className="
                   w-full rounded-lg p-2
-                  bg-input text-gray-400
+                  bg-[var(--black-to-primary)] text-white
                   focus:outline-none
                 "
               >
+                <option value="" disabled>
+                  Selecione uma alíquota
+                </option>
+                <option value="0">0%</option>
                 <option value="0.04">4%</option>
                 <option value="0.073">7,3%</option>
                 <option value="0.095">9,5%</option>

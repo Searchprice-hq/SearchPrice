@@ -56,6 +56,7 @@
   --yellow-100: #f2d66b;
 
   --gray-100: #808080;
+  --gray-to-white: #4b5563;
   --dollar-bill-container: #e3f4f7;
 }
 
@@ -103,6 +104,8 @@
 
   --green-to-white: #f8f8f8;
   --danger-to-white: #f8f8f8;
+
+  --gray-to-white: #f8f8f8;
 }
 
 body {
