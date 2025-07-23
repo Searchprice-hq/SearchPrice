@@ -47,17 +47,27 @@ export default function Register() {
     validateDocument,
   } = useRegister() as UseRegisterReturn;
 
+  const validateFullName = (value: string) => /^[A-Za-z ]{1,60}$/.test(value);
+  const fullNameValid = validateFullName(fullName);
+
   const isValidPassword = validatePassword(password);
   const passwordsMatch = checkPasswordsMatch(password, confirmPassword);
   const docValid = validateDocument(document);
 
-  // Função de validação de e-mail
   const validateEmail = (value: string) => /^\S+@\S+\.\S+$/.test(value);
   const emailValid = validateEmail(email);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!emailValid || !docValid || !isValidPassword || !passwordsMatch) return;
+    if (
+      !fullNameValid ||
+      !emailValid ||
+      !docValid ||
+      !isValidPassword ||
+      !passwordsMatch
+    )
+      return;
+
     await handleRegister(fullName, document, email, password, confirmPassword);
   };
 
@@ -82,14 +92,23 @@ export default function Register() {
         />
         <form onSubmit={onSubmit} className="w-full flex flex-col items-center">
           <div className="w-full max-w-sm flex flex-col gap-6">
-            <input
-              type="text"
-              placeholder="Nome completo"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
-              disabled={loading}
-            />
+            <div>
+              <input
+                type="text"
+                placeholder="Nome completo"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                maxLength={60}
+                className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+                disabled={loading}
+              />
+              {!fullNameValid && fullName.length > 0 && (
+                <p className="text-[var(--danger)] text-xs ml-1">
+                  Informe um nome válido.
+                </p>
+              )}
+            </div>
+
             <div>
               <input
                 type="text"
@@ -101,7 +120,7 @@ export default function Register() {
               />
               {!docValid && document.length > 0 && (
                 <p className="text-[var(--danger)] text-xs ml-1">
-                  Digite um CPF ou CNPJ válido
+                  Digite um CPF ou CNPJ válido.
                 </p>
               )}
             </div>
@@ -117,7 +136,7 @@ export default function Register() {
               />
               {!emailValid && email.length > 0 && (
                 <p className="text-[var(--danger)] text-xs ml-1">
-                  Insira um e-mail válido
+                  Insira um e-mail válido.
                 </p>
               )}
             </div>
@@ -185,20 +204,22 @@ export default function Register() {
           <button
             type="submit"
             disabled={
+              !fullNameValid ||
+              !emailValid ||
+              !docValid ||
               !isValidPassword ||
               !passwordsMatch ||
-              !docValid ||
-              !emailValid ||
               loading
             }
             className={`
               mt-8 h-14 w-full max-w-xs rounded-xl flex items-center justify-center
               text-white transition-all duration-200 bg-[var(--primary)]
               ${
+                !fullNameValid ||
+                !emailValid ||
+                !docValid ||
                 !isValidPassword ||
                 !passwordsMatch ||
-                !docValid ||
-                !emailValid ||
                 loading
                   ? `
                     opacity-50
