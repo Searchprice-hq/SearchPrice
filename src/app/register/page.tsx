@@ -171,16 +171,25 @@ export default function Register() {
 
           <button
             type="submit"
-            className={`mt-8 h-14 w-full max-w-xs rounded-xl flex items-center justify-center text-white transition-all duration-200
-              ${
-                !isValidPassword || !passwordsMatch || !docValid || loading
-                  ? "bg-[var(--primary)] hover:bg-[var(--secondary)] opacity-50 cursor-not-allowed"
-                  : "bg-[var(--primary)] hover:bg-[var(--secondary)] hover:scale-105"
-              }
-            `}
             disabled={
               !isValidPassword || !passwordsMatch || !docValid || loading
             }
+            className={`
+    mt-8 h-14 w-full max-w-xs rounded-xl flex items-center justify-center
+    text-white transition-all duration-200 bg-[var(--primary)]
+    ${
+      !isValidPassword || !passwordsMatch || !docValid || loading
+        ? `
+          opacity-50
+          cursor-not-allowed
+          pointer-events-none
+        `
+        : `
+          hover:bg-[var(--secondary)]
+          hover:scale-105
+        `
+    }
+  `}
           >
             {loading ? "Registrando..." : "Registrar-se agora"}
           </button>
