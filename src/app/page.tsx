@@ -117,7 +117,7 @@ export default function Home() {
               className="block mx-auto h-auto w-auto rounded-md shadow-lg mb-6"
             />
             <div className="flex justify-center mt-8">
-              <div className="flex justify-between items-center w-[20rem] sm:w-[27rem]">
+              <div className="flex justify-between items-center w-[18rem] sm:w-[27rem]">
                 <Image
                   src="/magnifying-glass.png"
                   alt="Lupa"
@@ -181,7 +181,7 @@ export default function Home() {
                   </div>
 
                   {/* Texto */}
-                  <div className="w-7/8 sm:w-2/3 space-y-4 text-justify">
+                  <div className="w-7/8 sm:w-2/3 space-y-4 text-center md:text-justify">
                     <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
                       {i === 1
                         ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
