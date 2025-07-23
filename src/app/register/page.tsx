@@ -51,8 +51,13 @@ export default function Register() {
   const passwordsMatch = checkPasswordsMatch(password, confirmPassword);
   const docValid = validateDocument(document);
 
+  // Função de validação de e-mail
+  const validateEmail = (value: string) => /^\S+@\S+\.\S+$/.test(value);
+  const emailValid = validateEmail(email);
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!emailValid || !docValid || !isValidPassword || !passwordsMatch) return;
     await handleRegister(fullName, document, email, password, confirmPassword);
   };
 
@@ -85,29 +90,37 @@ export default function Register() {
               className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
               disabled={loading}
             />
+            <div>
+              <input
+                type="text"
+                placeholder="CPF ou CNPJ"
+                value={document}
+                onChange={(e) => setDocument(e.target.value.replace(/\D/g, ""))}
+                className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+                disabled={loading}
+              />
+              {!docValid && document.length > 0 && (
+                <p className="text-[var(--danger)] text-xs ml-1">
+                  Digite um CPF ou CNPJ válido
+                </p>
+              )}
+            </div>
 
-            <input
-              type="text"
-              placeholder="CPF ou CNPJ"
-              value={document}
-              onChange={(e) => setDocument(e.target.value.replace(/\D/g, ""))}
-              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
-              disabled={loading}
-            />
-            {!docValid && document.length > 0 && (
-              <p className="text-[var(--danger)] text-xs ml-1">
-                Digite um CPF ou CNPJ válido
-              </p>
-            )}
-
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
-              disabled={loading}
-            />
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+                disabled={loading}
+              />
+              {!emailValid && email.length > 0 && (
+                <p className="text-[var(--danger)] text-xs ml-1">
+                  Insira um e-mail válido
+                </p>
+              )}
+            </div>
 
             <div className="relative">
               <input
@@ -172,24 +185,32 @@ export default function Register() {
           <button
             type="submit"
             disabled={
-              !isValidPassword || !passwordsMatch || !docValid || loading
+              !isValidPassword ||
+              !passwordsMatch ||
+              !docValid ||
+              !emailValid ||
+              loading
             }
             className={`
-    mt-8 h-14 w-full max-w-xs rounded-xl flex items-center justify-center
-    text-white transition-all duration-200 bg-[var(--primary)]
-    ${
-      !isValidPassword || !passwordsMatch || !docValid || loading
-        ? `
-          opacity-50
-          cursor-not-allowed
-          pointer-events-none
-        `
-        : `
-          hover:bg-[var(--secondary)]
-          hover:scale-105
-        `
-    }
-  `}
+              mt-8 h-14 w-full max-w-xs rounded-xl flex items-center justify-center
+              text-white transition-all duration-200 bg-[var(--primary)]
+              ${
+                !isValidPassword ||
+                !passwordsMatch ||
+                !docValid ||
+                !emailValid ||
+                loading
+                  ? `
+                    opacity-50
+                    cursor-not-allowed
+                    pointer-events-none
+                  `
+                  : `
+                    hover:bg-[var(--secondary)]
+                    hover:scale-105
+                  `
+              }
+            `}
           >
             {loading ? "Registrando..." : "Registrar-se agora"}
           </button>
