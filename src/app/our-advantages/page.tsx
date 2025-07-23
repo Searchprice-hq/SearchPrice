@@ -1,12 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Nossos diferenciais",
-  description: "Os principais benefícios da Search Price",
-};
 
 function InfoCard({
   icon,
