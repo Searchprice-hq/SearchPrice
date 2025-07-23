@@ -50,7 +50,7 @@ export const useRegister = () => {
     }
 
     if (!validatePassword(password)) {
-      setError("A senha não atende todos os requisitos.");
+      setError("A senha não atende todos os requisitos");
       return;
     }
 

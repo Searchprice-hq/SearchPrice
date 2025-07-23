@@ -18,11 +18,11 @@ export function useResetPassword() {
     setError(null);
 
     if (password !== confirmPassword) {
-      setError("As senhas não coincidem.");
+      setError("As senhas não coincidem");
       return;
     }
     if (password.length < 8) {
-      setError("A senha deve ter ao menos 8 caracteres.");
+      setError("A senha deve ter ao menos 8 caracteres");
       return;
     }
 

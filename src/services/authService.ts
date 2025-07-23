@@ -11,8 +11,8 @@ interface ErrorDetail {
   message: string;
   rule: string;
   field: string;
+  meta?: Record<string, any>;
 }
-
 interface ErrorResponse {
   errors?: ErrorDetail[];
   message?: string;
@@ -28,20 +28,34 @@ export async function loginUser(
     body: JSON.stringify({ email, password }),
   });
 
-  const body = await res.json();
+  const raw = (await res.json().catch(() => ({}))) as
+    | { data: LoginResponse }
+    | ErrorResponse;
 
   if (!res.ok) {
+    const errBody = raw as ErrorResponse;
+    const firstError = errBody.errors?.[0];
+
     if (res.status === 400) {
       throw new Error("Senha incorreta");
     }
-    if (res.status === 422) {
-      throw new Error("E-mail não cadastrado");
+
+    if (res.status === 422 && firstError) {
+      if (firstError.field === "password" && firstError.rule === "minLength") {
+        throw new Error("A senha deve ter no mínimo 8 caracteres");
+      }
+      if (firstError.field === "email") {
+        throw new Error("E‑mail não cadastrado");
+      }
+      throw new Error(firstError.message);
     }
 
-    throw new Error(body.message || "Erro ao efetuar login");
+    throw new Error(
+      errBody.message || firstError?.message || "Erro ao efetuar login"
+    );
   }
 
-  return body.data as LoginResponse;
+  return (raw as { data: LoginResponse }).data;
 }
 
 export async function registerUser(

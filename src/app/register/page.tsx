@@ -47,8 +47,9 @@ export default function Register() {
     validateDocument,
   } = useRegister() as UseRegisterReturn;
 
-  const validateFullName = (value: string) => /^[A-Za-z ]{1,60}$/.test(value);
-  const fullNameValid = validateFullName(fullName);
+  const fullNamePatternValid = /^[A-Za-z ]{1,60}$/.test(fullName);
+  const fullNameLengthValid = fullName.trim().length >= 10;
+  const fullNameValid = fullNamePatternValid && fullNameLengthValid;
 
   const isValidPassword = validatePassword(password);
   const passwordsMatch = checkPasswordsMatch(password, confirmPassword);
@@ -102,11 +103,18 @@ export default function Register() {
                 className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
                 disabled={loading}
               />
-              {!fullNameValid && fullName.length > 0 && (
+              {fullName.length > 0 && !fullNameLengthValid && (
                 <p className="text-[var(--danger)] text-xs ml-1">
-                  Informe um nome válido.
+                  O nome deve ter no mínimo 10 caracteres.
                 </p>
               )}
+              {fullName.length > 0 &&
+                fullNameLengthValid &&
+                !fullNamePatternValid && (
+                  <p className="text-[var(--danger)] text-xs ml-1">
+                    Informe um nome válido.
+                  </p>
+                )}
             </div>
 
             <div>
