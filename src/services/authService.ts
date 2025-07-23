@@ -11,7 +11,6 @@ interface ErrorDetail {
   message: string;
   rule: string;
   field: string;
-  meta?: Record<string, any>;
 }
 interface ErrorResponse {
   errors?: ErrorDetail[];
