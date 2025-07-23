@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
-import "../../globals.css";
 import { Poppins } from "next/font/google";
-import { ThemeProvider } from "@/components/ThemeProvider";
-
-export const metadata: Metadata = {
-  title: "Search Price",
-  description: "Aplicativo de comparação de preços",
-};
+import { ThemeProvider } from "next-themes";
+import "../../globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,13 +10,21 @@ const poppins = Poppins({
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="pt-BR" className={poppins.variable}>
+    <html lang="pt-BR" className={poppins.variable} suppressHydrationWarning>
+      <head />
       <body className="font-sans antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="light"
+          enableSystem={false}
+          enableColorScheme={false}
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

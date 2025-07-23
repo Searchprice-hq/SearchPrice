@@ -2,17 +2,16 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/hooks/useTheme";
 import { Grid } from "@/components/Grid";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   const router = useRouter();
-  const { toggleTheme } = useTheme();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -29,17 +28,7 @@ export default function Home() {
             <h2 className="text-white font-semibold text-xl">Search Price</h2>
           </div>
           <div className="flex items-center gap-6">
-            <button
-              onClick={toggleTheme}
-              className="focus:outline-none transition-transform duration-200 hover:scale-110 z-10"
-            >
-              <Image
-                src="/half-moon.png"
-                alt="Alterar tema"
-                width={36}
-                height={36}
-              />
-            </button>
+            <ThemeToggle />
             <button
               onClick={() => {
                 router.push("/login");

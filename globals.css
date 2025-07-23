@@ -2,10 +2,60 @@
 
 :root {
   --primary: #144750;
+  --secondary: #278d8d;
+  --third: #41aaa3;
+  --fourth: #4dd1c8;
+  --fifth: #228da0;
+  --border: #b6b6b6;
+  --white: #f8f8f8;
+  --gray: #dfdfdf;
+  --light-gray: #f0f0f0;
+
+  --background-input: #f8f8f8;
+  --background-container: #f8f8f8;
+  --background-secondary: #f8f8f8;
+
+  --dark-black-to-primary: #144750;
+  --dark-black-to-secondary: #299c9c;
+
+  --black-to-gray: #d1ddde;
+  --black-to-gray-50: #f9fafb;
+  --black-to-gray-100: #d1ddde;
+  --black-to-light-gray: #f0f0f0;
+
+  --black-to-primary: #144750;
+  --black-to-secondary: #299c9c;
+  --black-to-light-blue: #dcf5f3;
+  --black-to-white: #f8f8f8;
+
+  --primary-to-white: #f8f8f8;
+  --primary-to-secondary: #299c9c;
+  --white-to-primary: #144750;
+
+  --secondary-to-primary: #144750;
+  --secondary-to-third: #41aaa3;
+  --secondary-to-fourth: #4dd1c8;
+  --secondary-to-white: #f8f8f8;
+  --secondary-to-gray: #d1ddde;
+
+  --third-to-primary: #144750;
+  --third-to-secondary: #299c9c;
+  --third-to-fourth: #4dd1c8;
+  --third-to-white: #f8f8f8;
+
+  --danger: #c93642;
+  --danger-hover: #fc5b69;
+
+  --green-100: #47ce57;
+  --gray-to-white: #f8f8f8;
+}
+
+[data-theme="dark"] {
+  --primary: #144750;
   --secondary: #299c9c;
   --third: #41aaa3;
   --fourth: #4dd1c8;
-  --fifth: #1e7483;
+  --fifth: #228da0;
   --white: #f8f8f8;
   --border: #333333;
 
@@ -49,51 +99,6 @@
 
   --gray-to-white: #4b5563;
   --dollar-bill-container: #e3f4f7;
-}
-
-[data-theme="light"] {
-  --primary: #144750;
-  --secondary: #278d8d;
-  --third: #41aaa3;
-  --fourth: #4dd1c8;
-  --border: #b6b6b6;
-
-  --gray: #dfdfdf;
-  --light-gray: #f0f0f0;
-
-  --background-input: #f8f8f8;
-  --background-container: #f8f8f8;
-  --background-secondary: #f8f8f8;
-
-  --dark-black-to-primary: #144750;
-  --dark-black-to-secondary: #299c9c;
-
-  --black-to-gray: #d1ddde;
-  --black-to-gray-50: #f9fafb;
-  --black-to-gray-100: #d1ddde;
-  --black-to-light-gray: #f0f0f0;
-
-  --black-to-primary: #144750;
-  --black-to-secondary: #299c9c;
-  --black-to-light-blue: #dcf5f3;
-  --black-to-white: #f8f8f8;
-
-  --primary-to-white: #f8f8f8;
-  --primary-to-secondary: #299c9c;
-  --white-to-primary: #144750;
-
-  --secondary-to-primary: #144750;
-  --secondary-to-third: #41aaa3;
-  --secondary-to-fourth: #4dd1c8;
-  --secondary-to-white: #f8f8f8;
-  --secondary-to-gray: #d1ddde;
-
-  --third-to-primary: #144750;
-  --third-to-secondary: #299c9c;
-  --third-to-fourth: #4dd1c8;
-  --third-to-white: #f8f8f8;
-
-  --gray-to-white: #f8f8f8;
 }
 
 body {
