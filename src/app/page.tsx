@@ -330,10 +330,9 @@ export default function Home() {
                   sx={{
                     backgroundColor: "var(--black-to-light-blue)",
                     borderRadius: "0.5rem",
-                    borderWidth: "1.5px",
+                    border: "1.5px solid var(--secondary-to-light-blue)",
                     color: "var(--white-to-primary)",
                   }}
-                  className="w-full rounded-2xl dark:border-[var(--secondary)]"
                 >
                   <AccordionSummary
                     expandIcon={

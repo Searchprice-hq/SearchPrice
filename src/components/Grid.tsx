@@ -11,7 +11,8 @@ export function Grid() {
         {
           "bg-[var(--black-to-gray-100)] text-white border-[var(--secondary-to-gray)]":
             symbol === "✅",
-          "bg-[var(--black-to-light-gray)] border-white": symbol !== "✅",
+          "bg-[var(--black-to-light-gray)] border-[var(--white-to-light-gray)]":
+            symbol !== "✅",
         }
       );
 
@@ -32,7 +33,7 @@ export function Grid() {
           {
             "bg-[var(--black-to-primary)] text-sm text-center text-white border-[var(--secondary-to-primary)]":
               isFirst,
-            "bg-[var(--black-to-light-blue)] text-sm text-center text-[var(--white-to-primary)] border-white":
+            "bg-[var(--black-to-light-blue)] text-sm text-center text-[var(--white-to-primary)] border-[var(--white-to-light-blue)]":
               !isFirst,
           }
         );
