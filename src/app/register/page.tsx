@@ -47,7 +47,7 @@ export default function Register() {
     validateDocument,
   } = useRegister() as UseRegisterReturn;
 
-  const fullNamePatternValid = /^[A-Za-z ]{1,60}$/.test(fullName);
+  const fullNamePatternValid = /^[\p{L} ]{1,60}$/u.test(fullName);
   const fullNameLengthValid = fullName.trim().length >= 10;
   const fullNameValid = fullNamePatternValid && fullNameLengthValid;
 
