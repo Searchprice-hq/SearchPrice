@@ -216,8 +216,8 @@ export default function DashboardPage() {
               width={50}
               height={50}
             />
-            <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 bg-white text-red-600 text-sm rounded opacity-0 group-hover:opacity-100">
-              Logout?
+            <span className="absolute top-full left-1/2 font-medium -translate-x-1/2 mt-1 px-2 py-1 bg-white text-red-600 text-sm rounded opacity-0 group-hover:opacity-100">
+              Sair
             </span>
           </button>
         </div>

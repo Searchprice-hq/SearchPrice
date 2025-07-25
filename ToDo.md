@@ -6,13 +6,15 @@
 
 - Alterar o titulo da coluna preço para Preço R$ e trocar a formatação de ponto para vírgula. Exemplo: 59,99 ✅
 
-- No "filtrar por:", deixar padrão "Preço (Menor -> Maior)" e retirar "--Todos--".
+- No "filtrar por:", deixar padrão "Preço (Menor -> Maior)" e retirar "--Todos--". ✅
 
 - Adicionar uma legenda para barras verticais, no modo Web colocar a legenda ao lado dos filtros, no modo mobile colocar abaixo do "Filtrar por:"
 
+- Alterar botão de "Logout" para "Sair".✅
+
 # Redefinição de senha
 
-- Inserir os mesmos controles do cadastro da senha (a validação de senha vermelho e verde da tela de cadastro).
+- Inserir os mesmos controles do cadastro da senha (a validação de senha vermelho e verde da tela de cadastro). ✅
 
 - Inserir a opção visualização de senha (O "olhinho").
 

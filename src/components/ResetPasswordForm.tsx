@@ -2,6 +2,11 @@
 
 import React, { useState, useEffect, FormEvent } from "react";
 import { useResetPassword } from "@/hooks/useResetPassword";
+import { useRegister } from "@/hooks/useRegister";
+import type {
+  PasswordRequirement,
+  UseRegisterReturn,
+} from "@/hooks/useRegister";
 
 interface Props {
   initialEmail: string;
@@ -16,8 +21,15 @@ export default function ResetPasswordForm({
   const [token, setToken] = useState(initialToken);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswordRules, setShowPasswordRules] = useState(false);
+  const [showConfirmError, setShowConfirmError] = useState(false);
 
   const { handleReset, error, loading } = useResetPassword();
+  const { passwordRequirements, validatePassword, checkPasswordsMatch } =
+    useRegister() as UseRegisterReturn;
+
+  const isValidPassword = validatePassword(password);
+  const passwordsMatch = checkPasswordsMatch(password, confirmPassword);
 
   useEffect(() => {
     setEmail(initialEmail);
@@ -27,8 +39,8 @@ export default function ResetPasswordForm({
   const isFormValid =
     email.trim() !== "" &&
     token.trim() !== "" &&
-    password.trim() !== "" &&
-    confirmPassword.trim() !== "";
+    isValidPassword &&
+    passwordsMatch;
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -64,25 +76,61 @@ export default function ResetPasswordForm({
             disabled={loading}
             className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
-          <input
-            type="password"
-            placeholder="Nova senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            disabled={loading}
-            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
-          />
-          <input
-            type="password"
-            placeholder="Confirme a nova senha"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            disabled={loading}
-            className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
-          />
-
+          <div className="relative">
+            <input
+              type="password"
+              placeholder="Nova senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onFocus={() => setShowPasswordRules(true)}
+              onBlur={() => {
+                if (!password || isValidPassword) setShowPasswordRules(false);
+              }}
+              required
+              disabled={loading}
+              className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
+            />
+            {showPasswordRules && !isValidPassword && (
+              <ul className="mt-2 pl-4 text-sm text-[var(--danger)] space-y-1">
+                {passwordRequirements.map(
+                  (req: PasswordRequirement, idx: number) => {
+                    const ok = req.regex.test(password);
+                    return (
+                      <li
+                        key={idx}
+                        className={
+                          ok ? "text-[var(--green-400)] line-through" : ""
+                        }
+                      >
+                        {req.text}
+                      </li>
+                    );
+                  }
+                )}
+              </ul>
+            )}
+          </div>
+          <div className="relative">
+            <input
+              type="password"
+              placeholder="Confirme a nova senha"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onFocus={() => setShowConfirmError(true)}
+              onBlur={() => {
+                if (passwordsMatch || !confirmPassword)
+                  setShowConfirmError(false);
+              }}
+              required
+              disabled={loading}
+              className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
+            />
+            {showConfirmError && !passwordsMatch && (
+              <p className="text-[var(--danger)] text-sm mt-1">
+                As senhas não coincidem!
+              </p>
+            )}
+          </div>
           {error && <p className="text-[var(--danger)] text-sm">{error}</p>}
 
           <button

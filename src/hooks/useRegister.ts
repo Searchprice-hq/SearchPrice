@@ -6,7 +6,7 @@ import { registerUser } from "@/services/authService";
 import type { User } from "@/models/User";
 import { validateDocument } from "@/helpers/validators";
 
-interface PasswordRequirement {
+export interface PasswordRequirement {
   regex: RegExp;
   text: string;
 }
@@ -85,3 +85,5 @@ export const useRegister = () => {
     validateDocument,
   };
 };
+
+export type UseRegisterReturn = ReturnType<typeof useRegister>;
