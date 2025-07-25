@@ -18,7 +18,7 @@ export default function TooltipInfo({ text }: TooltipInfoProps) {
         i
       </div>
       {visible && (
-        <div className="absolute z-50 w-52 p-2 bg-black text-white text-sm rounded-md top-6 left-1/2 -translate-x-1/2 shadow-lg">
+        <div className="absolute z-50 w-52 p-2 bg-black text-white text-sm rounded-md bottom-6 left-1/2 -translate-x-1/2 shadow-lg">
           {text}
         </div>
       )}

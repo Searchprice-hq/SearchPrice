@@ -53,7 +53,7 @@ export default function OurAdvantagesPage() {
 
         <div className="container mx-auto px-6 flex items-center justify-center pt-12 pb-14">
           <div className="text-center max-w-6xl mx-auto">
-            <h1 className="mt-4 sm:mt-4 md:mt-0 text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="mt-4 sm:mt-4 md:mt-0 text-4xl font-bold mb-4">
               Estratégia de preços com inteligência de mercado
             </h1>
             <p className="max-w-2xl mx-auto text-lg leading-relaxed">

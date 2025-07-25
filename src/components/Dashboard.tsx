@@ -17,6 +17,31 @@ const FILTER_OPTIONS: { value: FilterOption; label: string }[] = [
 
 const SHIP_OPTIONS = ["Prime", "Normal", "Flex", "Full", "Express"];
 
+const LegendTooltip = () => {
+  return (
+    <div className="relative group inline-block ml-2">
+      <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-black text-xs font-bold cursor-pointer">
+        <Image src="/info.png" alt="Legenda" width={20} height={20} />
+      </div>
+
+      <div className="absolute z-50 hidden group-hover:flex flex-col gap-2 text-sm text-white bg-black p-4 rounded-lg w-70 left-1/2 -translate-x-1/2 shadow-xl">
+        <div className="flex items-center gap-2">
+          <span className="w-3 h-3 rounded bg-green-500 inline-block" />
+          <span>Lucro e preço de venda competitivo</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-3 h-3 rounded bg-yellow-500 inline-block" />
+          <span>Lucro e preço de venda igual ao do anúncio</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-3 h-3 rounded bg-red-500 inline-block" />
+          <span>Sem lucro ou preço de venda maior que o do anúncio</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Dashboard() {
   const router = useRouter();
 
@@ -233,9 +258,10 @@ export default function Dashboard() {
 
         <div className="flex flex-wrap gap-4 mb-6 items-end">
           <div>
-            <label className="block mb-1 text-sm text-white">
+            <label className="block text-sm text-white flex items-center gap-1">
               Filtrar por:
             </label>
+
             <select
               value={filter}
               onChange={handleFilterChange}
@@ -247,6 +273,7 @@ export default function Dashboard() {
                 </option>
               ))}
             </select>
+            <LegendTooltip />
           </div>
           {filter === "shipping" && (
             <div>

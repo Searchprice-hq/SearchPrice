@@ -113,7 +113,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="sell_price" className="block text-white">
                 Valor de venda
-                <TooltipInfo text="Insira o valor pelo qual você deseja vender o produto." />
+                <TooltipInfo text="Valor pelo qual você deseja vender o produto." />
               </label>
 
               <input
@@ -231,7 +231,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="buy_price" className="block text-white">
                 Custo de compra
-                <TooltipInfo text="Insira o custo de compra do produto." />
+                <TooltipInfo text="Custo de compra do produto." />
               </label>
               <input
                 id="buy_price"
@@ -248,7 +248,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="additional_cost" className="block text-white">
                 Custos adicionais
-                <TooltipInfo text="Insira quaisquer custos adicionais que possam afetar o preço final." />
+                <TooltipInfo text="Quaisquer custos adicionais que possam afetar o preço final." />
               </label>
               <input
                 id="additional_cost"
@@ -271,7 +271,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="aliquot" className="block text-white">
                 Alíquota
-                <TooltipInfo text="Insira a alíquota de imposto ICMS da venda do produto." />
+                <TooltipInfo text="Alíquota de imposto ICMS da venda do produto." />
               </label>
               <input
                 id="aliquot"
