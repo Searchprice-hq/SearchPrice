@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Head from "next/head";
 
 interface Testimonial {
   avatar: string;
@@ -89,68 +88,63 @@ function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
 
 export default function TestimonialsPage() {
   return (
-    <>
-      <Head>
-        <title>Depoimentos</title>
-      </Head>
-      <main className="bg-[var(--black-to-light-blue)] min-h-screen">
-        <header className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
-          <Link
-            href="/"
-            className="absolute top-4 left-4 hover:opacity-90 transition-opacity transform hover:scale-110"
-          >
-            <Image src="/home.png" alt="Home" width={40} height={40} />
-          </Link>
-          <Link
-            href="/login"
-            className="absolute top-4 right-4 hover:opacity-90 transition-opacity transform hover:scale-110"
-          >
-            <Image src="/profile.png" alt="Login" width={42} height={42} />
-          </Link>
+    <main className="bg-[var(--black-to-light-blue)] min-h-screen">
+      <header className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
+        <Link
+          href="/"
+          className="absolute top-4 left-4 hover:opacity-90 transition-opacity transform hover:scale-110"
+        >
+          <Image src="/home.png" alt="Home" width={40} height={40} />
+        </Link>
+        <Link
+          href="/login"
+          className="absolute top-4 right-4 hover:opacity-90 transition-opacity transform hover:scale-110"
+        >
+          <Image src="/profile.png" alt="Login" width={42} height={42} />
+        </Link>
 
-          <div className="container mx-auto px-6 text-center py-10">
-            <h1 className="text-4xl font-bold mb-2 mt-6 sm:mt-0 text-[var(--white)]">
-              Depoimentos
-            </h1>
-            <p className="max-w-md mx-auto">
-              Veja como a Search Price tem ajudado vendedores e empreendedores a
-              otimizarem suas vendas e lucros.
-            </p>
-          </div>
-        </header>
-
-        <section className="container mx-auto px-6 py-16">
-          <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {TESTIMONIALS.map((t) => (
-              <TestimonialCard key={t.name} {...t} />
-            ))}
-          </div>
-        </section>
-
-        <section className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-12">
-          <div className="container mx-auto px-6 text-center space-y-4">
-            <h2 className="text-2xl font-semibold text-[var(--white)]">
-              Quer ser nosso próximo caso de sucesso?
-            </h2>
-            <p>
-              Experimente a Search Price grátis por 14 dias e veja a diferença!
-            </p>
-            <Link
-              href="/register"
-              className="mt-4 inline-block px-6 py-3 bg-white text-[var(--primary)] font-semibold rounded-lg hover:scale-105 transition-transform"
-            >
-              Começar Agora
-            </Link>
-          </div>
-        </section>
-
-        <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
-          <p className="text-base text-[var(--white-to-primary)]">
-            © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os
-            direitos reservados.
+        <div className="container mx-auto px-6 text-center py-10">
+          <h1 className="text-4xl font-bold mb-2 mt-6 sm:mt-0 text-[var(--white)]">
+            Depoimentos
+          </h1>
+          <p className="max-w-md mx-auto">
+            Veja como a Search Price tem ajudado vendedores e empreendedores a
+            otimizarem suas vendas e lucros.
           </p>
-        </footer>
-      </main>
-    </>
+        </div>
+      </header>
+
+      <section className="container mx-auto px-6 py-16">
+        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <TestimonialCard key={t.name} {...t} />
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-12">
+        <div className="container mx-auto px-6 text-center space-y-4">
+          <h2 className="text-2xl font-semibold text-[var(--white)]">
+            Quer ser nosso próximo caso de sucesso?
+          </h2>
+          <p>
+            Experimente a Search Price grátis por 14 dias e veja a diferença!
+          </p>
+          <Link
+            href="/register"
+            className="mt-4 inline-block px-6 py-3 bg-white text-[var(--primary)] font-semibold rounded-lg hover:scale-105 transition-transform"
+          >
+            Começar Agora
+          </Link>
+        </div>
+      </section>
+
+      <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
+        <p className="text-base text-[var(--white-to-primary)]">
+          © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
+          reservados.
+        </p>
+      </footer>
+    </main>
   );
 }
