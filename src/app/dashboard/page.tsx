@@ -114,7 +114,7 @@ export default function DashboardPage() {
                   {[
                     "Produtos",
                     "Nome",
-                    "Preço",
+                    "Preço R$",
                     "Frete",
                     "Disponível",
                     "Vendidos",
@@ -158,7 +158,6 @@ export default function DashboardPage() {
                       className="hover:bg-gray-100 cursor-pointer"
                     >
                       <td className="px-4 py-2 relative">
-                        {/* só mostra a barra quando calcResult for válido */}
                         {calcResult !== null && !Number.isNaN(calcResult) && (
                           <div
                             className={`absolute inset-y-0 left-0 w-3 rounded-r ${colorClass}`}
@@ -176,9 +175,9 @@ export default function DashboardPage() {
                       </td>
                       <td className="px-4 py-2 text-center">{p.name}</td>
                       <td className="px-4 py-2 text-center">
-                        {p.price.toLocaleString("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
+                        {Number(p.price).toLocaleString("pt-BR", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
                         })}
                       </td>
                       <td className="px-4 py-2 text-center capitalize">
@@ -339,7 +338,7 @@ export default function DashboardPage() {
 
               <p>
                 <span className="font-semibold">Preço:</span>{" "}
-                {selectedProduct.price.toLocaleString("pt-BR", {
+                {Number(selectedProduct.price).toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
@@ -378,7 +377,8 @@ export default function DashboardPage() {
       )}
 
       <footer className="bg-[var(--dark-black-to-secondary)] text-white text-center p-8">
-        © 2024-2025 Search Price Soluções Tecnológicas LTDA.
+        © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
+        reservados.
       </footer>
     </div>
   );

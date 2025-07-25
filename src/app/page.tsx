@@ -369,7 +369,7 @@ export default function Home() {
       <footer className="bg-[var(--dark-black-to-primary)] text-white py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
           <p className="text-base">
-            © 2024-2025 Search Price Soluções Tecnológicas LTDA. Todos os
+            © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os
             direitos reservados.
           </p>
         </div>
