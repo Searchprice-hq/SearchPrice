@@ -4,7 +4,7 @@
 
 # Tela dashboard
 
-- Alterar o titulo da coluna preço para Preço R$ e trocar a formatação de ponto para vírgula. Exemplo: 59,99
+- Alterar o titulo da coluna preço para Preço R$ e trocar a formatação de ponto para vírgula. Exemplo: 59,99 ✅
 
 - No "filtrar por:", deixar padrão "Preço (Menor -> Maior)" e retirar "--Todos--".
 

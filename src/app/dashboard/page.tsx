@@ -10,7 +10,6 @@ import MiniCalculator from "@/components/MiniCalculator";
 type FilterOption = "" | "price" | "shipping" | "productCode";
 
 const FILTER_OPTIONS: { value: FilterOption; label: string }[] = [
-  { value: "", label: "— Todos —" },
   { value: "price", label: "Preço (menor → maior)" },
   { value: "shipping", label: "Tipo de Frete" },
   { value: "productCode", label: "Código EAN" },
@@ -22,7 +21,7 @@ export default function DashboardPage() {
   const router = useRouter();
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [filter, setFilter] = useState<FilterOption>("");
+  const [filter, setFilter] = useState<FilterOption>("price");
   const [dataFilter, setDataFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,11 +56,7 @@ export default function DashboardPage() {
   );
 
   useEffect(() => {
-    if (filter && filter !== "productCode") {
-      loadProducts(filter, dataFilter);
-    } else {
-      loadProducts();
-    }
+    loadProducts(filter, dataFilter);
   }, [filter, dataFilter, loadProducts]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -262,7 +257,7 @@ export default function DashboardPage() {
                 onChange={(e) => setDataFilter(e.target.value)}
                 className="rounded p-2 bg-white"
               >
-                <option value="">— Todos —</option>
+                <option value="">Todos</option>
                 {SHIP_OPTIONS.map((s) => (
                   <option key={s} value={s}>
                     {s}
