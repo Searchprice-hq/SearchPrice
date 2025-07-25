@@ -27,14 +27,12 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const [buyPrice, setBuyPrice] = useState("");
   const [aliquot, setAliquot] = useState("");
   const [logistics, setLogistics] = useState("");
-  const [adType, setAdType] = useState("");
-  const [calcResult, setCalcResult] = useState<number | null>(null);
+  const [adType, setAdType] = useState(""); // para opções pré-definidas
   const [customLogisticsEnabled, setCustomLogisticsEnabled] = useState(false);
-  const [customAdEnabled, setCustomAdEnabled] = useState(false);
   const [customLogisticsValue, setCustomLogisticsValue] = useState("");
-  const [customAdValue, setCustomAdValue] = useState("");
-  const [customAliquotEnabled, setCustomAliquotEnabled] = useState(false);
-  const [customAliquotValue, setCustomAliquotValue] = useState("");
+  const [customAdEnabled, setCustomAdEnabled] = useState(false);
+  const [customAdValue, setCustomAdValue] = useState(""); // valor em % (até duas casas)
+  const [calcResult, setCalcResult] = useState<number | null>(null);
 
   useEffect(() => {
     if (!sellPrice || !buyPrice || !aliquot) {
@@ -43,17 +41,19 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       return;
     }
 
-    const sp = parseFloat(sellPrice);
-    const bp = parseFloat(buyPrice);
-    const al = parseFloat(aliquot || "0");
+    const sp = parseFloat(sellPrice) || 0;
+    const bp = parseFloat(buyPrice) || 0;
+    const al = parseFloat(aliquot) || 0;
 
     const logCost = customLogisticsEnabled
-      ? parseFloat(customLogisticsValue || "0")
+      ? parseFloat(customLogisticsValue) || 0
       : logisticsCosts[logistics] ?? 0;
 
-    const adCost = customAdEnabled
-      ? parseFloat(customAdValue || "0")
-      : adCosts[adType] ?? 0;
+    const adPct = customAdEnabled
+      ? (parseFloat(customAdValue) || 0) / 100
+      : (adCosts[adType] ?? 0) / 100;
+
+    const adCost = sp * adPct;
 
     const result = sp - logCost - adCost - bp - sp * al;
     setCalcResult(result);
@@ -62,13 +62,13 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
     sellPrice,
     buyPrice,
     logistics,
-    adType,
-    aliquot,
-    onCalc,
     customLogisticsEnabled,
     customLogisticsValue,
     customAdEnabled,
     customAdValue,
+    adType,
+    aliquot,
+    onCalc,
   ]);
 
   const fmt = (v: number) =>
@@ -119,9 +119,10 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
           <div className="space-y-4 mt-4">
             <div>
               <label htmlFor="sell_price" className="block text-white">
-                Valor que deseja vender:
+                Valor de venda
               </label>
               <input
+                id="sell_price"
                 type="number"
                 value={sellPrice}
                 onChange={(e) => setSellPrice(e.target.value)}
@@ -133,6 +134,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 "
               />
             </div>
+
             <hr className="border-[var(--gray-to-white)]" />
 
             <div>
@@ -154,7 +156,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   type="number"
                   value={customLogisticsValue}
                   onChange={(e) => setCustomLogisticsValue(e.target.value)}
-                  placeholder="Valor customizado"
+                  placeholder="R$ 0,00"
                   className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
                 />
               ) : (
@@ -181,15 +183,18 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 </>
               )}
             </div>
+
             <hr className="border-[var(--gray-to-white)]" />
 
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="text-white">Tipo de anúncio</label>
+                <label htmlFor="adPercentage" className="text-white">
+                  Taxa de anúncio
+                </label>
                 <button
                   type="button"
                   className="text-xs text-white"
-                  onClick={() => setCustomAdEnabled(!customAdEnabled)}
+                  onClick={() => setCustomAdEnabled((p) => !p)}
                 >
                   {customAdEnabled ? "Usar lista" : "Inserir valor"}
                 </button>
@@ -197,32 +202,34 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
               {customAdEnabled ? (
                 <input
+                  id="adPercentage"
                   type="number"
+                  step="0.01"
+                  min="0"
+                  max="100"
                   value={customAdValue}
                   onChange={(e) => setCustomAdValue(e.target.value)}
-                  placeholder="Valor customizado"
+                  placeholder="0.00%"
                   className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
                 />
               ) : (
-                <>
-                  <select
-                    value={adType}
-                    onChange={(e) => setAdType(e.target.value)}
-                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
-                  >
-                    <option value="" disabled>
-                      Anúncio
-                    </option>
-                    <option value="classic">Clássico</option>
-                    <option value="premium">Premium</option>
-                    <option value="free">Free</option>
-                  </select>
-                  {adType && (
-                    <p className="mt-2 text-white text-sm">
-                      Valor: {fmt(adCosts[adType])}
-                    </p>
-                  )}
-                </>
+                <select
+                  value={adType}
+                  onChange={(e) => setAdType(e.target.value as any)}
+                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
+                >
+                  <option value="" disabled>
+                    Anúncio
+                  </option>
+                  <option value="classic">Clássico</option>
+                  <option value="premium">Premium</option>
+                  <option value="free">Free</option>
+                </select>
+              )}
+              {!customAdEnabled && adType && (
+                <p className="mt-2 text-white text-sm">
+                  Taxa: {(adCosts[adType] ?? 0).toFixed(2)}%
+                </p>
               )}
             </div>
             <hr className="border-[var(--gray-to-white)]" />
@@ -232,6 +239,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 Custo de compra:
               </label>
               <input
+                id="buy_price"
                 type="number"
                 value={buyPrice}
                 onChange={(e) => setBuyPrice(e.target.value)}
@@ -243,23 +251,25 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 "
               />
             </div>
+
             <hr className="border-[var(--gray-to-white)]" />
 
             <div>
               <label htmlFor="aliquot" className="block text-white">
-                Alíquota (%):
+                Alíquota:
               </label>
               <input
+                id="aliquot"
                 type="number"
                 step="0.001"
                 value={aliquot}
                 onChange={(e) => setAliquot(e.target.value)}
-                placeholder="Ex: 0.073"
+                placeholder="0.000%"
                 className="
-      w-full rounded-lg p-2
-      bg-[var(--black-to-primary)] text-white placeholder:text-gray-400
-      focus:outline-none
-    "
+                  w-full rounded-lg p-2
+                  bg-[var(--black-to-primary)] text-white placeholder:text-gray-400
+                  focus:outline-none
+                "
               />
             </div>
 
