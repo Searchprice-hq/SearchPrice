@@ -6,41 +6,17 @@ import { useRouter } from "next/navigation";
 import { fetchProducts } from "@/services/productService";
 import type { Product } from "@/models/Product";
 import MiniCalculator from "@/components/MiniCalculator";
+import LegendTooltip from "./LegendTooltip";
 
-type FilterOption = "" | "price" | "shipping" | "productCode";
+type FilterOption = (typeof FILTER_OPTIONS)[number]["value"];
 
-const FILTER_OPTIONS: { value: FilterOption; label: string }[] = [
+const FILTER_OPTIONS = [
   { value: "price", label: "Preço (menor → maior)" },
   { value: "shipping", label: "Tipo de Frete" },
   { value: "productCode", label: "Código EAN" },
-];
+] as const;
 
 const SHIP_OPTIONS = ["Prime", "Normal", "Flex", "Full", "Express"];
-
-const LegendTooltip = () => {
-  return (
-    <div className="relative group inline-block ml-2">
-      <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-black text-xs font-bold cursor-pointer">
-        <Image src="/info.png" alt="Legenda" width={20} height={20} />
-      </div>
-
-      <div className="absolute z-50 hidden group-hover:flex flex-col gap-2 text-sm text-white bg-black p-4 rounded-lg w-70 left-1/2 -translate-x-1/2 shadow-xl">
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded bg-green-500 inline-block" />
-          <span>Lucro e preço de venda competitivo</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded bg-yellow-500 inline-block" />
-          <span>Lucro e preço de venda igual ao do anúncio</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded bg-red-500 inline-block" />
-          <span>Sem lucro ou preço de venda maior que o do anúncio</span>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default function Dashboard() {
   const router = useRouter();
@@ -257,51 +233,58 @@ export default function Dashboard() {
         </div>
 
         <div className="flex flex-wrap gap-4 mb-6 items-end">
-          <div>
-            <label className="block text-sm text-white flex items-center gap-1">
+          <div className="flex flex-col">
+            <label className="block text-sm text-white mb-1">
               Filtrar por:
             </label>
-
-            <select
-              value={filter}
-              onChange={handleFilterChange}
-              className="rounded p-2 bg-white"
-            >
-              {FILTER_OPTIONS.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-            <LegendTooltip />
-          </div>
-          {filter === "shipping" && (
-            <div>
-              <label className="block mb-1 text-sm text-white">Frete:</label>
+            <div className="flex items-center gap-2">
               <select
-                value={dataFilter}
-                onChange={(e) => setDataFilter(e.target.value)}
+                value={filter}
+                onChange={handleFilterChange}
                 className="rounded p-2 bg-white"
               >
-                <option value="">Todos</option>
-                {SHIP_OPTIONS.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
+                {FILTER_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
                   </option>
                 ))}
               </select>
+              {filter === "price" && <LegendTooltip />}
+            </div>
+          </div>
+          {filter === "shipping" && (
+            <div className="flex items-end gap-2">
+              <div>
+                <label className="block mb-1 text-sm text-white">Frete:</label>
+                <select
+                  value={dataFilter}
+                  onChange={(e) => setDataFilter(e.target.value)}
+                  className="rounded p-2 bg-white"
+                >
+                  <option value="">Todos</option>
+                  {SHIP_OPTIONS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <LegendTooltip />
             </div>
           )}
           {filter === "productCode" && (
-            <div>
-              <label className="block mb-1 text-sm text-white">EAN:</label>
-              <input
-                type="text"
-                placeholder="Digite EAN..."
-                value={dataFilter}
-                onChange={handleEANChange}
-                className="border rounded p-2 bg-white"
-              />
+            <div className="flex items-end gap-2">
+              <div>
+                <label className="block mb-1 text-sm text-white">EAN:</label>
+                <input
+                  type="text"
+                  placeholder="Digite EAN..."
+                  value={dataFilter}
+                  onChange={handleEANChange}
+                  className="border rounded p-2 bg-white"
+                />
+              </div>
+              <LegendTooltip />
             </div>
           )}
         </div>
