@@ -1,5 +1,10 @@
 import ResetPasswordForm from "@/components/ResetPasswordForm";
 
+export const metadata = {
+  title: "Recuperar Senha",
+  description: "Recupere sua senha.",
+};
+
 type SearchParamsType = {
   email?: string | string[];
   token?: string | string[];

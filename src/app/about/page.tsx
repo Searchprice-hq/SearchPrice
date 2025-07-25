@@ -2,6 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Sobre Nós",
+  description: "Saiba mais sobre a nossa missão e equipe.",
+};
+
 const SOCIALS = [
   {
     name: "Instagram",

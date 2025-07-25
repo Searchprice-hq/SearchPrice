@@ -2,6 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Depoimentos",
+  description: "Veja o que nossos usuários dizem.",
+};
+
 interface Testimonial {
   avatar: string;
   name: string;
