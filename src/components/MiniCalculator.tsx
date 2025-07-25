@@ -33,6 +33,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const [customAdEnabled, setCustomAdEnabled] = useState(false);
   const [customAdValue, setCustomAdValue] = useState("");
   const [calcResult, setCalcResult] = useState<number | null>(null);
+  const [additionalCost, setAdditionalCost] = useState("");
 
   useEffect(() => {
     if (!sellPrice || !buyPrice) {
@@ -53,10 +54,12 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       : (adCosts[adType] ?? 0) / 100;
     const adCost = sp * adPct;
 
+    const additional = parseFloat(additionalCost) || 0;
+
     const alPct = (parseFloat(aliquot) || 0) / 100;
     const alCost = sp * alPct;
 
-    const result = sp - logCost - adCost - bp - alCost;
+    const result = sp - logCost - adCost - bp - alCost - additional;
 
     setCalcResult(result);
     if (onCalc) onCalc(sp, result);
@@ -70,6 +73,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
     customAdValue,
     adType,
     aliquot,
+    additionalCost,
     onCalc,
   ]);
 
@@ -231,6 +235,28 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 onChange={(e) => setBuyPrice(e.target.value)}
                 placeholder="R$ 0,00"
                 className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
+              />
+            </div>
+
+            <hr className="border-[var(--gray-to-white)]" />
+
+            <div>
+              <label htmlFor="additional_cost" className="block text-white">
+                Custos adicionais
+              </label>
+              <input
+                id="additional_cost"
+                type="number"
+                step="0.01"
+                min="0"
+                value={additionalCost}
+                onChange={(e) => setAdditionalCost(e.target.value)}
+                placeholder="R$ 0,00"
+                className="
+      w-full rounded-lg p-2
+      bg-[var(--black-to-primary)] text-white placeholder:text-gray-400
+      focus:outline-none
+    "
               />
             </div>
 
