@@ -56,36 +56,46 @@ export default function Dashboard() {
   );
 
   useEffect(() => {
-    loadProducts(filter, dataFilter);
-  }, [filter, dataFilter, loadProducts]);
+    loadProducts(); // carrega tudo apenas uma vez
+  }, [loadProducts]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
+
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value as FilterOption);
     setDataFilter("");
   };
+
   const handleEANChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDataFilter(e.target.value);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
   };
 
-  let productsToDisplay = products;
-  if (filter === "productCode" && dataFilter.trim()) {
-    const term = dataFilter.trim().toLowerCase();
+  let productsToDisplay = [...products];
+
+  const term = dataFilter.trim().toLowerCase();
+  if (filter === "productCode" && term) {
     productsToDisplay = productsToDisplay.filter((p) =>
       p.productCode.toLowerCase().includes(term)
     );
   }
-  if (searchTerm.trim()) {
-    const term = searchTerm.trim().toLowerCase();
+
+  if (filter === "shipping" && term) {
     productsToDisplay = productsToDisplay.filter((p) =>
-      p.name.toLowerCase().includes(term)
+      p.shipping.toLowerCase().includes(term)
     );
   }
 
+  if (searchTerm.trim()) {
+    const search = searchTerm.trim().toLowerCase();
+    productsToDisplay = productsToDisplay.filter((p) =>
+      p.name.toLowerCase().includes(search)
+    );
+  }
   const mercadoLivre = productsToDisplay.filter((p) =>
     p.marketplace.toLowerCase().includes("mercado")
   );

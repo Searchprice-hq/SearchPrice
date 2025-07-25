@@ -181,7 +181,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               <div className="flex justify-between items-center mb-1">
                 <label htmlFor="adPercentage" className="text-white">
                   Taxa de anúncio
-                  <TooltipInfo text="Selecione o tipo de anúncio ou insira uma taxa personalizada." />
+                  <TooltipInfo text="Selecione o tipo de anúncio ou insira uma taxa personalizada (%)." />
                 </label>
                 <button
                   type="button"
@@ -271,7 +271,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="aliquot" className="block text-white">
                 Alíquota
-                <TooltipInfo text="Alíquota de imposto ICMS da venda do produto." />
+                <TooltipInfo text="Alíquota de imposto ICMS da venda do produto (%)." />
               </label>
               <input
                 id="aliquot"

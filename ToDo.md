@@ -8,7 +8,7 @@
 
 - No "filtrar por:", deixar padrão "Preço (Menor -> Maior)" e retirar "--Todos--". ✅
 
-- Adicionar uma legenda para barras verticais, no modo Web colocar a legenda ao lado dos filtros, no modo mobile colocar abaixo do "Filtrar por:"
+- Adicionar uma legenda para barras verticais, no modo Web colocar a legenda ao lado dos filtros, no modo mobile colocar abaixo do "Filtrar por:" ✅
 
 - Alterar botão de "Logout" para "Sair".✅
 
