@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 
 function InfoCard({
   icon,
@@ -31,134 +32,139 @@ function StatCard({ value, label }: { value: string | number; label: string }) {
 
 export default function OurAdvantagesPage() {
   return (
-    <main className="bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] min-h-screen">
-      <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
-        <Link
-          href="/"
-          className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
-        >
-          <Image src="/home.png" alt="Home" width={40} height={40} />
-        </Link>
-        <Link
-          href="/login"
-          className="absolute top-4 right-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
-        >
-          <Image src="/profile.png" alt="Login" width={40} height={40} />
-        </Link>
+    <>
+      <Head>
+        <title>Nossos diferenciais</title>
+      </Head>
+      <main className="bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)] min-h-screen">
+        <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
+          <Link
+            href="/"
+            className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+          >
+            <Image src="/home.png" alt="Home" width={40} height={40} />
+          </Link>
+          <Link
+            href="/login"
+            className="absolute top-4 right-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+          >
+            <Image src="/profile.png" alt="Login" width={40} height={40} />
+          </Link>
 
-        <div className="container mx-auto px-6 flex items-center justify-center pt-12 pb-14">
-          <div className="text-center max-w-6xl mx-auto">
-            <h1 className="mt-4 sm:mt-4 md:mt-0 text-4xl md:text-5xl font-bold mb-4">
-              Estratégia de preços com inteligência de mercado
-            </h1>
-            <p className="max-w-2xl mx-auto text-lg leading-relaxed">
-              Na Search Price, oferecemos uma plataforma completa que agrega e
-              analisa dados de múltiplos marketplaces em um só lugar, permitindo
-              que você acompanhe tendências, ajuste ofertas e maximize sua
-              lucratividade de forma simples e rápida.
-            </p>
+          <div className="container mx-auto px-6 flex items-center justify-center pt-12 pb-14">
+            <div className="text-center max-w-6xl mx-auto">
+              <h1 className="mt-4 sm:mt-4 md:mt-0 text-4xl md:text-5xl font-bold mb-4">
+                Estratégia de preços com inteligência de mercado
+              </h1>
+              <p className="max-w-2xl mx-auto text-lg leading-relaxed">
+                Na Search Price, oferecemos uma plataforma completa que agrega e
+                analisa dados de múltiplos marketplaces em um só lugar,
+                permitindo que você acompanhe tendências, ajuste ofertas e
+                maximize sua lucratividade de forma simples e rápida.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          <InfoCard icon="🔍" title="Busca Unificada">
-            Compare preços de Amazon, Shopee e Mercado Livre sem sair de uma
-            tela.
-          </InfoCard>
-          <InfoCard icon="⚙️" title="Precificação Inteligente">
-            Ajuste automaticamente suas ofertas com base na concorrência e na
-            demanda.
-          </InfoCard>
-          <InfoCard icon="📊" title="Insights em Tempo Real">
-            Dashboards e relatórios que mostram tendências e oportunidades de
-            lucro.
-          </InfoCard>
-          <InfoCard icon="🔒" title="Segurança de Dados">
-            Seus dados são criptografados e armazenados em servidores confiáveis
-            para sua total tranquilidade.
-          </InfoCard>
-          <InfoCard icon="💬" title="Suporte Dedicado">
-            Equipe especializada disponível 24/7 para ajudar você a extrair o
-            máximo da plataforma.
-          </InfoCard>
-        </div>
-      </section>
+        <section className="py-16">
+          <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            <InfoCard icon="🔍" title="Busca Unificada">
+              Compare preços de Amazon, Shopee e Mercado Livre sem sair de uma
+              tela.
+            </InfoCard>
+            <InfoCard icon="⚙️" title="Precificação Inteligente">
+              Ajuste automaticamente suas ofertas com base na concorrência e na
+              demanda.
+            </InfoCard>
+            <InfoCard icon="📊" title="Insights em Tempo Real">
+              Dashboards e relatórios que mostram tendências e oportunidades de
+              lucro.
+            </InfoCard>
+            <InfoCard icon="🔒" title="Segurança de Dados">
+              Seus dados são criptografados e armazenados em servidores
+              confiáveis para sua total tranquilidade.
+            </InfoCard>
+            <InfoCard icon="💬" title="Suporte Dedicado">
+              Equipe especializada disponível 24/7 para ajudar você a extrair o
+              máximo da plataforma.
+            </InfoCard>
+          </div>
+        </section>
 
-      <section className="py-16 bg-[var(--dark-black-to-primary)] text-white">
-        <div className="container mx-auto px-6 grid gap-6 md:grid-cols-3">
-          <StatCard value="10K+" label="Consultas realizadas" />
-          <StatCard value="3" label="Marketplaces suportados" />
-          <StatCard value="24/7" label="Suporte contínuo" />
-        </div>
-      </section>
+        <section className="py-16 bg-[var(--dark-black-to-primary)] text-white">
+          <div className="container mx-auto px-6 grid gap-6 md:grid-cols-3">
+            <StatCard value="10K+" label="Consultas realizadas" />
+            <StatCard value="3" label="Marketplaces suportados" />
+            <StatCard value="24/7" label="Suporte contínuo" />
+          </div>
+        </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-6 flex justify-center">
-          <div className="bg-[var(--background-container)] rounded-lg shadow-lg p-8 max-w-3xl w-full transform transition-transform hover:scale-105">
-            <h2 className="text-3xl font-bold text-[var(--secondary)] text-center mb-4">
-              Como Funciona
+        <section className="py-16">
+          <div className="container mx-auto px-6 flex justify-center">
+            <div className="bg-[var(--background-container)] rounded-lg shadow-lg p-8 max-w-3xl w-full transform transition-transform hover:scale-105">
+              <h2 className="text-3xl font-bold text-[var(--secondary)] text-center mb-4">
+                Como Funciona
+              </h2>
+              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed mb-4">
+                Basta inserir o código do produto ou pesquisar por categoria, e
+                a Search Price retorna uma análise completa de preços, estoque,
+                vendas e avaliações, tudo em segundos. Com filtros avançados,
+                você refina os resultados e exporta relatórios detalhados para
+                tomar decisões embasadas.
+              </p>
+              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
+                Nossa infraestrutura em nuvem garante alta performance e
+                escalabilidade, enquanto nosso motor de filtragem avançada lhe
+                proporciona a visão mais precisa do mercado.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 bg-[var(--dark-black-to-primary)] text-[var(--third)]">
+          <div className="container mx-auto px-6 max-w-2xl">
+            <h2 className="text-3xl font-bold text-center mb-6">
+              Perguntas Frequentes
             </h2>
-            <p className="text-[var(--white-to-primary)] text-justify leading-relaxed mb-4">
-              Basta inserir o código do produto ou pesquisar por categoria, e a
-              Search Price retorna uma análise completa de preços, estoque,
-              vendas e avaliações, tudo em segundos. Com filtros avançados, você
-              refina os resultados e exporta relatórios detalhados para tomar
-              decisões embasadas.
-            </p>
-            <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
-              Nossa infraestrutura em nuvem garante alta performance e
-              escalabilidade, enquanto nosso motor de filtragem avançada lhe
-              proporciona a visão mais precisa do mercado.
-            </p>
+            <ul className="space-y-4">
+              <li>
+                <strong>Como faço uma busca?</strong>
+                <p className="text-white">
+                  Basta digitar o EAN ou nome do produto e clicar em Buscar.
+                </p>
+              </li>
+              <li>
+                <strong>Preciso de cadastro?</strong>
+                <p className="text-white">
+                  Sim, um cadastro rápido para proteger seu histórico e
+                  personalizar alertas.
+                </p>
+              </li>
+              <li>
+                <strong>Quais marketplaces são suportados?</strong>
+                <p className="text-white">
+                  Atualmente Amazon, Shopee e Mercado Livre, com novos sendo
+                  adicionados em breve.
+                </p>
+              </li>
+              <li>
+                <strong>Posso exportar relatórios?</strong>
+                <p className="text-white">
+                  Sim, exporte em CSV ou Excel para integrar com suas
+                  ferramentas de BI.
+                </p>
+              </li>
+            </ul>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-16 bg-[var(--dark-black-to-primary)] text-[var(--third)]">
-        <div className="container mx-auto px-6 max-w-2xl">
-          <h2 className="text-3xl font-bold text-center mb-6">
-            Perguntas Frequentes
-          </h2>
-          <ul className="space-y-4">
-            <li>
-              <strong>Como faço uma busca?</strong>
-              <p className="text-white">
-                Basta digitar o EAN ou nome do produto e clicar em Buscar.
-              </p>
-            </li>
-            <li>
-              <strong>Preciso de cadastro?</strong>
-              <p className="text-white">
-                Sim, um cadastro rápido para proteger seu histórico e
-                personalizar alertas.
-              </p>
-            </li>
-            <li>
-              <strong>Quais marketplaces são suportados?</strong>
-              <p className="text-white">
-                Atualmente Amazon, Shopee e Mercado Livre, com novos sendo
-                adicionados em breve.
-              </p>
-            </li>
-            <li>
-              <strong>Posso exportar relatórios?</strong>
-              <p className="text-white">
-                Sim, exporte em CSV ou Excel para integrar com suas ferramentas
-                de BI.
-              </p>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
-        <p className="text-base text-[var(--white-to-primary)]">
-          © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
-          reservados.
-        </p>
-      </footer>
-    </main>
+        <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
+          <p className="text-base text-[var(--white-to-primary)]">
+            © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os
+            direitos reservados.
+          </p>
+        </footer>
+      </main>
+    </>
   );
 }

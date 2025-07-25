@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-
+import TooltipInfo from "@/components/TooltipInfo";
 export interface MiniCalculatorProps {
   onCalc?: (sellPrice: number, calcResult: number) => void;
 }
@@ -55,10 +55,8 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
     const adCost = sp * adPct;
 
     const additional = parseFloat(additionalCost) || 0;
-
     const alPct = (parseFloat(aliquot) || 0) / 100;
     const alCost = sp * alPct;
-
     const result = sp - logCost - adCost - bp - alCost - additional;
 
     setCalcResult(result);
@@ -115,7 +113,9 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="sell_price" className="block text-white">
                 Valor de venda
+                <TooltipInfo text="Insira o valor pelo qual você deseja vender o produto." />
               </label>
+
               <input
                 id="sell_price"
                 type="number"
@@ -130,7 +130,10 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="text-white">Custo de logística</label>
+                <label className="text-white">
+                  Custo de logística
+                  <TooltipInfo text="Selecione o tipo de logística ou insira um valor personalizado." />
+                </label>
                 <button
                   type="button"
                   className="text-xs text-white"
@@ -178,6 +181,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               <div className="flex justify-between items-center mb-1">
                 <label htmlFor="adPercentage" className="text-white">
                   Taxa de anúncio
+                  <TooltipInfo text="Selecione o tipo de anúncio ou insira uma taxa personalizada." />
                 </label>
                 <button
                   type="button"
@@ -227,6 +231,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="buy_price" className="block text-white">
                 Custo de compra
+                <TooltipInfo text="Insira o custo de compra do produto." />
               </label>
               <input
                 id="buy_price"
@@ -243,6 +248,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="additional_cost" className="block text-white">
                 Custos adicionais
+                <TooltipInfo text="Insira quaisquer custos adicionais que possam afetar o preço final." />
               </label>
               <input
                 id="additional_cost"
@@ -265,6 +271,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <div>
               <label htmlFor="aliquot" className="block text-white">
                 Alíquota
+                <TooltipInfo text="Insira a alíquota de imposto ICMS da venda do produto." />
               </label>
               <input
                 id="aliquot"
@@ -279,7 +286,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            {/* Resultado */}
             {calcResult !== null && (
               <p id="calc-result" className="mt-4 text-white font-medium">
                 {calcResult >= 0 ? "Lucro Total:" : "Prejuízo Total:"}{" "}

@@ -1,0 +1,27 @@
+"use client";
+import { useState } from "react";
+
+interface TooltipInfoProps {
+  text: string;
+}
+
+export default function TooltipInfo({ text }: TooltipInfoProps) {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div
+      className="relative ml-2 inline-block"
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+    >
+      <div className="w-4 h-4 flex items-center justify-center rounded-full bg-white text-black text-xs font-bold cursor-default">
+        i
+      </div>
+      {visible && (
+        <div className="absolute z-50 w-52 p-2 bg-black text-white text-sm rounded-md top-6 left-1/2 -translate-x-1/2 shadow-lg">
+          {text}
+        </div>
+      )}
+    </div>
+  );
+}

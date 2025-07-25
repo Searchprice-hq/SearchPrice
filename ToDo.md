@@ -16,24 +16,23 @@
 
 - Inserir os mesmos controles do cadastro da senha (a validação de senha vermelho e verde da tela de cadastro). ✅
 
-- Inserir a opção visualização de senha (O "olhinho").
+- Inserir a opção visualização de senha (O "olhinho"). ✅
 
 # Cadastro
 
-- Inserir a opção visualização de senha (O "olhinho").
+- Inserir a opção visualização de senha (O "olhinho"). ✅
 
 # Calculadora
 
-- No "Valor que deseja vender:" e no "Custo de compra:" o placeholder deve ser "R$ 0,00" e deixar mais apagado.
+- No "Valor que deseja vender:" e no "Custo de compra:" o placeholder deve ser "R$ 0,00" e deixar mais apagado. ✅
 
 - Inserir um item para o cliente selecionar se ele já sabe a taxa que vai pagar e ele preenche. Senão a colocar as taxas fixas.
-  (Adicionar um botão para ativar e desativar o select, quando o select estiver desativado um input deve aparecer para inserção de valor. Isso tanto no "Custo de logistica" quanto no "Tipo de anúncio").
+  (Adicionar um botão para ativar e desativar o select, quando o select estiver desativado um input deve aparecer para inserção de valor. Isso tanto no "Custo de logistica" quanto no "Tipo de anúncio"). ✅
 
-- Custo por tipo de anúncio é porcentagem. (A porcentagem é sobre o "Valor que deseja vender")
+- Custo por tipo de anúncio é porcentagem. (A porcentagem é sobre o "Valor que deseja vender") ✅
 
-- Adicionar campo para custos adicionais.
+- Adicionar campo para custos adicionais. ✅
 
-- Inserir o ícone para explicação para cada campo (tooltip).
-
+- Inserir o ícone para explicação para cada campo (tooltip). ✅
   No "Custo de compra" informar Custo de compra por produto.
   Na "Alíquota" informar Imposto ICMS sobre a venda.
