@@ -36,6 +36,8 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPasswordRules, setShowPasswordRules] = useState<boolean>(false);
   const [showConfirmError, setShowConfirmError] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     handleRegister,
@@ -149,21 +151,38 @@ export default function Register() {
               )}
             </div>
 
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="Senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setShowPasswordRules(true)}
-                onBlur={() => {
-                  if (!password || isValidPassword) setShowPasswordRules(false);
-                }}
-                className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
-                disabled={loading}
-              />
+            <div className="space-y-1">
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setShowPasswordRules(true)}
+                  onBlur={() => {
+                    if (!password || isValidPassword)
+                      setShowPasswordRules(false);
+                  }}
+                  className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 pr-12 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2"
+                >
+                  <Image
+                    src={showPassword ? "/eye-opened.png" : "/eye-closed.png"}
+                    alt={showPassword ? "Esconder senha" : "Mostrar senha"}
+                    width={20}
+                    height={20}
+                    className="opacity-80 hover:opacity-100 transition"
+                  />
+                </button>
+              </div>
+
               {showPasswordRules && !isValidPassword && (
-                <ul className="mt-2 pl-4 text-sm text-[var(--danger)] space-y-1">
+                <ul className="pl-4 text-sm text-[var(--danger)] space-y-1">
                   {passwordRequirements.map((req, idx) => {
                     const ok = req.regex.test(password);
                     return (
@@ -181,22 +200,44 @@ export default function Register() {
               )}
             </div>
 
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="Confirme sua senha"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                onFocus={() => setShowConfirmError(true)}
-                onBlur={() => {
-                  if (passwordsMatch || !confirmPassword)
-                    setShowConfirmError(false);
-                }}
-                className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
-                disabled={loading}
-              />
+            <div className="space-y-1">
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirme sua senha"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onFocus={() => setShowConfirmError(true)}
+                  onBlur={() => {
+                    if (passwordsMatch || !confirmPassword)
+                      setShowConfirmError(false);
+                  }}
+                  className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] outline-none h-14 px-4 pr-12 text-[var(--white-to-primary)] w-full focus:border-[var(--white-to-primary)]"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2"
+                >
+                  <Image
+                    src={
+                      showConfirmPassword
+                        ? "/eye-opened.png"
+                        : "/eye-closed.png"
+                    }
+                    alt={
+                      showConfirmPassword ? "Esconder senha" : "Mostrar senha"
+                    }
+                    width={20}
+                    height={20}
+                    className="opacity-80 hover:opacity-100 transition"
+                  />
+                </button>
+              </div>
+
               {showConfirmError && !passwordsMatch && (
-                <p className="absolute text-[var(--danger)] text-sm mt-1">
+                <p className="text-[var(--danger)] text-sm mt-1">
                   As senhas não coincidem!
                 </p>
               )}

@@ -7,7 +7,7 @@ import type {
   PasswordRequirement,
   UseRegisterReturn,
 } from "@/hooks/useRegister";
-
+import Image from "next/image";
 interface Props {
   initialEmail: string;
   initialToken: string;
@@ -23,6 +23,8 @@ export default function ResetPasswordForm({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPasswordRules, setShowPasswordRules] = useState(false);
   const [showConfirmError, setShowConfirmError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { handleReset, error, loading } = useResetPassword();
   const { passwordRequirements, validatePassword, checkPasswordsMatch } =
@@ -76,22 +78,39 @@ export default function ResetPasswordForm({
             disabled={loading}
             className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
-          <div className="relative">
-            <input
-              type="password"
-              placeholder="Nova senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onFocus={() => setShowPasswordRules(true)}
-              onBlur={() => {
-                if (!password || isValidPassword) setShowPasswordRules(false);
-              }}
-              required
-              disabled={loading}
-              className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
-            />
+          <div className="space-y-1">
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Nova senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setShowPasswordRules(true)}
+                onBlur={() => {
+                  if (!password || isValidPassword) setShowPasswordRules(false);
+                }}
+                required
+                disabled={loading}
+                className="w-full h-12 px-4 pr-12 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+              >
+                <Image
+                  src={showPassword ? "/eye-opened.png" : "/eye-closed.png"}
+                  alt={showPassword ? "Esconder senha" : "Mostrar senha"}
+                  width={20}
+                  height={20}
+                  className="opacity-80 hover:opacity-100 transition"
+                />
+              </button>
+            </div>
+
+            {/* Agora abaixo do input */}
             {showPasswordRules && !isValidPassword && (
-              <ul className="mt-2 pl-4 text-sm text-[var(--danger)] space-y-1">
+              <ul className="pl-4 text-sm text-[var(--danger)] space-y-1">
                 {passwordRequirements.map(
                   (req: PasswordRequirement, idx: number) => {
                     const ok = req.regex.test(password);
@@ -110,21 +129,39 @@ export default function ResetPasswordForm({
               </ul>
             )}
           </div>
-          <div className="relative">
-            <input
-              type="password"
-              placeholder="Confirme a nova senha"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              onFocus={() => setShowConfirmError(true)}
-              onBlur={() => {
-                if (passwordsMatch || !confirmPassword)
-                  setShowConfirmError(false);
-              }}
-              required
-              disabled={loading}
-              className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
-            />
+          <div className="space-y-1">
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirme a nova senha"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                onFocus={() => setShowConfirmError(true)}
+                onBlur={() => {
+                  if (passwordsMatch || !confirmPassword)
+                    setShowConfirmError(false);
+                }}
+                required
+                disabled={loading}
+                className="w-full h-12 px-4 pr-12 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+              >
+                <Image
+                  src={
+                    showConfirmPassword ? "/eye-opened.png" : "/eye-closed.png"
+                  }
+                  alt={showConfirmPassword ? "Esconder senha" : "Mostrar senha"}
+                  width={20}
+                  height={20}
+                  className="opacity-80 hover:opacity-100 transition"
+                />
+              </button>
+            </div>
+
             {showConfirmError && !passwordsMatch && (
               <p className="text-[var(--danger)] text-sm mt-1">
                 As senhas não coincidem!
