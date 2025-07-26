@@ -291,7 +291,11 @@ export default function Dashboard() {
                   placeholder="Digite EAN..."
                   value={dataFilter}
                   onChange={handleEANChange}
-                  className="border rounded p-2 bg-white"
+                  className="
+    border rounded p-2 bg-white
+    w-full sm:w-auto    /* ocupa 100% da largura no mobile, volta ao auto no sm+ */
+    max-w-xs sm:max-w-none  /* limita largura máxima a ~20rem no mobile */
+  "
                 />
               </div>
               <LegendTooltip />

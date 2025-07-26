@@ -7,15 +7,14 @@ export default function LegendTooltip() {
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
         tooltipRef.current &&
-        !tooltipRef.current.contains(event.target as Node)
+        !tooltipRef.current.contains(e.target as Node)
       ) {
         setVisible(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -27,13 +26,20 @@ export default function LegendTooltip() {
         onClick={() => setVisible((v) => !v)}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
-        className="ml-2 w-10 h-10 flex items-center justify-center rounded-full bg-white text-black shadow"
+        className="ml-2 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow"
       >
         <Image src="/info.png" alt="Legenda" width={20} height={20} />
       </button>
 
       {visible && (
-        <div className="absolute z-50 top-14 left-1/2 -translate-x-1/2 w-[280px] bg-black text-white p-4 rounded-lg shadow-lg text-sm">
+        <div
+          className={`
+            fixed inset-x-0 left-1/2 -translate-x-1/2 top-68
+            w-[280px] 
+            sm:absolute sm:top-14 sm:left-1/2 sm:-translate-x-1/2
+            z-50 bg-black text-white p-4 rounded-lg shadow-lg text-sm
+          `}
+        >
           <div className="flex items-center gap-2 mb-2">
             <span className="w-3 h-3 bg-green-500 rounded inline-block" />
             <span>Lucro e preço de venda competitivo</span>
