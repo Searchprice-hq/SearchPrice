@@ -259,9 +259,12 @@ export default function Dashboard() {
                   </option>
                 ))}
               </select>
-              {filter === "price" && <LegendTooltip />}
+              <div className={filter === "price" ? "" : "hidden"}>
+                <LegendTooltip drop={false} />
+              </div>
             </div>
           </div>
+
           {filter === "shipping" && (
             <div className="flex items-end gap-2">
               <div>
@@ -279,9 +282,10 @@ export default function Dashboard() {
                   ))}
                 </select>
               </div>
-              <LegendTooltip />
+              <LegendTooltip drop={true} />
             </div>
           )}
+
           {filter === "productCode" && (
             <div className="flex items-end gap-2">
               <div>
@@ -298,7 +302,7 @@ export default function Dashboard() {
   "
                 />
               </div>
-              <LegendTooltip />
+              <LegendTooltip drop={true} />
             </div>
           )}
         </div>
