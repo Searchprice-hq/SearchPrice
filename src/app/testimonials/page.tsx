@@ -99,13 +99,13 @@ export default function TestimonialsPage() {
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transform hover:scale-110"
         >
-          <Image src="/home.png" alt="Home" width={40} height={40} />
+          <Image src="/home.png" alt="Home" width={36} height={36} />
         </Link>
         <Link
           href="/login"
           className="absolute top-4 right-4 hover:opacity-90 transition-opacity transform hover:scale-110"
         >
-          <Image src="/profile.png" alt="Login" width={42} height={42} />
+          <Image src="/profile.png" alt="Login" width={40} height={40} />
         </Link>
 
         <div className="container mx-auto px-6 text-center py-10">

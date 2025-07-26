@@ -60,7 +60,7 @@ export default function AboutPage() {
           href="/"
           className="absolute top-4 left-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
         >
-          <Image src="/home.png" alt="Home" width={40} height={40} />
+          <Image src="/home.png" alt="Home" width={36} height={36} />
         </Link>
         <Link
           href="/login"
@@ -70,7 +70,7 @@ export default function AboutPage() {
         </Link>
 
         <div className="container mx-auto px-6 text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl text-[var(--white)] font-bold">
+          <h1 className="text-4xl md:text-4xl text-[var(--white)] font-bold">
             Bem-vindo à Search Price
           </h1>
           <p className="max-w-2xl mx-auto text-lg text-center">
