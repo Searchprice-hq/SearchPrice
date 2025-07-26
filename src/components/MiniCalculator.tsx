@@ -105,7 +105,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
           >
             ✕
           </button>
-          <h2 className="text-white font-semibold text-lg text-center mt-6">
+          <h2 className="text-white font-semibold text-lg text-center mt-4">
             Calculadora
           </h2>
 
@@ -129,7 +129,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            <hr className="border-[var(--gray-to-white)]" />
+            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
             <div>
               <div className="flex justify-between items-center mb-1">
@@ -178,7 +178,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               )}
             </div>
 
-            <hr className="border-[var(--gray-to-white)]" />
+            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
             <div>
               <div className="flex justify-between items-center mb-1">
@@ -232,7 +232,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 </>
               )}
             </div>
-            <hr className="border-[var(--gray-to-white)]" />
+            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
             <div>
               <label
@@ -252,7 +252,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            <hr className="border-[var(--gray-to-white)]" />
+            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
             <div>
               <label
@@ -278,7 +278,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            <hr className="border-[var(--gray-to-white)]" />
+            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
             <div>
               <label
@@ -302,7 +302,10 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             </div>
 
             {calcResult !== null && (
-              <p id="calc-result" className="mt-4 text-white font-medium">
+              <p
+                id="calc-result"
+                className="mt-4 text-sm sm:text-base text-white font-medium"
+              >
                 {calcResult >= 0 ? "Lucro Total:" : "Prejuízo Total:"}{" "}
                 {fmt(calcResult)}
               </p>
