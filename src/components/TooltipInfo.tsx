@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface TooltipInfoProps {
   text: string;
@@ -7,38 +7,35 @@ interface TooltipInfoProps {
 
 export default function TooltipInfo({ text }: TooltipInfoProps) {
   const [visible, setVisible] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // mostrar tooltip e impedir que o evento chegue ao <label>
-  const show = (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
+  // Fecha ao clicar fora
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        setVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const toggle = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    setVisible(true);
-  };
-
-  // esconder tooltip e também bloquear propagação
-  const hide = (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setVisible(false);
+    setVisible((v) => !v);
   };
 
   return (
     <div
+      ref={wrapperRef}
       className="relative ml-2 inline-block select-none"
-      // desktop
-      onMouseDown={show}
-      onMouseUp={hide}
-      onMouseLeave={hide}
-      // mobile
-      onTouchStart={show}
-      onTouchEnd={hide}
-      onTouchCancel={hide}
+      onClick={toggle} // só um handler
     >
-      <div className="w-4 h-4 flex items-center justify-center rounded-full bg-white text-black text-xs font-bold cursor-default">
+      <div className="w-4 h-4 flex items-center justify-center rounded-full bg-white text-black text-xs font-bold cursor-pointer">
         i
       </div>
 
