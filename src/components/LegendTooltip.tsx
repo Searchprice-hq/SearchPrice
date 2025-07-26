@@ -23,7 +23,7 @@ export default function LegendTooltip({ drop = false }: LegendTooltipProps) {
     return () => document.removeEventListener("mousedown", onOutside);
   }, []);
 
-  const mobileTopClass = drop ? "top-68" : "top-86";
+  const mobileTopClass = drop ? "top-88" : "top-68";
 
   return (
     <div className="relative flex items-center" ref={tooltipRef}>
