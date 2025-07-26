@@ -98,7 +98,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       )}
 
       {open && (
-        <div className="fixed bottom-5 right-5 w-[250px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
+        <div className="fixed bottom-5 right-5 w-[270px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
           <button
             onClick={() => setOpen(false)}
             className="absolute top-2 right-3 text-white text-lg"
@@ -111,7 +111,10 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
           <div className="space-y-4 mt-4">
             <div>
-              <label htmlFor="sell_price" className="block text-white">
+              <label
+                htmlFor="sell_price"
+                className="block text-sm sm:text-base text-white"
+              >
                 Valor de venda
                 <TooltipInfo text="Valor pelo qual você deseja vender o produto." />
               </label>
@@ -122,7 +125,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 value={sellPrice}
                 onChange={(e) => setSellPrice(e.target.value)}
                 placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
@@ -130,7 +133,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="text-white">
+                <label className="text-white text-sm sm:text-base">
                   Custo de logística
                   <TooltipInfo text="Selecione o tipo de logística ou insira um valor personalizado." />
                 </label>
@@ -139,7 +142,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   className="text-xs text-white"
                   onClick={() => setCustomLogisticsEnabled((p) => !p)}
                 >
-                  {customLogisticsEnabled ? "Usar lista" : "Inserir valor"}
+                  {customLogisticsEnabled ? "Lista" : "Inserir"}
                 </button>
               </div>
               {customLogisticsEnabled ? (
@@ -155,7 +158,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   <select
                     value={logistics}
                     onChange={(e) => setLogistics(e.target.value)}
-                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
+                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white focus:outline-none"
                   >
                     <option value="" disabled>
                       Logística
@@ -179,7 +182,10 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label htmlFor="adPercentage" className="text-white">
+                <label
+                  htmlFor="adPercentage"
+                  className="text-white text-sm sm:text-base"
+                >
                   Taxa de anúncio
                   <TooltipInfo text="Selecione o tipo de anúncio ou insira uma taxa personalizada (%)." />
                 </label>
@@ -188,7 +194,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   className="text-xs text-white"
                   onClick={() => setCustomAdEnabled((p) => !p)}
                 >
-                  {customAdEnabled ? "Usar lista" : "Inserir valor"}
+                  {customAdEnabled ? "Lista" : "Inserir"}
                 </button>
               </div>
 
@@ -209,7 +215,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   <select
                     value={adType}
                     onChange={(e) => setAdType(e.target.value)}
-                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
+                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white focus:outline-none"
                   >
                     <option value="" disabled>
                       Anúncio
@@ -229,7 +235,10 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <hr className="border-[var(--gray-to-white)]" />
 
             <div>
-              <label htmlFor="buy_price" className="block text-white">
+              <label
+                htmlFor="buy_price"
+                className="block text-white text-sm sm:text-base"
+              >
                 Custo de compra
                 <TooltipInfo text="Custo de compra do produto." />
               </label>
@@ -239,14 +248,17 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 value={buyPrice}
                 onChange={(e) => setBuyPrice(e.target.value)}
                 placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white text-sm sm:text-baseplaceholder:text-gray-400 focus:outline-none"
               />
             </div>
 
             <hr className="border-[var(--gray-to-white)]" />
 
             <div>
-              <label htmlFor="additional_cost" className="block text-white">
+              <label
+                htmlFor="additional_cost"
+                className="block text-white text-sm sm:text-base"
+              >
                 Custos adicionais
                 <TooltipInfo text="Quaisquer custos adicionais que possam afetar o preço final." />
               </label>
@@ -260,7 +272,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 placeholder="R$ 0,00"
                 className="
       w-full rounded-lg p-2
-      bg-[var(--black-to-primary)] text-white placeholder:text-gray-400
+      bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400
       focus:outline-none
     "
               />
@@ -269,7 +281,10 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
             <hr className="border-[var(--gray-to-white)]" />
 
             <div>
-              <label htmlFor="aliquot" className="block text-white">
+              <label
+                htmlFor="aliquot"
+                className="block text-white text-sm sm:text-base"
+              >
                 Alíquota
                 <TooltipInfo text="Alíquota de imposto ICMS da venda do produto (%)." />
               </label>
@@ -282,7 +297,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 value={aliquot}
                 onChange={(e) => setAliquot(e.target.value)}
                 placeholder="0.000%"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
