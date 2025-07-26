@@ -16,6 +16,7 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
   const [forgotStatus, setForgotStatus] = useState<string | null>(null);
 
   const { handleLogin, handleForgotPassword, error, loading } =
@@ -62,15 +63,29 @@ export default function Login() {
               disabled={loading}
               className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
             />
-            <input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-              className="border border-[var(--border)] rounded-xl bg-[var(--background-input)] h-14 px-4 text-[var(--white-to-primary)] w-full outline-none focus:border-[var(--white-to-primary)]"
-            />
+            <div className="relative w-full max-w-sm">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+                className="w-full h-14 px-4 pr-12 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none focus:border-[var(--white-to-primary)]"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+              >
+                <Image
+                  src={showPassword ? "/eye-opened.png" : "/eye-closed.png"}
+                  alt={showPassword ? "Esconder senha" : "Mostrar senha"}
+                  width={20}
+                  height={20}
+                />
+              </button>
+            </div>
           </div>
 
           {error && (
