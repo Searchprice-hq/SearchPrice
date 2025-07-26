@@ -70,7 +70,7 @@ export default function AboutPage() {
         </Link>
 
         <div className="container mx-auto px-6 text-center space-y-4">
-          <h1 className="text-4xl md:text-4xl text-[var(--white)] font-bold">
+          <h1 className="text-3xl md:text-4xl text-[var(--white)] font-bold">
             Bem-vindo à Search Price
           </h1>
           <p className="max-w-2xl mx-auto text-lg text-center">

@@ -109,7 +109,7 @@ export default function TestimonialsPage() {
         </Link>
 
         <div className="container mx-auto px-6 text-center py-10">
-          <h1 className="text-4xl font-bold mb-2 mt-6 sm:mt-0 text-[var(--white)]">
+          <h1 className="text-3xl font-bold mb-2 mt-6 sm:mt-0 text-[var(--white)]">
             Depoimentos
           </h1>
           <p className="max-w-md mx-auto">
