@@ -56,7 +56,7 @@ export default function LegendTooltip({ drop = false }: LegendTooltipProps) {
           </div>
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 bg-red-500 rounded" />
-            <span>Sem lucro ou preço de venda maior que o do anúncio</span>
+            <span>Sem lucro ou preço de venda maior que do anúncio</span>
           </div>
         </div>
       )}
