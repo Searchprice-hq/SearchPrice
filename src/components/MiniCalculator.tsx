@@ -98,7 +98,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       )}
 
       {open && (
-        <div className="fixed bottom-5 right-5 w-[270px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
+        <div className="fixed bottom-5 right-5 w-[280px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
           <button
             onClick={() => setOpen(false)}
             className="absolute top-2 right-3 text-white text-lg"
@@ -151,7 +151,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   value={customLogisticsValue}
                   onChange={(e) => setCustomLogisticsValue(e.target.value)}
                   placeholder="R$ 0,00"
-                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
+                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
                 />
               ) : (
                 <>
@@ -208,7 +208,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   value={customAdValue}
                   onChange={(e) => setCustomAdValue(e.target.value)}
                   placeholder="0.00%"
-                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
+                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
                 />
               ) : (
                 <>
