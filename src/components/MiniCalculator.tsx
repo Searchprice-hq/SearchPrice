@@ -142,7 +142,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   className="text-xs text-white"
                   onClick={() => setCustomLogisticsEnabled((p) => !p)}
                 >
-                  {customLogisticsEnabled ? "Lista" : "Inserir"}
+                  {customLogisticsEnabled ? "Usar lista" : "Inserir valor"}
                 </button>
               </div>
               {customLogisticsEnabled ? (
@@ -194,7 +194,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   className="text-xs text-white"
                   onClick={() => setCustomAdEnabled((p) => !p)}
                 >
-                  {customAdEnabled ? "Lista" : "Inserir"}
+                  {customAdEnabled ? "Usar lista" : "Inserir valor"}
                 </button>
               </div>
 
@@ -248,7 +248,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 value={buyPrice}
                 onChange={(e) => setBuyPrice(e.target.value)}
                 placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white text-sm sm:text-baseplaceholder:text-gray-400 focus:outline-none"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white text-sm sm:text-base placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
