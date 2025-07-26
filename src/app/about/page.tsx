@@ -84,7 +84,7 @@ export default function AboutPage() {
       <section className="py-16 bg-[var(--background-secondary)]">
         <div className="container mx-auto px-6 grid gap-12 md:grid-cols-2">
           <div>
-            <h1 className="text-4xl font-bold text-[var(--third-to-primary)] mb-4">
+            <h1 className="text-3xl font-bold text-[var(--third-to-primary)] mb-4">
               Sobre a Search Price
             </h1>
             <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
