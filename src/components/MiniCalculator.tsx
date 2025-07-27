@@ -5,7 +5,6 @@ import Image from "next/image";
 import TooltipInfo from "@/components/TooltipInfo";
 
 export interface MiniCalculatorProps {
-  // Agora o segundo parâmetro pode ser null
   onCalc?: (sellPrice: number, calcResult: number | null) => void;
 }
 
@@ -22,8 +21,6 @@ const adCosts: Record<string, number> = {
   premium: 15,
   free: 0,
 };
-
-// --- Máscaras e Parsers ---
 
 const maskBRL = (value: string) => {
   const digits = value.replace(/\D/g, "");
@@ -47,7 +44,6 @@ const maskNumber = (value: string, decimals: number) => {
 const parseNumber = (value: string) => parseFloat(value.replace(",", ".")) || 0;
 
 export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
-  // — estados inalterados —
   const [open, setOpen] = useState(false);
   const [sellPrice, setSellPrice] = useState("");
   const [buyPrice, setBuyPrice] = useState("");
@@ -61,7 +57,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const [calcResult, setCalcResult] = useState<number | null>(null);
   const [additionalCost, setAdditionalCost] = useState("");
 
-  // — handlers aplicando máscara —
   const handleSellPrice = (e: ChangeEvent<HTMLInputElement>) =>
     setSellPrice(maskBRL(e.target.value));
   const handleBuyPrice = (e: ChangeEvent<HTMLInputElement>) =>
@@ -75,9 +70,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const handleAliquot = (e: ChangeEvent<HTMLInputElement>) =>
     setAliquot(maskNumber(e.target.value, 3));
 
-  // — cálculo do resultado, com reset para null e callback zerado —
   useEffect(() => {
-    // se não tiver valor de venda OU custo de compra, zera tudo
     if (!sellPrice || !buyPrice) {
       setCalcResult(null);
       if (onCalc) onCalc(0, null);
@@ -136,7 +129,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       )}
 
       {open && (
-        <div className="fixed bottom-5 right-5 w-[280px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
+        <div className="fixed bottom-5 right-5 w-[290px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
           <button
             onClick={() => setOpen(false)}
             className="absolute top-2 right-3 text-white text-lg"
@@ -148,7 +141,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
           </h2>
 
           <div className="space-y-4 mt-4">
-            {/* Valor de venda */}
             <div>
               <label htmlFor="sell_price" className="block text-white">
                 Valor de venda
@@ -166,7 +158,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
-            {/* Custo de logística */}
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label className="text-white">
@@ -216,7 +207,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
-            {/* Taxa de anúncio */}
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label htmlFor="adPercentage" className="text-white">
@@ -269,7 +259,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
-            {/* Custo de compra */}
             <div>
               <label htmlFor="buy_price" className="block text-white">
                 Custo de compra
@@ -287,7 +276,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
-            {/* Custos adicionais */}
             <div>
               <label htmlFor="additional_cost" className="block text-white">
                 Custos adicionais
@@ -305,7 +293,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
-            {/* Alíquota */}
             <div>
               <label htmlFor="aliquot" className="block text-white">
                 Alíquota (%)
@@ -321,7 +308,6 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            {/* Resultado só aparece após preencher venda + compra */}
             {calcResult !== null && (
               <p className="mt-4 text-white text-center font-medium">
                 {calcResult >= 0 ? "Lucro Total:" : "Prejuízo Total:"}{" "}
