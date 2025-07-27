@@ -117,7 +117,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed right-4 bottom-4 bg-[var(--black-to-primary)] h-20 text-white border border-white rounded-[20px] px-6 py-1 z-30 transform hover:scale-105 duration-200"
+          className="fixed right-3 bottom-3 bg-[var(--black-to-primary)] h-20 text-white border border-white rounded-[20px] px-6 py-1 z-30 transform hover:scale-105 duration-200"
         >
           <Image
             src="/calculator.png"
@@ -129,7 +129,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       )}
 
       {open && (
-        <div className="fixed bottom-3 right-3 w-[290px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
+        <div className="fixed bottom-1 right-1 w-[290px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
           <button
             onClick={() => setOpen(false)}
             className="absolute top-2 right-3 text-white text-lg"
