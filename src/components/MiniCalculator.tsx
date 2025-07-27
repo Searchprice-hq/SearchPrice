@@ -5,7 +5,8 @@ import Image from "next/image";
 import TooltipInfo from "@/components/TooltipInfo";
 
 export interface MiniCalculatorProps {
-  onCalc?: (sellPrice: number, calcResult: number) => void;
+  // Agora o segundo parâmetro pode ser null
+  onCalc?: (sellPrice: number, calcResult: number | null) => void;
 }
 
 const logisticsCosts: Record<string, number> = {
@@ -23,8 +24,10 @@ const adCosts: Record<string, number> = {
 };
 
 // --- Máscaras e Parsers ---
+
 const maskBRL = (value: string) => {
   const digits = value.replace(/\D/g, "");
+  if (!digits || Number(digits) === 0) return "";
   const pad = digits.padStart(3, "0");
   const intPart = pad.slice(0, -2).replace(/^0+(?=\d)/, "");
   const decPart = pad.slice(-2);
@@ -35,6 +38,7 @@ const parseBRL = (value: string) =>
 
 const maskNumber = (value: string, decimals: number) => {
   const digits = value.replace(/\D/g, "");
+  if (!digits || Number(digits) === 0) return "";
   const pad = digits.padStart(decimals + 1, "0");
   const intPart = pad.slice(0, -decimals).replace(/^0+(?=\d)/, "");
   const decPart = pad.slice(-decimals);
@@ -71,11 +75,12 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const handleAliquot = (e: ChangeEvent<HTMLInputElement>) =>
     setAliquot(maskNumber(e.target.value, 3));
 
-  // — cálculo do resultado, com guard para não exibir quando campos vazios —
+  // — cálculo do resultado, com reset para null e callback zerado —
   useEffect(() => {
+    // se não tiver valor de venda OU custo de compra, zera tudo
     if (!sellPrice || !buyPrice) {
-      // se ainda não preencheu os dois campos, zera resultado e sai
       setCalcResult(null);
+      if (onCalc) onCalc(0, null);
       return;
     }
 
@@ -93,7 +98,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
     const result = sp - logCost - sp * adPct - bp - sp * alPct - additional;
 
     setCalcResult(isNaN(result) ? null : result);
-    if (onCalc) onCalc(sp, result);
+    if (onCalc) onCalc(sp, isNaN(result) ? null : result);
   }, [
     sellPrice,
     buyPrice,
@@ -119,7 +124,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed right-4 bottom-4 bg-[var(--black-to-primary)] h-20 text-white border border-white rounded-[20px] px-6 py-1 z-30 transform transition-transform hover:scale-105 duration-200"
+          className="fixed right-4 bottom-4 bg-[var(--black-to-primary)] h-20 text-white border border-white rounded-[20px] px-6 py-1 z-30 transform hover:scale-105 duration-200"
         >
           <Image
             src="/calculator.png"
@@ -159,7 +164,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
+            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
             {/* Custo de logística */}
             <div>
@@ -194,9 +199,9 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                     <option value="" disabled>
                       Logística
                     </option>
-                    {Object.keys(logisticsCosts).map((key) => (
-                      <option key={key} value={key}>
-                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                    {Object.keys(logisticsCosts).map((k) => (
+                      <option key={k} value={k}>
+                        {k.charAt(0).toUpperCase() + k.slice(1)}
                       </option>
                     ))}
                   </select>
@@ -209,7 +214,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               )}
             </div>
 
-            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
+            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
             {/* Taxa de anúncio */}
             <div>
@@ -245,9 +250,9 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                     <option value="" disabled>
                       Anúncio
                     </option>
-                    {Object.keys(adCosts).map((key) => (
-                      <option key={key} value={key}>
-                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                    {Object.keys(adCosts).map((k) => (
+                      <option key={k} value={k}>
+                        {k.charAt(0).toUpperCase() + k.slice(1)}
                       </option>
                     ))}
                   </select>
@@ -260,7 +265,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               )}
             </div>
 
-            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
+            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
             {/* Custo de compra */}
             <div>
@@ -278,7 +283,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
+            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
             {/* Custos adicionais */}
             <div>
@@ -296,7 +301,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               />
             </div>
 
-            <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
+            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
 
             {/* Alíquota */}
             <div>
