@@ -244,7 +244,9 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                 <>
                   <select
                     value={adType}
-                    onChange={(e) => setAdType(e.target.value as any)}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                      setAdType(e.target.value as keyof typeof adCosts)
+                    }
                     className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
                   >
                     <option value="" disabled>
