@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import Image from "next/image";
 import TooltipInfo from "@/components/TooltipInfo";
+
 export interface MiniCalculatorProps {
   onCalc?: (sellPrice: number, calcResult: number) => void;
 }
@@ -21,7 +22,28 @@ const adCosts: Record<string, number> = {
   free: 0,
 };
 
+// --- Máscaras e Parsers ---
+const maskBRL = (value: string) => {
+  const digits = value.replace(/\D/g, "");
+  const pad = digits.padStart(3, "0");
+  const intPart = pad.slice(0, -2).replace(/^0+(?=\d)/, "");
+  const decPart = pad.slice(-2);
+  return `${intPart},${decPart}`;
+};
+const parseBRL = (value: string) =>
+  parseFloat(value.replace(/\./g, "").replace(",", ".")) || 0;
+
+const maskNumber = (value: string, decimals: number) => {
+  const digits = value.replace(/\D/g, "");
+  const pad = digits.padStart(decimals + 1, "0");
+  const intPart = pad.slice(0, -decimals).replace(/^0+(?=\d)/, "");
+  const decPart = pad.slice(-decimals);
+  return `${intPart}.${decPart}`;
+};
+const parseNumber = (value: string) => parseFloat(value.replace(",", ".")) || 0;
+
 export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
+  // — estados inalterados —
   const [open, setOpen] = useState(false);
   const [sellPrice, setSellPrice] = useState("");
   const [buyPrice, setBuyPrice] = useState("");
@@ -35,31 +57,42 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
   const [calcResult, setCalcResult] = useState<number | null>(null);
   const [additionalCost, setAdditionalCost] = useState("");
 
+  // — handlers aplicando máscara —
+  const handleSellPrice = (e: ChangeEvent<HTMLInputElement>) =>
+    setSellPrice(maskBRL(e.target.value));
+  const handleBuyPrice = (e: ChangeEvent<HTMLInputElement>) =>
+    setBuyPrice(maskBRL(e.target.value));
+  const handleCustomLogistics = (e: ChangeEvent<HTMLInputElement>) =>
+    setCustomLogisticsValue(maskBRL(e.target.value));
+  const handleAdditionalCost = (e: ChangeEvent<HTMLInputElement>) =>
+    setAdditionalCost(maskBRL(e.target.value));
+  const handleCustomAd = (e: ChangeEvent<HTMLInputElement>) =>
+    setCustomAdValue(maskNumber(e.target.value, 2));
+  const handleAliquot = (e: ChangeEvent<HTMLInputElement>) =>
+    setAliquot(maskNumber(e.target.value, 3));
+
+  // — cálculo do resultado, com guard para não exibir quando campos vazios —
   useEffect(() => {
     if (!sellPrice || !buyPrice) {
+      // se ainda não preencheu os dois campos, zera resultado e sai
       setCalcResult(null);
-      if (onCalc) onCalc(Number(sellPrice) || 0, NaN);
       return;
     }
 
-    const sp = parseFloat(sellPrice) || 0;
-    const bp = parseFloat(buyPrice) || 0;
-
+    const sp = parseBRL(sellPrice);
+    const bp = parseBRL(buyPrice);
     const logCost = customLogisticsEnabled
-      ? parseFloat(customLogisticsValue) || 0
+      ? parseBRL(customLogisticsValue)
       : logisticsCosts[logistics] ?? 0;
-
     const adPct = customAdEnabled
-      ? (parseFloat(customAdValue) || 0) / 100
+      ? parseNumber(customAdValue) / 100
       : (adCosts[adType] ?? 0) / 100;
-    const adCost = sp * adPct;
+    const additional = parseBRL(additionalCost);
+    const alPct = parseNumber(aliquot) / 100;
 
-    const additional = parseFloat(additionalCost) || 0;
-    const alPct = (parseFloat(aliquot) || 0) / 100;
-    const alCost = sp * alPct;
-    const result = sp - logCost - adCost - bp - alCost - additional;
+    const result = sp - logCost - sp * adPct - bp - sp * alPct - additional;
 
-    setCalcResult(result);
+    setCalcResult(isNaN(result) ? null : result);
     if (onCalc) onCalc(sp, result);
   }, [
     sellPrice,
@@ -67,15 +100,15 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
     logistics,
     customLogisticsEnabled,
     customLogisticsValue,
+    adType,
     customAdEnabled,
     customAdValue,
-    adType,
-    aliquot,
     additionalCost,
+    aliquot,
     onCalc,
   ]);
 
-  const fmt = (v: number) =>
+  const fmtBRL = (v: number) =>
     new Intl.NumberFormat("pt-BR", {
       style: "currency",
       currency: "BRL",
@@ -110,32 +143,30 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
           </h2>
 
           <div className="space-y-4 mt-4">
+            {/* Valor de venda */}
             <div>
-              <label
-                htmlFor="sell_price"
-                className="block text-sm sm:text-base text-white"
-              >
+              <label htmlFor="sell_price" className="block text-white">
                 Valor de venda
                 <TooltipInfo text="Valor pelo qual você deseja vender o produto." />
               </label>
-
               <input
                 id="sell_price"
-                type="number"
+                type="text"
                 value={sellPrice}
-                onChange={(e) => setSellPrice(e.target.value)}
-                placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
+                onChange={handleSellPrice}
+                placeholder="0,00"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
             <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
+            {/* Custo de logística */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="text-white text-sm sm:text-base">
+                <label className="text-white">
                   Custo de logística
-                  <TooltipInfo text="Selecione o tipo de logística ou insira um valor personalizado." />
+                  <TooltipInfo text="Selecione ou insira um valor personalizado." />
                 </label>
                 <button
                   type="button"
@@ -147,31 +178,31 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
               </div>
               {customLogisticsEnabled ? (
                 <input
-                  type="number"
+                  type="text"
                   value={customLogisticsValue}
-                  onChange={(e) => setCustomLogisticsValue(e.target.value)}
-                  placeholder="R$ 0,00"
-                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
+                  onChange={handleCustomLogistics}
+                  placeholder="0,00"
+                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
                 />
               ) : (
                 <>
                   <select
                     value={logistics}
                     onChange={(e) => setLogistics(e.target.value)}
-                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white focus:outline-none"
+                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
                   >
                     <option value="" disabled>
                       Logística
                     </option>
-                    <option value="prime">Prime</option>
-                    <option value="normal">Normal</option>
-                    <option value="flex">Flex</option>
-                    <option value="full">Full</option>
-                    <option value="express">Express</option>
+                    {Object.keys(logisticsCosts).map((key) => (
+                      <option key={key} value={key}>
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                      </option>
+                    ))}
                   </select>
                   {logistics && (
                     <p className="mt-2 text-white text-sm">
-                      Valor: {fmt(logisticsCosts[logistics])}
+                      Valor: {fmtBRL(logisticsCosts[logistics])}
                     </p>
                   )}
                 </>
@@ -180,14 +211,12 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
 
             <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
+            {/* Taxa de anúncio */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label
-                  htmlFor="adPercentage"
-                  className="text-white text-sm sm:text-base"
-                >
+                <label htmlFor="adPercentage" className="text-white">
                   Taxa de anúncio
-                  <TooltipInfo text="Selecione o tipo de anúncio ou insira uma taxa personalizada (%)." />
+                  <TooltipInfo text="Selecione ou insira uma taxa personalizada (%)." />
                 </label>
                 <button
                   type="button"
@@ -197,117 +226,99 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   {customAdEnabled ? "Usar lista" : "Inserir valor"}
                 </button>
               </div>
-
               {customAdEnabled ? (
                 <input
                   id="adPercentage"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  max="100"
+                  type="text"
                   value={customAdValue}
-                  onChange={(e) => setCustomAdValue(e.target.value)}
-                  placeholder="0.00%"
-                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
+                  onChange={handleCustomAd}
+                  placeholder="0.00"
+                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
                 />
               ) : (
                 <>
                   <select
                     value={adType}
-                    onChange={(e) => setAdType(e.target.value)}
-                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white focus:outline-none"
+                    onChange={(e) => setAdType(e.target.value as any)}
+                    className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
                   >
                     <option value="" disabled>
                       Anúncio
                     </option>
-                    <option value="classic">Clássico</option>
-                    <option value="premium">Premium</option>
-                    <option value="free">Free</option>
+                    {Object.keys(adCosts).map((key) => (
+                      <option key={key} value={key}>
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                      </option>
+                    ))}
                   </select>
                   {adType && (
                     <p className="mt-2 text-white text-sm">
-                      Taxa: {(adCosts[adType] ?? 0).toFixed(2)}%
+                      Taxa: {adCosts[adType].toFixed(2)}%
                     </p>
                   )}
                 </>
               )}
             </div>
+
             <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
+            {/* Custo de compra */}
             <div>
-              <label
-                htmlFor="buy_price"
-                className="block text-white text-sm sm:text-base"
-              >
+              <label htmlFor="buy_price" className="block text-white">
                 Custo de compra
                 <TooltipInfo text="Custo de compra do produto." />
               </label>
               <input
                 id="buy_price"
-                type="number"
+                type="text"
                 value={buyPrice}
-                onChange={(e) => setBuyPrice(e.target.value)}
-                placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white text-sm sm:text-base placeholder:text-gray-400 focus:outline-none"
+                onChange={handleBuyPrice}
+                placeholder="0,00"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
             <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
+            {/* Custos adicionais */}
             <div>
-              <label
-                htmlFor="additional_cost"
-                className="block text-white text-sm sm:text-base"
-              >
+              <label htmlFor="additional_cost" className="block text-white">
                 Custos adicionais
-                <TooltipInfo text="Quaisquer custos adicionais que possam afetar o preço final." />
+                <TooltipInfo text="Outros custos que afetem o preço final." />
               </label>
               <input
                 id="additional_cost"
-                type="number"
-                step="0.01"
-                min="0"
+                type="text"
                 value={additionalCost}
-                onChange={(e) => setAdditionalCost(e.target.value)}
-                placeholder="R$ 0,00"
-                className="
-      w-full rounded-lg p-2
-      bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400
-      focus:outline-none
-    "
+                onChange={handleAdditionalCost}
+                placeholder="0,00"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
             <hr className="border-[var(--gray-to-white)] mt-[-10px] mb-2" />
 
+            {/* Alíquota */}
             <div>
-              <label
-                htmlFor="aliquot"
-                className="block text-white text-sm sm:text-base"
-              >
-                Alíquota
-                <TooltipInfo text="Alíquota de imposto ICMS da venda do produto (%)." />
+              <label htmlFor="aliquot" className="block text-white">
+                Alíquota (%)
+                <TooltipInfo text="ICMS da venda do produto." />
               </label>
               <input
                 id="aliquot"
-                type="number"
-                step="0.01"
-                min="0"
-                max="100"
+                type="text"
                 value={aliquot}
-                onChange={(e) => setAliquot(e.target.value)}
-                placeholder="0.000%"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-sm sm:text-base text-white placeholder:text-gray-400 focus:outline-none"
+                onChange={handleAliquot}
+                placeholder="0.000"
+                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
+            {/* Resultado só aparece após preencher venda + compra */}
             {calcResult !== null && (
-              <p
-                id="calc-result"
-                className="mt-4 text-sm sm:text-base text-white font-medium"
-              >
+              <p className="mt-4 text-white text-center font-medium">
                 {calcResult >= 0 ? "Lucro Total:" : "Prejuízo Total:"}{" "}
-                {fmt(calcResult)}
+                <strong>{fmtBRL(calcResult)}</strong>
               </p>
             )}
           </div>
