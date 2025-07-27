@@ -129,14 +129,14 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
       )}
 
       {open && (
-        <div className="fixed bottom-5 right-5 w-[290px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
+        <div className="fixed bottom-3 right-3 w-[290px] sm:w-[300px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
           <button
             onClick={() => setOpen(false)}
             className="absolute top-2 right-3 text-white text-lg"
           >
             ✕
           </button>
-          <h2 className="text-white font-semibold text-lg text-center mt-4">
+          <h2 className="text-white font-semibold text-lg text-center mt-2">
             Calculadora
           </h2>
 
