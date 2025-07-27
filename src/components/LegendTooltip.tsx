@@ -26,7 +26,7 @@ export default function LegendTooltip({ drop = false }: LegendTooltipProps) {
   const mobileTopClass = drop ? "top-88" : "top-68";
 
   return (
-    <div className="relative flex items-center" ref={tooltipRef}>
+    <div className="flex items-center sm:relative" ref={tooltipRef}>
       <button
         type="button"
         onClick={() => setVisible((v) => !v)}
@@ -40,11 +40,11 @@ export default function LegendTooltip({ drop = false }: LegendTooltipProps) {
       {visible && (
         <div
           className={`
-            fixed inset-x-0 left-1/2 -translate-x-1/2 ${mobileTopClass}
-            w-[280px]
-            sm:absolute sm:top-14 sm:left-1/2 sm:-translate-x-1/2
-            z-50 bg-black text-white p-4 rounded-lg shadow-lg text-sm
-          `}
+      absolute inset-x-0 left-1/2 -translate-x-1/2 ${mobileTopClass}
+      w-[280px]
+      sm:top-14
+      z-50 bg-black text-white p-4 rounded-lg shadow-lg text-sm
+    `}
         >
           <div className="flex items-center gap-2 mb-2">
             <span className="w-3 h-3 bg-green-500 rounded" />
