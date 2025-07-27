@@ -48,15 +48,17 @@ export default function LegendTooltip({ drop = false }: LegendTooltipProps) {
         >
           <div className="flex items-center gap-2 mb-2">
             <span className="w-3 h-3 bg-green-500 rounded" />
-            <span>Lucro e preço de venda competitivo.</span>
+            <span>Lucro e preço de venda competitivos.</span>
           </div>
           <div className="flex items-center gap-2 mb-2">
             <span className="w-3 h-3 bg-yellow-500 rounded" />
-            <span>Lucro e preço de venda igual ao do anúncio.</span>
+            <span>Há lucro, mas o preço de venda é o mesmo do anúncio.</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 bg-red-500 rounded" />
-            <span>Sem lucro ou preço de venda maior que do anúncio.</span>
+            <span>
+              Não há lucro, ou o preço de venda está acima do anúncio.
+            </span>
           </div>
         </div>
       )}
