@@ -19,7 +19,7 @@ export default function HomeClient() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image
-              src="/searchprice-logo.png"
+              src="/home-searchprice-logo.png"
               className="w-auto h-auto"
               alt="logo"
               width={50}
@@ -91,7 +91,7 @@ export default function HomeClient() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <video
               src="/video.mp4"
-              className="w-full max-w-4xl h-auto mx-auto rounded-md mb-8"
+              className="w-full max-w-4xl h-[12rem] sm:h-[17rem] md:h-[20rem] lg:h-[24rem] mx-auto rounded-md mb-8"
               controls
               loop
             />
@@ -112,9 +112,10 @@ export default function HomeClient() {
             <Image
               src="/marketplaces-table.png"
               alt="Comparativo Marketplaces"
-              width={800}
-              height={700}
+              width={600}
+              height={500}
               className="block mx-auto h-auto w-auto rounded-md shadow-lg mb-6"
+              priority
             />
             <div className="flex justify-center mt-8">
               <div className="flex justify-between items-center w-[18rem] sm:w-[27rem]">
