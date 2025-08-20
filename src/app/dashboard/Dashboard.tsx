@@ -40,6 +40,10 @@ export default function Dashboard() {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
+const onlyDigits = (s: string) => s.replace(/\D/g, "");
+const capitalize = (s: string) =>
+  s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
+
   const loadProducts = useCallback(
     async (filterArg?: FilterOption, dataFilterArg?: string) => {
       setLoading(true);
@@ -100,29 +104,30 @@ export default function Dashboard() {
     setDataFilter("");
   };
 
-  const handleEANChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setDataFilter(e.target.value);
+ const handleEANChange = (e: ChangeEvent<HTMLInputElement>) =>
+  setDataFilter(onlyDigits(e.target.value));
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
   };
 
-  let productsToDisplay = [...products];
+let productsToDisplay = [...products];
 
-  const term = dataFilter.trim().toLowerCase();
-  if (filter === "productCode" && term) {
-    productsToDisplay = productsToDisplay.filter((p) =>
-      p.productCode.toLowerCase().includes(term)
-    );
-  }
+const term = dataFilter.trim().toLowerCase();
 
-  if (filter === "shipping" && term) {
-    productsToDisplay = productsToDisplay.filter((p) =>
-      p.shipping.toLowerCase().includes(term)
-    );
-  }
+if (filter === "productCode" && term) {
+  const eanTerm = onlyDigits(term);
+  productsToDisplay = productsToDisplay.filter((p) =>
+    onlyDigits(String(p.productCode ?? "")).startsWith(eanTerm)
+  );
+}
 
+if (filter === "shipping" && term) {
+  productsToDisplay = productsToDisplay.filter((p) =>
+    String(p.shipping).toLowerCase().includes(term)
+  );
+}
   if (searchTerm.trim()) {
     const search = searchTerm.trim().toLowerCase();
     productsToDisplay = productsToDisplay.filter((p) =>
@@ -364,17 +369,14 @@ export default function Dashboard() {
                   EAN:
                 </label>
                 <input
-                  id="productCodeInput"
-                  type="text"
-                  placeholder="Digite EAN..."
-                  value={dataFilter}
-                  onChange={handleEANChange}
-                  className="
-    border rounded p-2 bg-white
-    w-full sm:w-auto
-    max-w-xs sm:max-w-none
-  "
-                />
+  id="productCodeInput"
+  type="text"
+  inputMode="numeric"
+  placeholder="Digite EAN..."
+  value={dataFilter}
+  onChange={handleEANChange}
+  className="border rounded p-2 bg-white w-full sm:w-auto max-w-xs sm:max-w-none"
+/>
               </div>
               <LegendTooltip drop={true} />
             </div>
@@ -436,10 +438,10 @@ export default function Dashboard() {
                   currency: "BRL",
                 })}
               </p>
-              <p>
-                <span className="font-semibold">Frete:</span>{" "}
-                {selectedProduct.shipping}
-              </p>
+             <p>
+  <span className="font-semibold">Frete:</span>{" "}
+  {capitalize(String(selectedProduct.shipping))}
+</p>
               <p>
                 <span className="font-semibold">Disponível:</span>{" "}
                 {selectedProduct.amountAvailable}

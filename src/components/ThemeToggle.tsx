@@ -11,9 +11,6 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(next)}
-      aria-label={`Mudar para tema ${next === "dark" ? "escuro" : "claro"}`}
-      aria-pressed={resolvedTheme === "dark"}
-      title={`Trocar para ${next === "dark" ? "escuro" : "claro"}`}
       className="focus:outline-none transition-transform duration-200 hover:scale-110 z-10 grid place-items-center size-9 rounded-full"
     >
       <Image
