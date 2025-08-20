@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useEffect, useState, FormEvent } from "react";
+import Image from "next/image";
 import { useResetPassword } from "@/hooks/useResetPassword";
 import { useRegister } from "@/hooks/useRegister";
 import type { PasswordRequirement } from "@/hooks/useRegister";
-import Image from "next/image";
-interface Props {
-  readonly initialEmail: string;
-  readonly initialToken: string;
-}
 
-export default function ResetPasswordForm({
+type Props = { initialEmail: string; initialToken: string };
+
+export default function ResetPassword({
   initialEmail,
   initialToken,
-}: Props) {
+}: Readonly<Props>) {
   const [email, setEmail] = useState(initialEmail);
   const [token, setToken] = useState(initialToken);
   const [password, setPassword] = useState("");
@@ -66,6 +64,7 @@ export default function ResetPasswordForm({
             disabled={loading}
             className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
+
           <input
             type="text"
             placeholder="Código de redefinição"
@@ -75,6 +74,7 @@ export default function ResetPasswordForm({
             disabled={loading}
             className="w-full h-12 px-4 rounded-xl bg-[var(--background-input)] border border-[var(--border)] text-[var(--white-to-primary)] outline-none"
           />
+
           <div className="space-y-1">
             <div className="relative">
               <input
@@ -123,6 +123,7 @@ export default function ResetPasswordForm({
               </ul>
             )}
           </div>
+
           <div className="space-y-1">
             <div className="relative">
               <input
@@ -162,6 +163,7 @@ export default function ResetPasswordForm({
               </p>
             )}
           </div>
+
           {error && <p className="text-[var(--danger)] text-sm">{error}</p>}
 
           <button

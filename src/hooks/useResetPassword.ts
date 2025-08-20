@@ -26,15 +26,34 @@ export function useResetPassword() {
       return;
     }
 
+    function hasMessage(e: unknown): e is { message: string } {
+      return (
+        typeof e === "object" &&
+        e !== null &&
+        "message" in e &&
+        typeof (e as { message?: unknown }).message === "string"
+      );
+    }
+
     setLoading(true);
     try {
       await resetPassword(email, token, password);
       router.push("/login");
     } catch (err: unknown) {
+      let msg = "";
+
       if (err instanceof Error) {
-        setError(err.message);
+        msg = err.message;
+      } else if (typeof err === "string") {
+        msg = err;
+      } else if (hasMessage(err)) {
+        msg = err.message;
+      }
+
+      if (/invalid code/i.test(msg)) {
+        setError("Código inválido");
       } else {
-        setError(String(err) || "Erro ao redefinir senha");
+        setError(msg || "Erro ao redefinir senha");
       }
     } finally {
       setLoading(false);

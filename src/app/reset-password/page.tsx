@@ -1,4 +1,4 @@
-import ResetPasswordForm from "@/components/ResetPasswordForm";
+import ResetPassword from "./ResetPassword";
 
 export const metadata = {
   title: "Recuperar Senha",
@@ -15,14 +15,10 @@ export default async function ResetPasswordPage({
 }: Readonly<{
   searchParams: Promise<SearchParamsType>;
 }>) {
-  const { email, token } = await searchParams;
-  const initialEmail = Array.isArray(email) ? email[0] : email ?? "";
-  const initialToken = Array.isArray(token) ? token[0] : token ?? "";
+  const sp = await searchParams;
 
-  return (
-    <ResetPasswordForm
-      initialEmail={initialEmail}
-      initialToken={initialToken}
-    />
-  );
+  const email = Array.isArray(sp.email) ? sp.email[0] : sp.email ?? "";
+  const token = Array.isArray(sp.token) ? sp.token[0] : sp.token ?? "";
+
+  return <ResetPassword initialEmail={email} initialToken={token} />;
 }

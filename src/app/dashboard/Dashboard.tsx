@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { fetchProducts } from "@/services/productService";
 import type { Product } from "@/models/Product";
 import MiniCalculator from "@/components/MiniCalculator";
-import LegendTooltip from "./LegendTooltip";
+import LegendTooltip from "../../components/LegendTooltip";
 
 type FilterOption = (typeof FILTER_OPTIONS)[number]["value"];
 
@@ -142,6 +142,7 @@ export default function Dashboard() {
 
   const renderTable = (title: string, items: Product[]) => {
     if (items.length === 0) return null;
+
     return (
       <div key={title} className="mb-8">
         <h2 className="text-xl font-semibold text-white mb-2">{title}</h2>

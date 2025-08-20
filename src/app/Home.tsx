@@ -11,7 +11,7 @@ import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
 
-export default function HomeClient() {
+export default function Home() {
   const router = useRouter();
 
   return (
@@ -179,7 +179,6 @@ export default function HomeClient() {
             ${isEven ? "md:flex-row-reverse" : ""}
           `}
                 >
-                  {/* Imagem */}
                   <div className="w-full flex justify-center sm:w-1/2 md:w-2/5 mx-auto">
                     <Image
                       src={`/article${i}.png`}
@@ -190,7 +189,6 @@ export default function HomeClient() {
                     />
                   </div>
 
-                  {/* Texto */}
                   <div className="w-7/8 sm:w-2/3 space-y-4 text-center md:text-justify">
                     <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
                       {i === 1 && "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"}
