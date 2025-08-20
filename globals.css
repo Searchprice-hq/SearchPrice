@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
-:root {
+body, dialog {
+  font-family: "Poppins", sans-serif;
+  color: black;
+}
 
+.sp-modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+:root {
   --primary: #144750;
   --secondary: #278d8d;
   --third: #41aaa3;
@@ -114,10 +122,4 @@
   --white-to-light-gray: #f8f8f8;
 }
 
-body {
-  font-family: "Poppins", sans-serif;
-}
 
-.sp-modal::backdrop {
-  background: rgba(0, 0, 0, 0.5);
-}
