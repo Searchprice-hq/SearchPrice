@@ -32,7 +32,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     avatar: "/woman2.png",
     name: "Carla Souza",
-    role: "Especialista em E‑commerce",
+    role: "Especialista em E-commerce",
     quote:
       "Os relatórios de tendência de preços são precisos e fáceis de usar. Uma virada de jogo para o meu negócio.",
   },
@@ -59,7 +59,7 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
+function TestimonialCard({ avatar, name, role, quote }: Readonly<Testimonial>) {
   return (
     <div className="bg-[var(--background-container)] p-6 rounded-lg shadow-lg flex flex-col transform transition-transform hover:scale-105">
       <div className="flex items-center mb-4">
@@ -76,8 +76,8 @@ function TestimonialCard({ avatar, name, role, quote }: Testimonial) {
           </h3>
           <p className="text-sm text-[var(--white-to-primary)]">{role}</p>
           <div className="flex items-center mt-1 space-x-1">
-            {[...Array(5)].map((_, i) => (
-              <span key={i} className="text-yellow-400 text-sm">
+            {Array.from({ length: 5 }, (_, i) => (
+              <span key={`star-${i}`} className="text-yellow-400 text-sm">
                 ★
               </span>
             ))}

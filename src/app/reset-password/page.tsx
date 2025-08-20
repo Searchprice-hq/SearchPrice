@@ -12,9 +12,9 @@ type SearchParamsType = {
 
 export default async function ResetPasswordPage({
   searchParams,
-}: {
+}: Readonly<{
   searchParams: Promise<SearchParamsType>;
-}) {
+}>) {
   const { email, token } = await searchParams;
   const initialEmail = Array.isArray(email) ? email[0] : email ?? "";
   const initialToken = Array.isArray(token) ? token[0] : token ?? "";

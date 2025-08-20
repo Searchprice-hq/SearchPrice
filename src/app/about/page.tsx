@@ -32,11 +32,11 @@ function TeamMember({
   name,
   role,
   avatar,
-}: {
+}: Readonly<{
   name: string;
   role: string;
   avatar: string;
-}) {
+}>) {
   return (
     <div className="flex flex-col items-center">
       <Image
@@ -58,13 +58,13 @@ export default function AboutPage() {
       <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-16">
         <Link
           href="/"
-          className="absolute top-4 left-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+          className="absolute top-4 left-4 hover:opacity-90 transition-transform hover:scale-110"
         >
           <Image src="/home.png" alt="Home" width={36} height={36} />
         </Link>
         <Link
           href="/login"
-          className="absolute top-4 right-4 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+          className="absolute top-4 right-4 hover:opacity-90 transition-transform hover:scale-110"
         >
           <Image src="/profile.png" alt="Login" width={40} height={40} />
         </Link>
@@ -89,7 +89,7 @@ export default function AboutPage() {
             </h1>
             <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
               Fundada em 2023 por um grupo de empreendedores apaixonados por
-              e‑commerce, a Search Price surgiu para resolver o problema de
+              e-commerce, a Search Price surgiu para resolver o problema de
               coleta manual de dados de preços em diversos marketplaces. Desde
               então, evoluímos nossa plataforma para oferecer informações
               atualizadas sobre preços, visitas e vendas em um só lugar,
@@ -183,7 +183,7 @@ export default function AboutPage() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center p-6 bg-[var(--white)] rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 transition-transform hover:scale-110"
+              className="flex flex-col items-center p-6 bg-[var(--white)] rounded-lg shadow-lg hover:shadow-xl duration-200 transition-transform hover:scale-110"
             >
               <div className={`w-12 h-12 mb-4 ${color}`}>
                 <Image

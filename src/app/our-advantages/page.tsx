@@ -11,11 +11,11 @@ function InfoCard({
   icon,
   title,
   children,
-}: {
+}: Readonly<{
   icon: React.ReactNode;
   title: string;
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <div className="bg-[var(--background-container)] rounded-lg shadow-md p-6 flex flex-col items-center text-center transform transition-transform hover:scale-105">
       <div className="text-4xl mb-4">{icon}</div>
@@ -25,7 +25,10 @@ function InfoCard({
   );
 }
 
-function StatCard({ value, label }: { value: string | number; label: string }) {
+function StatCard({
+  value,
+  label,
+}: Readonly<{ value: string | number; label: string }>) {
   return (
     <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white rounded-lg p-6 text-center transform transition-transform hover:scale-105">
       <p className="text-3xl font-bold">{value}</p>
@@ -40,13 +43,13 @@ export default function OurAdvantagesPage() {
       <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
         <Link
           href="/"
-          className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+          className="absolute top-4 left-4 flex-shrink-0 hover:opacity-90 transition-opacity hover:scale-110"
         >
           <Image src="/home.png" alt="Home" width={36} height={36} />
         </Link>
         <Link
           href="/login"
-          className="absolute top-4 right-4 flex-shrink-0 hover:opacity-90 transition-opacity transition-transform hover:scale-110"
+          className="absolute top-4 right-4 flex-shrink-0 hover:opacity-90 transition-opacity hover:scale-110"
         >
           <Image src="/profile.png" alt="Login" width={40} height={40} />
         </Link>

@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+  useRef,
+} from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchProducts } from "@/services/productService";
@@ -31,9 +37,8 @@ export default function Dashboard() {
   const [sellPrice, setSellPrice] = useState<number | null>(null);
   const [calcResult, setCalcResult] = useState<number | null>(null);
 
-  useEffect(() => {
-    document.body.style.overflow = selectedProduct ? "hidden" : "";
-  }, [selectedProduct]);
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const loadProducts = useCallback(
     async (filterArg?: FilterOption, dataFilterArg?: string) => {
@@ -56,8 +61,30 @@ export default function Dashboard() {
   );
 
   useEffect(() => {
-    loadProducts(); // carrega tudo apenas uma vez
+    loadProducts();
   }, [loadProducts]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const onClose = () => {
+      setSelectedProduct(null);
+      document.body.style.overflow = "";
+    };
+
+    if (selectedProduct) {
+      if (!dialog.open) dialog.showModal();
+      document.body.style.overflow = "hidden";
+      setTimeout(() => closeButtonRef.current?.focus(), 0);
+      dialog.addEventListener("close", onClose);
+
+      return () => dialog.removeEventListener("close", onClose);
+    } else {
+      if (dialog.open) dialog.close();
+      document.body.style.overflow = "";
+    }
+  }, [selectedProduct]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
@@ -96,6 +123,7 @@ export default function Dashboard() {
       p.name.toLowerCase().includes(search)
     );
   }
+
   const mercadoLivre = productsToDisplay.filter((p) =>
     p.marketplace.toLowerCase().includes("mercado")
   );
@@ -211,6 +239,32 @@ export default function Dashboard() {
     );
   };
 
+  function renderContent() {
+    if (loading) {
+      return <p className="text-white">Carregando…</p>;
+    }
+
+    if (error) {
+      return <p className="text-red-500 mb-4">❌ {error}</p>;
+    }
+
+    if (productsToDisplay.length === 0) {
+      return <p className="text-white mb-4">Nenhum produto encontrado.</p>;
+    }
+
+    return (
+      <>
+        {renderTable("Mercado Livre", mercadoLivre)}
+        {renderTable("Amazon", amazon)}
+        {renderTable("Shopee", shopee)}
+      </>
+    );
+  }
+
+  const closeModal = useCallback(() => {
+    setSelectedProduct(null);
+  }, []);
+
   return (
     <div className="bg-[var(--black-to-primary)] min-h-screen flex flex-col">
       <main className="p-8 flex-grow">
@@ -244,11 +298,12 @@ export default function Dashboard() {
 
         <div className="flex flex-wrap gap-4 mb-6 items-end">
           <div className="flex flex-col">
-            <label className="block text-sm text-white mb-1">
+            <label htmlFor="filterBy" className="block text-sm text-white mb-1">
               Filtrar por:
             </label>
             <div className="flex items-center gap-2">
               <select
+                id="filterBy"
                 value={filter}
                 onChange={handleFilterChange}
                 className="rounded p-2 bg-white"
@@ -268,8 +323,14 @@ export default function Dashboard() {
           {filter === "shipping" && (
             <div className="flex items-end gap-2">
               <div>
-                <label className="block mb-1 text-sm text-white">Frete:</label>
+                <label
+                  htmlFor="filterShipping"
+                  className="block mb-1 text-sm text-white"
+                >
+                  Frete:
+                </label>
                 <select
+                  id="filterShipping"
                   value={dataFilter}
                   onChange={(e) => setDataFilter(e.target.value)}
                   className="rounded p-2 bg-white"
@@ -289,8 +350,14 @@ export default function Dashboard() {
           {filter === "productCode" && (
             <div className="flex items-end gap-2">
               <div>
-                <label className="block mb-1 text-sm text-white">EAN:</label>
+                <label
+                  htmlFor="productCodeInput"
+                  className="block mb-1 text-sm text-white"
+                >
+                  EAN:
+                </label>
                 <input
+                  id="productCodeInput"
                   type="text"
                   placeholder="Digite EAN..."
                   value={dataFilter}
@@ -307,19 +374,7 @@ export default function Dashboard() {
           )}
         </div>
 
-        {loading ? (
-          <p className="text-white">Carregando…</p>
-        ) : error ? (
-          <p className="text-red-500 mb-4">❌ {error}</p>
-        ) : productsToDisplay.length === 0 ? (
-          <p className="text-white mb-4">Nenhum produto encontrado.</p>
-        ) : (
-          <>
-            {renderTable("Mercado Livre", mercadoLivre)}
-            {renderTable("Amazon", amazon)}
-            {renderTable("Shopee", shopee)}
-          </>
-        )}
+        <div>{renderContent()}</div>
 
         <MiniCalculator
           onCalc={(sp, cr) => {
@@ -330,18 +385,24 @@ export default function Dashboard() {
       </main>
 
       {selectedProduct && (
-        <div
-          onClick={() => setSelectedProduct(null)}
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-10"
+        <dialog
+          ref={dialogRef}
+          aria-labelledby="productModalTitle"
+          className="
+    sp-modal
+    fixed top-1/2 left-1/2
+    -translate-x-1/2 -translate-y-1/2
+    m-0 p-0
+    rounded-2xl w-[350px] max-w-md border-0
+  "
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative bg-white rounded-2xl p-6 w-[350px] max-w-md"
-          >
+          <div className="relative bg-white rounded-2xl p-6">
             <button
-              onClick={() => setSelectedProduct(null)}
+              ref={closeButtonRef}
+              type="button"
+              onClick={closeModal}
               aria-label="Fechar"
-              className="absolute top-5 right-5 text-gray-500 hover:text-gray-700 text-2xl leading-none"
+              className="absolute top-5 right-5 text-gray-500 hover:text-gray-700 text-2xl leading-none focus:outline-none"
             >
               ✕
             </button>
@@ -354,7 +415,10 @@ export default function Dashboard() {
                 height={120}
                 className="rounded"
               />
-              <h3 className="text-2xl text-center font-semibold">
+              <h3
+                id="productModalTitle"
+                className="text-2xl text-center font-semibold"
+              >
                 {selectedProduct.name}
               </h3>
 
@@ -395,7 +459,7 @@ export default function Dashboard() {
               </p>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
 
       <footer className="bg-[var(--dark-black-to-secondary)] text-white text-center p-8">
