@@ -1,11 +1,5 @@
 import type { NextConfig } from "next";
 
-const API_URL = process.env.API_URL?.trim();
-
-if (!API_URL) {
-  throw new Error("API_URL não definida no .env");
-}
-
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
@@ -15,7 +9,8 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `${API_URL}/:path*`,
+        destination:
+          "http://ec2-54-233-2-124.sa-east-1.compute.amazonaws.com:3333/:path*",
       },
     ];
   },
