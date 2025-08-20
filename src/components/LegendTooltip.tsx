@@ -6,7 +6,9 @@ interface LegendTooltipProps {
   drop?: boolean;
 }
 
-export default function LegendTooltip({ drop = false }: LegendTooltipProps) {
+export default function LegendTooltip({
+  drop = false,
+}: Readonly<LegendTooltipProps>) {
   const [visible, setVisible] = useState(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
 

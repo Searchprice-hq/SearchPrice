@@ -68,23 +68,29 @@ export default function Dashboard() {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    const onClose = () => {
-      setSelectedProduct(null);
-      document.body.style.overflow = "";
-    };
+    const onClose = () => setSelectedProduct(null);
 
     if (selectedProduct) {
       if (!dialog.open) dialog.showModal();
-      document.body.style.overflow = "hidden";
       setTimeout(() => closeButtonRef.current?.focus(), 0);
       dialog.addEventListener("close", onClose);
 
       return () => dialog.removeEventListener("close", onClose);
-    } else {
-      if (dialog.open) dialog.close();
-      document.body.style.overflow = "";
+    } else if (dialog.open) {
+      dialog.close();
     }
   }, [selectedProduct]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+
+    return () => {
+      document.body.style.overflow = "";
+      if (dialog?.open) {
+        dialog.close();
+      }
+    };
+  }, []);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);

@@ -42,7 +42,7 @@ export const useLogin = () => {
     setLoading(true);
     try {
       await forgotPassword(email);
-      return "E‑mail de recuperação enviado com sucesso!";
+      return "E-mail de recuperação enviado com sucesso!";
     } catch (err: unknown) {
       console.error(err);
       if (err instanceof Error) {

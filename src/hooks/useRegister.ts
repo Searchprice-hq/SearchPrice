@@ -20,7 +20,7 @@ export const useRegister = () => {
     { text: "Pelo menos 8 caracteres", regex: /.{8,}/ },
     { text: "Uma letra maiúscula", regex: /[A-Z]/ },
     { text: "Uma letra minúscula", regex: /[a-z]/ },
-    { text: "Um número", regex: /[0-9]/ },
+    { text: "Um número", regex: /\d/ },
     { text: "Um caractere especial (!@#$%^&*)", regex: /[!@#$%^&*]/ },
   ];
 

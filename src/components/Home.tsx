@@ -9,6 +9,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
+import Link from "next/link";
 
 export default function HomeClient() {
   const router = useRouter();
@@ -49,12 +50,11 @@ export default function HomeClient() {
             ].map((item) => (
               <li
                 key={item.href}
-                className="text-white text-lg cursor-pointer hover:scale-110 transition"
-                onClick={() => {
-                  router.push(item.href);
-                }}
+                className="text-white text-lg hover:scale-110 transition"
               >
-                {item.label}
+                <Link href={item.href} className="cursor-pointer block">
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -69,10 +69,11 @@ export default function HomeClient() {
             ].map((item) => (
               <li
                 key={item.href}
-                className="text-white text-lg cursor-pointer hover:scale-110 transition py-1"
-                onClick={() => router.push(item.href)}
+                className="text-white text-lg hover:scale-110 transition py-1"
               >
-                {item.label}
+                <Link href={item.href} className="cursor-pointer block">
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -94,7 +95,15 @@ export default function HomeClient() {
               className="w-full max-w-4xl h-[12rem] sm:h-[17rem] md:h-[20rem] lg:h-[24rem] mx-auto rounded-md mb-8"
               controls
               loop
-            />
+            >
+              <track
+                src="/captions.vtt"
+                kind="captions"
+                srcLang="pt"
+                label="Português"
+                default
+              />
+            </video>
             <h1 className="text-[var(--white-to-primary)] font-semibold text-2xl sm:text-2xl lg:text-4xl mt-4 mb-10">
               Transforme horas de pesquisa por produtos em minutos
             </h1>
@@ -184,11 +193,9 @@ export default function HomeClient() {
                   {/* Texto */}
                   <div className="w-7/8 sm:w-2/3 space-y-4 text-center md:text-justify">
                     <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
-                      {i === 1
-                        ? "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"
-                        : i === 2
-                        ? "FIQUE SEMPRE UM PASSO À FRENTE!"
-                        : "TOME DECISÕES BASEADAS EM DADOS!"}
+                      {i === 1 && "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"}
+                      {i === 2 && "FIQUE SEMPRE UM PASSO À FRENTE!"}
+                      {i === 3 && "TOME DECISÕES BASEADAS EM DADOS!"}
                     </h4>
                     <h2 className="text-[var(--white-to-primary)] font-semibold text-lg sm:text-xl">
                       {i === 1 &&

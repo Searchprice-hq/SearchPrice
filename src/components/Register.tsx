@@ -183,11 +183,11 @@ export default function Register() {
 
               {showPasswordRules && !isValidPassword && (
                 <ul className="pl-4 text-sm text-[var(--danger)] space-y-1">
-                  {passwordRequirements.map((req, idx) => {
+                  {passwordRequirements.map((req) => {
                     const ok = req.regex.test(password);
                     return (
                       <li
-                        key={idx}
+                        key={req.text}
                         className={
                           ok ? "text-[var(--green-400)] line-through" : ""
                         }

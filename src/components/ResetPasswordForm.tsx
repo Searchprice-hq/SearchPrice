@@ -3,14 +3,11 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import { useResetPassword } from "@/hooks/useResetPassword";
 import { useRegister } from "@/hooks/useRegister";
-import type {
-  PasswordRequirement,
-  UseRegisterReturn,
-} from "@/hooks/useRegister";
+import type { PasswordRequirement } from "@/hooks/useRegister";
 import Image from "next/image";
 interface Props {
-  initialEmail: string;
-  initialToken: string;
+  readonly initialEmail: string;
+  readonly initialToken: string;
 }
 
 export default function ResetPasswordForm({
@@ -28,7 +25,7 @@ export default function ResetPasswordForm({
 
   const { handleReset, error, loading } = useResetPassword();
   const { passwordRequirements, validatePassword, checkPasswordsMatch } =
-    useRegister() as UseRegisterReturn;
+    useRegister();
 
   const isValidPassword = validatePassword(password);
   const passwordsMatch = checkPasswordsMatch(password, confirmPassword);
@@ -56,7 +53,7 @@ export default function ResetPasswordForm({
           Redefinir Senha
         </h1>
         <p className="text-center text-sm mb-6 text-[var(--white-to-primary)]">
-          Informe seu e‑mail, o código recebido por e‑mail e a nova senha.
+          Informe seu e-mail, o código recebido por e-mail e a nova senha.
         </p>
 
         <form onSubmit={onSubmit} className="space-y-4">
@@ -110,21 +107,19 @@ export default function ResetPasswordForm({
 
             {showPasswordRules && !isValidPassword && (
               <ul className="pl-4 text-sm text-[var(--danger)] space-y-1">
-                {passwordRequirements.map(
-                  (req: PasswordRequirement, idx: number) => {
-                    const ok = req.regex.test(password);
-                    return (
-                      <li
-                        key={idx}
-                        className={
-                          ok ? "text-[var(--green-400)] line-through" : ""
-                        }
-                      >
-                        {req.text}
-                      </li>
-                    );
-                  }
-                )}
+                {passwordRequirements.map((req: PasswordRequirement) => {
+                  const ok = req.regex.test(password);
+                  return (
+                    <li
+                      key={req.text}
+                      className={
+                        ok ? "text-[var(--green-400)] line-through" : ""
+                      }
+                    >
+                      {req.text}
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

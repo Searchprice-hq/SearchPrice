@@ -43,7 +43,9 @@ const maskNumber = (value: string, decimals: number) => {
 };
 const parseNumber = (value: string) => parseFloat(value.replace(",", ".")) || 0;
 
-export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
+export default function MiniCalculator({
+  onCalc,
+}: Readonly<MiniCalculatorProps>) {
   const [open, setOpen] = useState(false);
   const [sellPrice, setSellPrice] = useState("");
   const [buyPrice, setBuyPrice] = useState("");
@@ -235,7 +237,7 @@ export default function MiniCalculator({ onCalc }: MiniCalculatorProps) {
                   <select
                     value={adType}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                      setAdType(e.target.value as keyof typeof adCosts)
+                      setAdType(e.target.value)
                     }
                     className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
                   >
