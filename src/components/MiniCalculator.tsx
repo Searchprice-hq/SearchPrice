@@ -23,9 +23,6 @@ const adCosts: Record<string, number> = {
   free: 0,
 };
 
-const parseBRL = (value: string) =>
-  parseFloat(value.replace(/\./g, "").replace(",", ".")) || 0;
-
 const maskNumber = (value: string, decimals: number) => {
   const digits = value.replace(/\D/g, "");
   if (!digits || Number(digits) === 0) return "";
@@ -34,8 +31,6 @@ const maskNumber = (value: string, decimals: number) => {
   const decPart = pad.slice(-decimals);
   return `${intPart}.${decPart}`;
 };
-
-const parseNumber = (value: string) => parseFloat(value.replace(",", ".")) || 0;
 
 export default function MiniCalculator({
   onCalc,
@@ -80,20 +75,19 @@ export default function MiniCalculator({
     setAliquot(maskNumber(e.target.value, 2));
 
   useEffect(() => {
-    // Se qualquer um dos preços principais estiver vazio, zera o resultado
     if (!sellPrice || !buyPrice) {
       setCalcResult(null);
       onCalc?.(0, null);
       return;
     }
-    // >>> Converta SEMPRE com parseToNumberFromMaskedBRL <<<
-    const sp = parseToNumberFromMaskedBRL(sellPrice); // "R$ 5,22" -> 5.22
-    const bp = parseToNumberFromMaskedBRL(buyPrice); // "R$ 5,22" -> 5.22
+
+    const sp = parseToNumberFromMaskedBRL(sellPrice);
+    const bp = parseToNumberFromMaskedBRL(buyPrice);
     const additional = parseToNumberFromMaskedBRL(additionalCost);
 
     const logCost = customLogisticsEnabled
-      ? parseToNumberFromMaskedBRL(customLogisticsValue) // "R$ 7,00" -> 7
-      : logisticsCosts[logistics] ?? 0; // tabela (número já)
+      ? parseToNumberFromMaskedBRL(customLogisticsValue)
+      : logisticsCosts[logistics] ?? 0;
 
     const adPct = customAdEnabled
       ? (parseFloat(customAdValue.replace(",", ".")) || 0) / 100
