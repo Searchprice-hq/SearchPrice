@@ -1,11 +1,9 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-export const metadata = {
-  title: "Depoimentos",
-  description: "Veja o que nossos usuários dizem.",
-};
+import { ArrowRight, Star } from "lucide-react";
+import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter from "@/components/site/SiteFooter";
+import PageHero from "@/components/site/PageHero";
 
 interface Testimonial {
   avatar: string;
@@ -59,97 +57,63 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-function TestimonialCard({ avatar, name, role, quote }: Readonly<Testimonial>) {
-  return (
-    <div className="bg-[var(--background-container)] p-6 rounded-lg shadow-lg flex flex-col transform transition-transform hover:scale-105">
-      <div className="flex items-center mb-4">
-        <Image
-          src={avatar}
-          alt={name}
-          width={56}
-          height={56}
-          className="rounded-full object-cover"
-        />
-        <div className="ml-4">
-          <h3 className="font-semibold text-lg text-[var(--third-to-primary)]">
-            {name}
-          </h3>
-          <p className="text-sm text-[var(--white-to-primary)]">{role}</p>
-          <div className="flex items-center mt-1 space-x-1">
-            {Array.from({ length: 5 }, (_, i) => (
-              <span key={`star-${i}`} className="text-yellow-400 text-sm">
-                ★
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-      <p className="text-[var(--white-to-primary)] text-justify flex-1">
-        “{quote}”
-      </p>
-    </div>
-  );
-}
-
 export default function Testimonials() {
   return (
-    <main className="bg-[var(--black-to-light-blue)] min-h-screen">
-      <header className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white">
-        <Link
-          href="/"
-          className="absolute top-4 left-4 hover:opacity-90 transition-opacity transform hover:scale-110"
-        >
-          <Image src="/home.png" alt="Home" width={36} height={36} />
-        </Link>
-        <Link
-          href="/login"
-          className="absolute top-4 right-4 hover:opacity-90 transition-opacity transform hover:scale-110"
-        >
-          <Image src="/profile.png" alt="Login" width={40} height={40} />
-        </Link>
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader />
+      <main className="flex-1">
+        <PageHero
+          eyebrow="Depoimentos"
+          title="O que nossos usuários dizem"
+          description="Vendedores de Mercado Livre, Amazon e Shopee que trocaram a pesquisa manual pela Search Price."
+        />
 
-        <div className="container mx-auto px-6 text-center py-10">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2 mt-6 sm:mt-0 text-[var(--white)]">
-            Depoimentos
-          </h1>
-          <p className="max-w-md mx-auto">
-            Veja como a Search Price tem ajudado vendedores e empreendedores a
-            otimizarem suas vendas e lucros.
-          </p>
-        </div>
-      </header>
+        <section className="py-20">
+          <div className="mx-auto grid max-w-6xl gap-5 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3">
+            {TESTIMONIALS.map((t) => (
+              <figure
+                key={t.name}
+                className="flex flex-col rounded-2xl border border-border bg-surface p-6"
+              >
+                <div className="mb-4 flex gap-0.5" aria-label="5 de 5 estrelas">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <blockquote className="flex-1 text-fg text-pretty">“{t.quote}”</blockquote>
+                <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+                  <Image
+                    src={t.avatar}
+                    alt=""
+                    width={44}
+                    height={44}
+                    className="size-11 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold text-fg">{t.name}</p>
+                    <p className="text-sm text-muted">{t.role}</p>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
 
-      <section className="container mx-auto px-6 py-16">
-        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {TESTIMONIALS.map((t) => (
-            <TestimonialCard key={t.name} {...t} />
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-12">
-        <div className="container mx-auto px-6 text-center space-y-4">
-          <h2 className="text-2xl font-semibold text-[var(--white)]">
-            Quer ser nosso próximo caso de sucesso?
-          </h2>
-          <p>
-            Experimente a Search Price grátis por 14 dias e veja a diferença!
-          </p>
-          <Link
-            href="/register"
-            className="mt-4 inline-block px-6 py-3 bg-white text-[var(--primary)] font-semibold rounded-lg hover:scale-105 transition-transform"
-          >
-            Começar Agora
-          </Link>
-        </div>
-      </section>
-
-      <footer className="bg-[var(--black-to-light-blue)] text-white px-8 py-8 mt-auto text-center">
-        <p className="text-base text-[var(--white-to-primary)]">
-          © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
-          reservados.
-        </p>
-      </footer>
-    </main>
+        <section className="px-4 pb-20 sm:px-6">
+          <div className="mx-auto max-w-4xl rounded-3xl bg-gradient-to-br from-brand-strong via-brand to-accent px-6 py-12 text-center">
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">
+              Faça parte dessa história
+            </h2>
+            <p className="mt-3 text-white/85">
+              Teste por 7 dias e veja onde seus preços estão em relação ao mercado.
+            </p>
+            <Link href="/register" className="mt-8 inline-flex h-13 items-center gap-2 rounded-xl bg-white px-6 font-semibold text-brand-strong shadow-lift transition-all duration-200 hover:-translate-y-0.5">
+              Começar teste grátis <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   );
 }

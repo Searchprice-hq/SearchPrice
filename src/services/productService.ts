@@ -5,7 +5,6 @@ function getHeaders() {
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
   return {
     "Content-Type": "application/json",
-    "x-api-key": "m7fLLNkHUuKrUaKkYbJcTi8o154u81ze",
     ...(token && { Authorization: `Bearer ${token}` }),
   };
 }

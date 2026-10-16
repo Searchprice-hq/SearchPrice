@@ -1,480 +1,315 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  ChangeEvent,
-  useRef,
-} from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
+import {
+  LoaderCircle,
+  LogOut,
+  Package,
+  RefreshCw,
+  Search,
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
 import { fetchProducts } from "@/services/productService";
-import type { Product } from "@/models/Product";
+import Logo from "@/components/ui/Logo";
+import ThemeToggle from "@/components/ThemeToggle";
 import MiniCalculator from "@/components/MiniCalculator";
-import LegendTooltip from "../../components/LegendTooltip";
+import ProductCard from "@/components/dashboard/ProductCard";
+import OfferDialog from "@/components/dashboard/OfferDialog";
+import { inputClass } from "@/components/ui/Field";
+import { buttonClass } from "@/components/ui/button";
+import {
+  MARKETPLACES,
+  MarketplaceDot,
+  type MarketplaceKey,
+} from "@/components/ui/MarketplaceBadge";
+import { groupByProduct, normalizeEan, toOffer, type Offer } from "@/helpers/products";
+import { pricePosition } from "@/helpers/market";
+import { useMyPrices } from "@/hooks/useMyPrices";
 
-type FilterOption = (typeof FILTER_OPTIONS)[number]["value"];
+const SHIP_OPTIONS = ["prime", "normal", "flex", "full", "express"];
 
-const FILTER_OPTIONS = [
-  { value: "price", label: "Preço (menor → maior)" },
-  { value: "shipping", label: "Tipo de Frete" },
-  { value: "productCode", label: "Código EAN" },
-] as const;
+type SortKey = "name" | "offers" | "position";
 
-const SHIP_OPTIONS = ["Prime", "Normal", "Flex", "Full", "Express"];
+const SORT_OPTIONS: { value: SortKey; label: string }[] = [
+  { value: "position", label: "Posição (mais caro)" },
+  { value: "offers", label: "Mais ofertas" },
+  { value: "name", label: "Nome (A–Z)" },
+];
+
+function Kpi({
+  label,
+  value,
+  Icon,
+  tone = "default",
+}: Readonly<{
+  label: string;
+  value: number;
+  Icon: typeof Package;
+  tone?: "default" | "danger" | "success";
+}>) {
+  return (
+    <div className="rounded-2xl border border-border bg-surface p-3 sm:p-4">
+      <div className="flex items-start justify-between gap-2">
+        <p className="text-xs text-muted sm:text-sm">{label}</p>
+        <Icon
+          className={clsx(
+            "hidden size-4 shrink-0 sm:block",
+            tone === "danger" && "text-danger",
+            tone === "success" && "text-success",
+            tone === "default" && "text-subtle"
+          )}
+        />
+      </div>
+      <p className="mt-1 text-2xl font-bold tracking-tight text-fg tabular sm:mt-2 sm:text-3xl">{value}</p>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const router = useRouter();
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filter, setFilter] = useState<FilterOption>("price");
-  const [dataFilter, setDataFilter] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [offers, setOffers] = useState<Offer[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [sellPrice, setSellPrice] = useState<number | null>(null);
-  const [calcResult, setCalcResult] = useState<number | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
 
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [search, setSearch] = useState("");
+  const [marketplace, setMarketplace] = useState<MarketplaceKey | "all">("all");
+  const [shipping, setShipping] = useState("");
+  const [sort, setSort] = useState<SortKey>("position");
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
-const onlyDigits = (s: string) => s.replace(/\D/g, "");
-const capitalize = (s: string) =>
-  s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
+  const { prices: myPrices, setPrice: setMyPrice } = useMyPrices();
 
-  const loadProducts = useCallback(
-    async (filterArg?: FilterOption, dataFilterArg?: string) => {
-      setLoading(true);
-      setError(null);
-      try {
-        const list = await fetchProducts(
-          filterArg || undefined,
-          dataFilterArg?.trim() || undefined
-        );
-        setProducts(Array.isArray(list) ? list : []);
-      } catch (err: unknown) {
-        setProducts([]);
-        setError(err instanceof Error ? err.message : String(err));
-      } finally {
-        setLoading(false);
-      }
-    },
-    []
-  );
-
-  useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    const onClose = () => setSelectedProduct(null);
-
-    if (selectedProduct) {
-      if (!dialog.open) dialog.showModal();
-      setTimeout(() => closeButtonRef.current?.focus(), 0);
-      dialog.addEventListener("close", onClose);
-
-      return () => dialog.removeEventListener("close", onClose);
-    } else if (dialog.open) {
-      dialog.close();
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const list = await fetchProducts();
+      setOffers(list.map(toOffer));
+    } catch (err: unknown) {
+      setOffers([]);
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setLoading(false);
     }
-  }, [selectedProduct]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-
-    return () => {
-      document.body.style.overflow = "";
-      if (dialog?.open) {
-        dialog.close();
-      }
-    };
   }, []);
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setSearchTerm(e.target.value);
-
-  const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setFilter(e.target.value as FilterOption);
-    setDataFilter("");
-  };
-
- const handleEANChange = (e: ChangeEvent<HTMLInputElement>) =>
-  setDataFilter(onlyDigits(e.target.value));
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      router.replace("/login");
+      return;
+    }
+    try {
+      const user = JSON.parse(localStorage.getItem("user") ?? "null");
+      setUserName(user?.fullName ?? user?.email ?? null);
+    } catch {
+      setUserName(null);
+    }
+    load();
+  }, [load, router]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     router.push("/");
   };
 
-let productsToDisplay = [...products];
+  const groups = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    const eanTerm = normalizeEan(term);
 
-const term = dataFilter.trim().toLowerCase();
+    const filtered = offers.filter((o) => {
+      if (marketplace !== "all" && o.marketplaceKey !== marketplace) return false;
+      if (shipping && String(o.shipping).toLowerCase() !== shipping) return false;
+      if (!term) return true;
+      if (/^\d+$/.test(term)) return normalizeEan(o.productCode).startsWith(eanTerm);
+      return o.name.toLowerCase().includes(term);
+    });
 
-if (filter === "productCode" && term) {
-  const eanTerm = onlyDigits(term);
-  productsToDisplay = productsToDisplay.filter((p) =>
-    onlyDigits(String(p.productCode ?? "")).startsWith(eanTerm)
-  );
-}
+    const list = groupByProduct(filtered);
+    const deltaOf = (key: string, stats: (typeof list)[number]["stats"]) =>
+      myPrices[key] && stats ? pricePosition(myPrices[key], stats).deltaPct : -Infinity;
 
-if (filter === "shipping" && term) {
-  productsToDisplay = productsToDisplay.filter((p) =>
-    String(p.shipping).toLowerCase().includes(term)
-  );
-}
-  if (searchTerm.trim()) {
-    const search = searchTerm.trim().toLowerCase();
-    productsToDisplay = productsToDisplay.filter((p) =>
-      p.name.toLowerCase().includes(search)
-    );
-  }
+    return list.sort((a, b) => {
+      if (sort === "name") return a.name.localeCompare(b.name, "pt-BR");
+      if (sort === "offers") return b.offers.length - a.offers.length;
+      return deltaOf(b.key, b.stats) - deltaOf(a.key, a.stats);
+    });
+  }, [offers, search, marketplace, shipping, sort, myPrices]);
 
-  const mercadoLivre = productsToDisplay.filter((p) =>
-    p.marketplace.toLowerCase().includes("mercado")
-  );
-  const amazon = productsToDisplay.filter((p) =>
-    p.marketplace.toLowerCase().includes("amazon")
-  );
-  const shopee = productsToDisplay.filter((p) =>
-    p.marketplace.toLowerCase().includes("shopee")
-  );
-
-  const renderTable = (title: string, items: Product[]) => {
-    if (items.length === 0) return null;
-
-    return (
-      <div key={title} className="mb-8">
-        <h2 className="text-xl font-semibold text-white mb-2">{title}</h2>
-        <div className="bg-white shadow rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-max w-full table-auto">
-              <thead className="bg-[var(--secondary-to-third)]">
-                <tr>
-                  {[
-                    "Produtos",
-                    "Nome",
-                    "Preço R$",
-                    "Frete",
-                    "Disponível",
-                    "Vendidos",
-                    "Vendedor",
-                    "Código EAN",
-                    "Visitas no Mês",
-                    "Visualizações",
-                  ].map((col) => (
-                    <th
-                      key={col}
-                      className="px-4 py-2 text-sm font-medium text-white text-center"
-                    >
-                      {col}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-300">
-                {items.map((p) => {
-                  let colorClass = "";
-
-                  const adPrice =
-                    typeof p.price === "string" ? parseFloat(p.price) : p.price;
-                  if (
-                    sellPrice !== null &&
-                    calcResult !== null &&
-                    !Number.isNaN(calcResult)
-                  ) {
-                    if (sellPrice < adPrice && calcResult > 0) {
-                      colorClass = "bg-green-500";
-                    } else if (sellPrice === adPrice && calcResult > 0) {
-                      colorClass = "bg-yellow-500";
-                    } else {
-                      colorClass = "bg-red-500";
-                    }
-                  }
-                  return (
-                    <tr
-                      key={p.id}
-                      onClick={() => setSelectedProduct(p)}
-                      className="hover:bg-gray-100 cursor-pointer"
-                    >
-                      <td className="px-4 py-2 relative">
-                        {calcResult !== null && !Number.isNaN(calcResult) && (
-                          <div
-                            className={`absolute inset-y-0 left-0 w-3 rounded-r ${colorClass}`}
-                          />
-                        )}
-                        <div className="flex justify-center items-center ml-2">
-                          <Image
-                            src={p.image}
-                            alt={p.name}
-                            width={48}
-                            height={48}
-                            className="object-cover rounded"
-                          />
-                        </div>
-                      </td>
-                      <td className="px-4 py-2 text-center">{p.name}</td>
-                      <td className="px-4 py-2 text-center">
-                        {Number(p.price).toLocaleString("pt-BR", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </td>
-                      <td className="px-4 py-2 text-center capitalize">
-                        {p.shipping}
-                      </td>
-                      <td className="px-4 py-2 text-center">
-                        {p.amountAvailable}
-                      </td>
-                      <td className="px-4 py-2 text-center">{p.amountSold}</td>
-                      <td className="px-4 py-2 text-center">{p.sellerName}</td>
-                      <td className="px-4 py-2 text-center">{p.productCode}</td>
-                      <td className="px-4 py-2 text-center">
-                        {p.amountVisitsLastMonth}
-                      </td>
-                      <td className="px-4 py-2 text-center">
-                        {p.amountReviews}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  function renderContent() {
-    if (loading) {
-      return <p className="text-white">Carregando…</p>;
+  const kpis = useMemo(() => {
+    let above = 0;
+    let below = 0;
+    for (const g of groups) {
+      const mine = myPrices[g.key];
+      if (!mine || !g.stats) continue;
+      const { level } = pricePosition(mine, g.stats);
+      if (level === "above") above++;
+      if (level === "below") below++;
     }
+    return { products: groups.length, above, below };
+  }, [groups, myPrices]);
 
-    if (error) {
-      return <p className="text-red-500 mb-4">❌ {error}</p>;
-    }
-
-    if (productsToDisplay.length === 0) {
-      return <p className="text-white mb-4">Nenhum produto encontrado.</p>;
-    }
-
-    return (
-      <>
-        {renderTable("Mercado Livre", mercadoLivre)}
-        {renderTable("Amazon", amazon)}
-        {renderTable("Shopee", shopee)}
-      </>
-    );
-  }
-
-  const closeModal = useCallback(() => {
-    setSelectedProduct(null);
-  }, []);
+  const firstName = userName?.split(" ")[0];
 
   return (
-    <div className="bg-[var(--black-to-primary)] min-h-screen flex flex-col">
-      <main className="p-8 flex-grow">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-white">
-            Dashboard de Produtos
-          </h1>
-          <button onClick={handleLogout} className="relative group">
-            <Image
-              src="/logout.png"
-              className="h-13 w-13"
-              alt="Logout"
-              width={50}
-              height={50}
-            />
-            <span className="absolute top-full left-1/2 font-medium -translate-x-1/2 mt-1 px-2 py-1 bg-white text-red-600 text-sm rounded opacity-0 group-hover:opacity-100">
-              Sair
-            </span>
+    <div className="flex min-h-screen flex-col">
+      <header className="sticky top-0 z-30 border-b border-border bg-bg/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+          <Logo href="/dashboard" />
+          <div className="flex items-center gap-1.5">
+            {firstName && (
+              <span className="mr-2 hidden text-sm text-muted sm:inline">
+                Olá, <span className="font-medium text-fg">{firstName}</span>
+              </span>
+            )}
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={buttonClass("ghost", "sm")}
+            >
+              <LogOut className="size-4" />
+              <span className="hidden sm:inline">Sair</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
+        <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
+              Comparar preços
+            </h1>
+            <p className="mt-1 text-muted">
+              Informe seu preço em cada produto e veja onde você está em relação ao mercado.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={load}
+            disabled={loading}
+            className={buttonClass("secondary", "sm", "self-start sm:self-auto")}
+          >
+            <RefreshCw className={clsx("size-4", loading && "animate-spin")} />
+            Atualizar
           </button>
         </div>
 
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Buscar produto por nome..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="w-full max-w-md p-2 rounded bg-white"
-          />
-        </div>
+        <section className="mb-6 grid grid-cols-3 gap-3">
+          <Kpi label="Produtos" value={kpis.products} Icon={Package} />
+          <Kpi label="Acima do mercado" value={kpis.above} Icon={TrendingUp} tone="danger" />
+          <Kpi label="Abaixo do mercado" value={kpis.below} Icon={TrendingDown} tone="success" />
+        </section>
 
-        <div className="flex flex-wrap gap-4 mb-6 items-end">
-          <div className="flex flex-col">
-            <label htmlFor="filterBy" className="block text-sm text-white mb-1">
-              Filtrar por:
-            </label>
-            <div className="flex items-center gap-2">
-              <select
-                id="filterBy"
-                value={filter}
-                onChange={handleFilterChange}
-                className="rounded p-2 bg-white"
-              >
-                {FILTER_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-              <div className={filter === "price" ? "" : "hidden"}>
-                <LegendTooltip drop={false} />
-              </div>
-            </div>
+        <section className="mb-6 flex flex-col gap-3 rounded-2xl border border-border bg-surface p-3 lg:flex-row lg:items-center">
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-subtle" />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar por nome ou EAN…"
+              aria-label="Buscar por nome ou EAN"
+              className={clsx(inputClass, "pl-10")}
+            />
           </div>
 
-          {filter === "shipping" && (
-            <div className="flex items-end gap-2">
-              <div>
-                <label
-                  htmlFor="filterShipping"
-                  className="block mb-1 text-sm text-white"
+          <div
+            role="group"
+            aria-label="Filtrar por marketplace"
+            className="flex flex-wrap gap-1 rounded-xl bg-surface-2 p-1"
+          >
+            {(["all", ...Object.keys(MARKETPLACES)] as (MarketplaceKey | "all")[]).map(
+              (k) => (
+                <button
+                  key={k}
+                  type="button"
+                  onClick={() => setMarketplace(k)}
+                  aria-pressed={marketplace === k}
+                  className={clsx(
+                    "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium transition-colors",
+                    marketplace === k
+                      ? "bg-surface text-fg shadow-sm"
+                      : "text-muted hover:text-fg"
+                  )}
                 >
-                  Frete:
-                </label>
-                <select
-                  id="filterShipping"
-                  value={dataFilter}
-                  onChange={(e) => setDataFilter(e.target.value)}
-                  className="rounded p-2 bg-white"
-                >
-                  <option value="">Todos</option>
-                  {SHIP_OPTIONS.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <LegendTooltip drop={true} />
-            </div>
-          )}
+                  {k !== "all" && <MarketplaceDot marketplace={k} />}
+                  {k === "all" ? "Todos" : MARKETPLACES[k].label}
+                </button>
+              )
+            )}
+          </div>
 
-          {filter === "productCode" && (
-            <div className="flex items-end gap-2">
-              <div>
-                <label
-                  htmlFor="productCodeInput"
-                  className="block mb-1 text-sm text-white"
-                >
-                  EAN:
-                </label>
-                <input
-  id="productCodeInput"
-  type="text"
-  inputMode="numeric"
-  placeholder="Digite EAN..."
-  value={dataFilter}
-  onChange={handleEANChange}
-  className="border rounded p-2 bg-white w-full sm:w-auto max-w-xs sm:max-w-none"
-/>
-              </div>
-              <LegendTooltip drop={true} />
-            </div>
-          )}
-        </div>
+          <div className="grid grid-cols-2 gap-3 lg:flex">
+            <select
+              value={shipping}
+              onChange={(e) => setShipping(e.target.value)}
+              aria-label="Tipo de frete"
+              className={clsx(inputClass, "lg:w-40")}
+            >
+              <option value="">Todo frete</option>
+              {SHIP_OPTIONS.map((s) => (
+                <option key={s} value={s}>
+                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                </option>
+              ))}
+            </select>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as SortKey)}
+              aria-label="Ordenar"
+              className={clsx(inputClass, "lg:w-56")}
+            >
+              {SORT_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </section>
 
-        <div>{renderContent()}</div>
-
-        <MiniCalculator
-          onCalc={(sp, cr) => {
-            setSellPrice(sp);
-            setCalcResult(cr);
-          }}
-        />
+        {loading ? (
+          <div className="flex items-center justify-center gap-2 py-24 text-muted">
+            <LoaderCircle className="size-5 animate-spin" /> Carregando ofertas…
+          </div>
+        ) : error ? (
+          <div className="rounded-2xl border border-danger/30 bg-danger-soft p-6 text-danger">
+            <p className="font-semibold">Não foi possível carregar os produtos.</p>
+            <p className="mt-1 text-sm">{error}</p>
+            <button type="button" onClick={load} className={buttonClass("secondary", "sm", "mt-4")}>
+              Tentar novamente
+            </button>
+          </div>
+        ) : groups.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border-strong py-20 text-center">
+            <Package className="mx-auto mb-3 size-8 text-subtle" />
+            <p className="font-semibold text-fg">Nenhum produto encontrado</p>
+            <p className="mt-1 text-sm text-muted">Ajuste a busca ou os filtros.</p>
+          </div>
+        ) : (
+          <div className="space-y-4 pb-20">
+            {groups.map((g) => (
+              <ProductCard
+                key={g.key}
+                group={g}
+                myPrice={myPrices[g.key] ?? null}
+                onMyPriceChange={(v) => setMyPrice(g.key, v)}
+                onSelectOffer={setSelectedOffer}
+              />
+            ))}
+          </div>
+        )}
       </main>
 
-      {selectedProduct && (
-        <dialog
-          ref={dialogRef}
-          aria-labelledby="productModalTitle"
-          className="
-    sp-modal
-    fixed top-1/2 left-1/2
-    -translate-x-1/2 -translate-y-1/2
-    m-0 p-0
-    rounded-2xl w-[350px] max-w-md border-0
-  "
-        >
-          <div className="relative bg-white rounded-2xl p-6">
-            <button
-              ref={closeButtonRef}
-              type="button"
-              onClick={closeModal}
-              aria-label="Fechar"
-              className="absolute top-5 right-5 text-gray-500 hover:text-gray-700 text-2xl leading-none focus:outline-none"
-            >
-              ✕
-            </button>
-
-            <div className="flex flex-col items-center gap-4">
-              <Image
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
-                width={120}
-                height={120}
-                className="rounded"
-              />
-              <h3
-                id="productModalTitle"
-                className="text-2xl text-center font-semibold"
-              >
-                {selectedProduct.name}
-              </h3>
-
-              <p>
-                <span className="font-semibold">Preço:</span>{" "}
-                {Number(selectedProduct.price).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-              </p>
-             <p>
-  <span className="font-semibold">Frete:</span>{" "}
-  {capitalize(String(selectedProduct.shipping))}
-</p>
-              <p>
-                <span className="font-semibold">Disponível:</span>{" "}
-                {selectedProduct.amountAvailable}
-              </p>
-              <p>
-                <span className="font-semibold">Vendidos:</span>{" "}
-                {selectedProduct.amountSold}
-              </p>
-              <p>
-                <span className="font-semibold">Vendedor:</span>{" "}
-                {selectedProduct.sellerName}
-              </p>
-              <p>
-                <span className="font-semibold">EAN:</span>{" "}
-                {selectedProduct.productCode}
-              </p>
-              <p>
-                <span className="font-semibold">Visitas:</span>{" "}
-                {selectedProduct.amountVisitsLastMonth}
-              </p>
-              <p>
-                <span className="font-semibold">Avaliações:</span>{" "}
-                {selectedProduct.amountReviews}
-              </p>
-            </div>
-          </div>
-        </dialog>
-      )}
-
-      <footer className="bg-[var(--dark-black-to-secondary)] text-white text-center p-8">
-        © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
-        reservados.
-      </footer>
+      <OfferDialog offer={selectedOffer} onClose={() => setSelectedOffer(null)} />
+      <MiniCalculator />
     </div>
   );
 }

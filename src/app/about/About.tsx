@@ -1,211 +1,126 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter, { SOCIALS } from "@/components/site/SiteFooter";
+import PageHero from "@/components/site/PageHero";
+import { buttonClass } from "@/components/ui/button";
 
-export const metadata = {
-  title: "Sobre Nós",
-  description: "Saiba mais sobre a nossa missão e equipe.",
-};
-
-const SOCIALS = [
+const PILLARS = [
   {
-    name: "Instagram",
-    href: "https://instagram.com/searchprice",
-    icon: "/instagram.png",
-    color: "text-pink-500",
+    title: "Missão",
+    text: "Democratizar o acesso a dados de mercado, permitindo que qualquer lojista ou empreendedor tome decisões estratégicas baseadas em informações reais e atualizadas.",
   },
   {
-    name: "LinkedIn",
-    href: "https://linkedin.com/searchprice",
-    icon: "/linkedin-icon.png",
-    color: "text-blue-700",
+    title: "Visão",
+    text: "Ser referência na América Latina em inteligência de preços, oferecendo uma plataforma confiável e inovadora para o comércio eletrônico.",
   },
   {
-    name: "WhatsApp",
-    href: "https://whatsapp.com/searchprice",
-    icon: "/whatsapp.png",
-    color: "text-green-500",
+    title: "Valores",
+    text: "Transparência, inovação contínua e foco no sucesso dos nossos clientes são os pilares que guiam cada nova funcionalidade da Search Price.",
   },
 ];
 
-function TeamMember({
-  name,
-  role,
-  avatar,
-}: Readonly<{
-  name: string;
-  role: string;
-  avatar: string;
-}>) {
-  return (
-    <div className="flex flex-col items-center">
-      <Image
-        src={avatar}
-        alt={name}
-        width={80}
-        height={80}
-        className="rounded-full mb-3 w-auto h-auto object-cover transition-transform hover:scale-110"
-      />
-      <h4 className="font-medium text-white text-center">{name}</h4>
-      <p className="text-sm text-white text-center">{role}</p>
-    </div>
-  );
-}
+const TEAM = [
+  { name: "Gerson Boing Carvalho", role: "CEO & Cofundador", avatar: "/gerson-boing.png" },
+  { name: "Priscilla Barbosa Moni", role: "CTO & Cofundadora", avatar: "/priscilla-barbosa.png" },
+  { name: "Rogerio Rodrigues da Silva", role: "Cloud System Administrator", avatar: "/rogerio-silva.png" },
+  { name: "Patrick Meirelles", role: "Backend Developer", avatar: "/patrick-meirelles.png" },
+  { name: "Victor Augusto Barbosa Moni", role: "Frontend Developer", avatar: "/victor-moni.png" },
+];
 
 export default function About() {
   return (
-    <main className="bg-[var(--black-to-gray-50)] flex flex-col min-h-screen">
-      <section className="relative bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white py-16">
-        <Link
-          href="/"
-          className="absolute top-4 left-4 hover:opacity-90 transition-transform hover:scale-110"
-        >
-          <Image src="/home.png" alt="Home" width={36} height={36} />
-        </Link>
-        <Link
-          href="/login"
-          className="absolute top-4 right-4 hover:opacity-90 transition-transform hover:scale-110"
-        >
-          <Image src="/profile.png" alt="Login" width={40} height={40} />
-        </Link>
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader />
+      <main className="flex-1">
+        <PageHero
+          eyebrow="Sobre nós"
+          title="Bem-vindo à Search Price"
+          description="Nossa missão é simplificar a busca e a análise de preços em múltiplos marketplaces, entregando dados precisos para decisões melhores."
+        />
 
-        <div className="container mx-auto px-6 text-center space-y-4">
-          <h1 className="text-3xl text-[var(--white)] font-bold">
-            Bem-vindo à Search Price
-          </h1>
-          <p className="max-w-2xl mx-auto text-lg text-center">
-            Nossa missão é simplificar a busca e análise de preços em múltiplos
-            marketplaces, entregando dados precisos e insights valiosos em tempo
-            real.
-          </p>
-        </div>
-      </section>
-
-      <section className="py-16 bg-[var(--background-secondary)]">
-        <div className="container mx-auto px-6 grid gap-12 md:grid-cols-2">
-          <div>
-            <h1 className="text-3xl font-bold text-[var(--third-to-primary)] mb-4">
-              Sobre a Search Price
-            </h1>
-            <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
-              Fundada em 2023 por um grupo de empreendedores apaixonados por
-              e-commerce, a Search Price surgiu para resolver o problema de
-              coleta manual de dados de preços em diversos marketplaces. Desde
-              então, evoluímos nossa plataforma para oferecer informações
-              atualizadas sobre preços, visitas e vendas em um só lugar,
-              ajudando milhares de lojistas a otimizar suas estratégias.
-            </p>
-          </div>
-
-          <div className="space-y-8">
+        <section className="py-20">
+          <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr]">
             <div>
-              <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
-                Missão
+              <h2 className="text-3xl font-bold tracking-tight text-fg">
+                Nossa história
               </h2>
-              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
-                Democratizar o acesso a dados de mercado, permitindo que
-                qualquer lojista ou empreendedor tome decisões estratégicas
-                baseadas em informações reais e atualizadas.
+              <p className="mt-4 text-lg text-muted text-pretty">
+                Fundada em 2023 por um grupo de empreendedores apaixonados por
+                e-commerce, a Search Price surgiu para resolver a coleta manual
+                de preços em diversos marketplaces. Desde então, evoluímos a
+                plataforma para reunir preços, visitas e vendas em um só lugar e
+                ajudar lojistas a otimizar suas estratégias.
               </p>
             </div>
-            <div>
-              <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
-                Visão
-              </h2>
-              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
-                Ser referência na América Latina em inteligência de preços,
-                oferecendo uma plataforma confiável e inovadora para comércio
-                eletrônico.
-              </p>
-            </div>
-            <div>
-              <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] mb-2">
-                Valores
-              </h2>
-              <p className="text-[var(--white-to-primary)] text-justify leading-relaxed">
-                Transparência, inovação contínua e foco no sucesso dos nossos
-                clientes são os pilares que guiam cada nova funcionalidade da
-                Search Price.
-              </p>
+            <div className="grid gap-4">
+              {PILLARS.map((p) => (
+                <div
+                  key={p.title}
+                  className="rounded-2xl border border-border bg-surface p-6"
+                >
+                  <h3 className="mb-2 font-semibold text-brand">{p.title}</h3>
+                  <p className="text-muted">{p.text}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-8 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
-        <div className="container mx-auto px-6  text-center mb-6">
-          <h2 className="text-3xl text-[var(--white)] font-bold py-4">
-            Nosso Time
-          </h2>
-          <p className="text-white max-w-xl mx-auto">
-            Um grupo diverso de desenvolvedores, analistas e estrategistas
-            dedicados a transformar dados em resultados reais para nossos
-            clientes.
-          </p>
-        </div>
-        <div className="container mx-auto px-6 grid gap-12 sm:grid-cols-2 md:grid-cols-5">
-          <TeamMember
-            name="Gerson Boing Carvalho"
-            role="CEO & Cofundador"
-            avatar="/gerson-boing.png"
-          />
-          <TeamMember
-            name="Priscilla Barbosa Moni"
-            role="CTO & Cofundadora"
-            avatar="/priscilla-barbosa.png"
-          />
-          <TeamMember
-            name="Rogerio Rodrigues da Silva"
-            role="Cloud System Administrator"
-            avatar="/rogerio-silva.png"
-          />
-          <TeamMember
-            name="Patrick Meirelles"
-            role="Backend Developer"
-            avatar="/patrick-meirelles.png"
-          />
-          <TeamMember
-            name="Victor Augusto Barbosa Moni"
-            role="Frontend Developer"
-            avatar="/victor-moni.png"
-          />
-        </div>
-      </section>
+        <section className="border-y border-border bg-surface py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="mx-auto mb-12 max-w-xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-fg">
+                Nosso time
+              </h2>
+              <p className="mt-3 text-muted">
+                Desenvolvedores, analistas e estrategistas dedicados a
+                transformar dados em resultados reais.
+              </p>
+            </div>
+            <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+              {TEAM.map((m) => (
+                <li key={m.name} className="flex flex-col items-center text-center">
+                  <Image
+                    src={m.avatar}
+                    alt={m.name}
+                    width={96}
+                    height={96}
+                    className="mb-3 size-24 rounded-full object-cover ring-4 ring-brand-soft"
+                  />
+                  <p className="font-semibold text-fg">{m.name}</p>
+                  <p className="text-sm text-muted">{m.role}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
-      <section className="container mx-auto px-6 py-16">
-        <h2 className="text-2xl font-semibold text-[var(--third-to-primary)] text-center mb-8">
-          Conecte-se Conosco
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 ">
-          {SOCIALS.map(({ name, href, icon, color }) => (
-            <Link
-              key={name}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center p-6 bg-[var(--white)] rounded-lg shadow-lg hover:shadow-xl duration-200 transition-transform hover:scale-110"
-            >
-              <div className={`w-12 h-12 mb-4 ${color}`}>
-                <Image
-                  src={icon}
-                  alt={name}
-                  width={48}
-                  height={48}
-                  className="object-contain"
-                />
-              </div>
-              <span className="font-medium text-[var(--primary)]">{name}</span>
+        <section className="py-20">
+          <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+            <h2 className="text-2xl font-bold text-fg">Conecte-se conosco</h2>
+            <div className="mt-6 flex justify-center gap-3">
+              {SOCIALS.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClass("secondary", "md")}
+                >
+                  <Icon className="size-4" />
+                  {name}
+                </a>
+              ))}
+            </div>
+            <Link href="/register" className={buttonClass("primary", "lg", "mt-10")}>
+              Começar teste grátis <ArrowRight className="size-4" />
             </Link>
-          ))}
-        </div>
-      </section>
-
-      <footer className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white px-8 py-8 mt-auto text-center">
-        <p className="text-base">
-          © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os direitos
-          reservados.
-        </p>
-      </footer>
-    </main>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   );
 }

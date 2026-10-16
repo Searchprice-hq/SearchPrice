@@ -3,7 +3,6 @@ import type { User, LoginResponse } from "@/models/User";
 function getDefaultHeaders() {
   return {
     "Content-Type": "application/json",
-    "x-api-key": "m7fLLNkHUuKrUaKkYbJcTi8o154u81ze",
   };
 }
 

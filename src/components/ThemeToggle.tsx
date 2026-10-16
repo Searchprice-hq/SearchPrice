@@ -1,26 +1,32 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
+import { Moon, Sun } from "lucide-react";
+import clsx from "clsx";
 
-export default function ThemeToggle() {
+export default function ThemeToggle({
+  className,
+}: Readonly<{ className?: string }>) {
   const { resolvedTheme, setTheme } = useTheme();
-  const next = resolvedTheme === "dark" ? "light" : "dark";
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   return (
     <button
       type="button"
-      onClick={() => setTheme(next)}
-      className="focus:outline-none transition-transform duration-200 hover:scale-110 z-10 grid place-items-center size-9 rounded-full"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label={isDark ? "Usar tema claro" : "Usar tema escuro"}
+      title={isDark ? "Tema claro" : "Tema escuro"}
+      className={clsx(
+        "grid size-9 place-items-center rounded-lg text-muted transition-colors hover:bg-surface-2 hover:text-fg",
+        className
+      )}
     >
-      <Image
-        src="/half-moon.png"
-        alt="Alterar tema"
-        width={36}
-        height={36}
-        priority
-        sizes="36px"
-      />
+      {isDark ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
     </button>
   );
 }

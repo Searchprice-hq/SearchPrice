@@ -1,385 +1,625 @@
-"use client";
-
-import React from "react";
-import { useRouter } from "next/navigation";
-import { Grid } from "@/components/Grid";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
-import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
+import {
+  ArrowRight,
+  BarChart3,
+  Calculator,
+  Check,
+  ChevronDown,
+  Headset,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Target,
+  Truck,
+  X,
+  Zap,
+} from "lucide-react";
+import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter, { SOCIALS } from "@/components/site/SiteFooter";
+import HeroPreview from "@/components/site/HeroPreview";
+import Reveal from "@/components/ui/Reveal";
+import CountUp from "@/components/ui/CountUp";
+import { buttonClass } from "@/components/ui/button";
+import MarketplaceBadge, {
+  MARKETPLACES,
+  type MarketplaceKey,
+} from "@/components/ui/MarketplaceBadge";
+
+const STEPS = [
+  {
+    Icon: Search,
+    title: "Informe seu produto",
+    text: "Busque pelo EAN ou nome e diga por quanto você vende hoje.",
+  },
+  {
+    Icon: BarChart3,
+    title: "Comparamos os canais",
+    text: "Reunimos as ofertas do Mercado Livre, Amazon e Shopee e calculamos mínimo, mediana e máximo.",
+  },
+  {
+    Icon: Target,
+    title: "Veja sua posição",
+    text: "Saiba na hora se você está acima, alinhado ou abaixo do mercado — e quanto de margem sobra.",
+  },
+];
+
+const CHANNELS: { key: MarketplaceKey; points: string[] }[] = [
+  {
+    key: "mercadolivre",
+    points: [
+      "Preço por anúncio e por catálogo",
+      "Tipo de frete: Full, Flex, Coletas",
+      "Vendidos, visitas e reputação do vendedor",
+    ],
+  },
+  {
+    key: "amazon",
+    points: [
+      "Ofertas por ASIN/EAN",
+      "Buy Box e vendedores concorrentes",
+      "Prime e prazo de entrega",
+    ],
+  },
+  {
+    key: "shopee",
+    points: [
+      "Preço por variação",
+      "Vendidos e avaliação da loja",
+      "Descontos e cupons ativos",
+    ],
+  },
+];
+
+const ADVANTAGES = [
+  {
+    Icon: Target,
+    title: "Posição de preço",
+    text: "Régua mín–mediana–máx com o seu preço marcado, por produto.",
+  },
+  {
+    Icon: Calculator,
+    title: "Calculadora de margem",
+    text: "Comissão, frete, imposto e custos extras na mesma conta.",
+  },
+  {
+    Icon: Truck,
+    title: "Frete na comparação",
+    text: "Filtre por Full, Flex, Prime e compare só o que concorre com você.",
+  },
+  {
+    Icon: Zap,
+    title: "Busca por EAN",
+    text: "Encontre o mesmo produto nos três canais sem depender do título.",
+  },
+  {
+    Icon: Sparkles,
+    title: "Precificação inteligente",
+    text: "Ajuste suas ofertas com base na concorrência e na sua margem.",
+  },
+  {
+    Icon: ShieldCheck,
+    title: "Seus dados protegidos",
+    text: "Seu preço e seus custos ficam só na sua conta.",
+  },
+];
+
+const COMPARISON = {
+  columns: ["Search Price", "Google", "ChatGPT", "Avantpro"],
+  rows: [
+    "Análise de mercado em tempo real",
+    "Calculadora de lucro integrada",
+    "Baixo custo",
+    "Busca assertiva por EAN",
+    "Fornecedores na plataforma",
+  ],
+};
+
+const TESTIMONIALS = [
+  {
+    avatar: "/woman1.png",
+    name: "Ana Silva",
+    role: "Vendedora no Mercado Livre",
+    quote:
+      "Reduzi em 30% o tempo gasto pesquisando preços e ainda aumentei minha margem de lucro em 15%.",
+  },
+  {
+    avatar: "/man3.png",
+    name: "Bruno Costa",
+    role: "Empreendedor Amazon",
+    quote:
+      "A comparação me ajuda a ajustar meus valores na hora. Recomendo para qualquer seller sério.",
+  },
+  {
+    avatar: "/man2.png",
+    name: "Pedro Lima",
+    role: "Varejista online",
+    quote:
+      "Antes gastava horas comparando preços. Com a Search Price, faço isso em segundos.",
+  },
+];
+
+const TEAM = [
+  { name: "Gerson Boing Carvalho", role: "CEO & Cofundador", avatar: "/gerson-boing.png" },
+  { name: "Priscilla Barbosa Moni", role: "CTO & Cofundadora", avatar: "/priscilla-barbosa.png" },
+  { name: "Rogerio Rodrigues da Silva", role: "Cloud System Administrator", avatar: "/rogerio-silva.png" },
+  { name: "Patrick Meirelles", role: "Backend Developer", avatar: "/patrick-meirelles.png" },
+  { name: "Victor Augusto Barbosa Moni", role: "Frontend Developer", avatar: "/victor-moni.png" },
+];
+
+const FAQ = [
+  {
+    q: "O que é a Search Price?",
+    a: "Uma plataforma que compara o preço do seu produto com as ofertas do Mercado Livre, Amazon e Shopee e mostra se você está acima ou abaixo do mercado.",
+  },
+  {
+    q: "Como a Search Price me ajuda a definir preços?",
+    a: "Você vê o mínimo, a mediana e o máximo praticados pelos concorrentes e, com a calculadora de margem, testa um novo preço antes de publicar.",
+  },
+  {
+    q: "Preciso conectar minha conta dos marketplaces?",
+    a: "Não para começar: a busca funciona por EAN ou nome. Conectar suas contas permite trazer seus anúncios e preços automaticamente.",
+  },
+  {
+    q: "Quais marketplaces são suportados?",
+    a: "Mercado Livre, Amazon e Shopee. Novos canais serão adicionados em breve.",
+  },
+  {
+    q: "Posso testar antes de assinar?",
+    a: "Sim. São 7 dias grátis, com benefícios exclusivos para membros fundadores.",
+  },
+];
+
+const MARQUEE = [
+  "Mercado Livre",
+  "Preço mínimo",
+  "Amazon",
+  "Mediana do mercado",
+  "Shopee",
+  "Busca por EAN",
+  "Full · Flex · Prime",
+  "Margem real",
+];
+
+const WHATSAPP_HREF = SOCIALS.find((s) => s.name === "WhatsApp")!.href;
+
+function SectionHeading({
+  eyebrow,
+  title,
+  text,
+}: Readonly<{ eyebrow: string; title: string; text?: string }>) {
+  return (
+    <Reveal className="mx-auto mb-14 max-w-2xl text-center">
+      <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand">
+        {eyebrow}
+      </p>
+      <h2 className="text-3xl font-bold tracking-tight text-fg text-balance sm:text-4xl">
+        {title}
+      </h2>
+      {text && <p className="mt-4 text-lg text-muted text-pretty">{text}</p>}
+    </Reveal>
+  );
+}
+
+const cardHover =
+  "transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-lift";
 
 export default function Home() {
-  const router = useRouter();
-
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="relative bg-[var(--dark-black-to-primary)] px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Image
-              src="/home-searchprice-logo.png"
-              className="w-auto h-auto"
-              alt="logo"
-              width={50}
-              height={50}
-            />
-            <h2 className="text-white font-semibold text-xl">Search Price</h2>
-          </div>
-          <div className="flex items-center gap-6">
-            <ThemeToggle />
-            <button
-              onClick={() => {
-                router.push("/login");
-              }}
-              className="focus:outline-none transition-transform duration-200 hover:scale-110 z-10"
-            >
-              <Image src="/profile.png" alt="Perfil" width={40} height={40} />
-            </button>
-          </div>
-        </div>
-
-        <nav className="hidden lg:block absolute inset-x-0 top-1/2 transform -translate-y-1/2">
-          <ul className="flex justify-center gap-20">
-            {[
-              { label: "Sobre", href: "/about" },
-              { label: "Depoimentos", href: "/testimonials" },
-              { label: "Nossos diferenciais", href: "/our-advantages" },
-            ].map((item) => (
-              <li
-                key={item.href}
-                className="text-white text-lg hover:scale-110 transition"
-              >
-                <Link href={item.href} className="cursor-pointer block">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <nav className="lg:hidden mt-4">
-          <ul className="flex flex-col text-left">
-            {[
-              { label: "- Sobre", href: "/about" },
-              { label: "- Depoimentos", href: "/testimonials" },
-              { label: "- Nossos diferenciais", href: "/our-advantages" },
-            ].map((item) => (
-              <li
-                key={item.href}
-                className="text-white text-lg hover:scale-110 transition py-1"
-              >
-                <Link href={item.href} className="cursor-pointer block">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
+    <div className="flex min-h-screen flex-col overflow-x-clip">
+      <SiteHeader />
 
       <main className="flex-1">
-        <button className="fixed bottom-6 right-6 z-50 flex items-center justify-center bg-[var(--green-100)] sm:w-14 sm:h-14 rounded-full p-3 md:w-58 md:h-16 lg:w-58 lg:h-16 sm:px-4 sm:py-4 transition-transform duration-200 hover:scale-105">
-          <Image src="/whatsapp.png" alt="WhatsApp" width={34} height={34} />
-          <span className="hidden sm:inline ml-2 text-[var(--white)] font-bold">
-            Conversar com os fundadores
-          </span>
-        </button>
-
-        <section className="bg-[var(--background-secondary)] py-10 sm:py-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <video
-              src="/video.mp4"
-              className="w-full max-w-4xl h-[12rem] sm:h-[17rem] md:h-[20rem] lg:h-[24rem] mx-auto rounded-md mb-8"
-              controls
-              loop
-            >
-              <track
-                src="/captions.vtt"
-                kind="captions"
-                srcLang="pt"
-                label="Português"
-                default
-              />
-            </video>
-            <h1 className="text-[var(--white-to-primary)] font-semibold text-2xl sm:text-2xl lg:text-4xl mt-4 mb-10">
-              Transforme horas de pesquisa por produtos em minutos
-            </h1>
-            <button
-              onClick={() => router.push("/register")}
-              className="bg-[var(--primary)] text-white px-6 py-3 rounded-md font-semibold text-base sm:text-lg transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
-            >
-              Quero economizar meu tempo
-            </button>
+        {/* Hero */}
+        <section className="relative -mt-16 overflow-hidden pt-16">
+          <div className="bg-grid absolute inset-0" aria-hidden />
+          <div
+            className="absolute -left-40 -top-20 size-[32rem] animate-blob rounded-full bg-accent/25 blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="absolute -right-32 top-40 size-[28rem] animate-blob rounded-full bg-brand/15 blur-3xl [animation-delay:-6s]"
+            aria-hidden
+          />
+          <div className="relative mx-auto grid max-w-6xl items-center gap-16 px-4 pb-24 pt-14 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:pt-24">
+            <div>
+              <Reveal>
+                <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
+                  <span className="size-1.5 animate-pulse-ring rounded-full bg-brand" />
+                  Inteligência de preços para marketplaces
+                </p>
+              </Reveal>
+              <Reveal delay={80}>
+                <h1 className="text-4xl font-extrabold tracking-tight text-fg text-balance sm:text-5xl lg:text-6xl">
+                  Seu preço está <span className="text-shine">acima ou abaixo</span>{" "}
+                  do mercado?
+                </h1>
+              </Reveal>
+              <Reveal delay={160}>
+                <p className="mt-6 max-w-xl text-lg text-muted text-pretty">
+                  Compare seu produto com as ofertas do Mercado Livre, Amazon e
+                  Shopee em um só painel e ajuste o preço sem perder margem.
+                </p>
+              </Reveal>
+              <Reveal delay={240} className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link href="/register" className={buttonClass("primary", "lg", "group")}>
+                  Começar teste grátis
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <a
+                  href={WHATSAPP_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClass("secondary", "lg")}
+                >
+                  Conversar com os fundadores
+                </a>
+              </Reveal>
+              <Reveal delay={320}>
+                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+                  {["7 dias grátis", "Sem fidelidade", "Benefícios de fundador"].map((t) => (
+                    <li key={t} className="flex items-center gap-1.5">
+                      <Check className="size-4 text-brand" /> {t}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+            <Reveal delay={200}>
+              <HeroPreview />
+            </Reveal>
           </div>
         </section>
 
-        <section className="bg-[var(--dark-black-to-primary)] py-10">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Image
-              src="/marketplaces-table.png"
-              alt="Comparativo Marketplaces"
-              width={600}
-              height={500}
-              className="block mx-auto h-auto w-auto rounded-md shadow-lg mb-6"
-              priority
+        {/* Faixa animada */}
+        <section className="border-y border-border bg-surface-2 py-4" aria-label="Destaques">
+          <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="flex shrink-0 animate-marquee gap-10 pr-10 hover:[animation-play-state:paused]">
+              {[...MARQUEE, ...MARQUEE].map((item, i) => (
+                <span
+                  key={`${item}-${i}`}
+                  className="flex items-center gap-10 whitespace-nowrap text-sm font-semibold text-muted"
+                  aria-hidden={i >= MARQUEE.length}
+                >
+                  {item}
+                  <span className="size-1.5 rounded-full bg-brand/50" />
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Como funciona */}
+        <section id="como-funciona" className="py-24 sm:py-28">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionHeading
+              eyebrow="Como funciona"
+              title="Da busca à decisão de preço em minutos"
+              text="Sem abrir três abas, sem planilha. Você informa o produto, a Search Price faz o resto."
             />
-            <div className="flex justify-center mt-8">
-              <div className="flex justify-between items-center w-[18rem] sm:w-[27rem]">
-                <Image
-                  src="/magnifying-glass.png"
-                  alt="Lupa"
-                  width={56}
-                  height={56}
-                  className="w-8 h-8 sm:w-14 sm:h-14"
-                />
-                <Image
-                  src="/pointer.png"
-                  alt="Pointer"
-                  width={56}
-                  height={56}
-                  className="w-8 h-8 sm:w-14 sm:h-14"
-                />
-                <Image
-                  src="/star.png"
-                  alt="Estrela"
-                  width={56}
-                  height={56}
-                  className="w-8 h-8 sm:w-14 sm:h-14"
-                />
-              </div>
-            </div>
-            <div className="flex justify-center mt-2">
-              <div className="flex justify-between w-[22rem] sm:w-[31rem] text-center">
-                <p className="w-[6rem] sm:w-[8rem] text-[var(--third-to-fourth)] text-base sm:text-xl">
-                  Busque por produtos
-                </p>
-                <p className="w-[8rem] sm:w-[10rem] text-[var(--third-to-fourth)] text-base sm:text-xl">
-                  Escolha as melhores oportunidades
-                </p>
-                <p className="w-[6rem] sm:w-[8rem] text-[var(--third-to-fourth)] text-base sm:text-xl">
-                  Busque por um produto
-                </p>
-              </div>
+            <ol className="relative grid gap-5 md:grid-cols-3">
+              <div
+                className="absolute left-[16%] right-[16%] top-11 hidden h-px bg-gradient-to-r from-transparent via-brand/40 to-transparent md:block"
+                aria-hidden
+              />
+              {STEPS.map(({ Icon, title, text }, i) => (
+                <Reveal
+                  as="li"
+                  key={title}
+                  delay={i * 120}
+                  className={`group relative rounded-3xl border border-border bg-surface p-7 ${cardHover}`}
+                >
+                  <div className="mb-6 flex items-center justify-between">
+                    <span className="grid size-12 place-items-center rounded-2xl bg-brand text-brand-contrast shadow-lift transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                      <Icon className="size-5" />
+                    </span>
+                    <span className="text-5xl font-extrabold text-brand/10 tabular">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold text-fg">{title}</h3>
+                  <p className="text-muted">{text}</p>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Canais */}
+        <section id="canais" className="bg-surface-2 py-24 sm:py-28">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionHeading
+              eyebrow="Canais"
+              title="Os três maiores marketplaces do Brasil, lado a lado"
+              text="Cada canal tem suas regras de frete, comissão e catálogo. A comparação respeita isso."
+            />
+            <div className="grid gap-5 md:grid-cols-3">
+              {CHANNELS.map(({ key, points }, i) => (
+                <Reveal
+                  as="article"
+                  key={key}
+                  delay={i * 120}
+                  className={`flex flex-col rounded-3xl border border-border bg-surface p-7 ${cardHover}`}
+                >
+                  <div className="mb-6 flex items-center justify-between">
+                    <MarketplaceBadge marketplace={key} />
+                    <span className="text-xs font-medium text-subtle">
+                      {MARKETPLACES[key].short}
+                    </span>
+                  </div>
+                  <ul className="space-y-3.5">
+                    {points.map((p) => (
+                      <li key={p} className="flex gap-3 text-fg">
+                        <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-soft text-brand">
+                          <Check className="size-3" />
+                        </span>
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="py-8 bg-[var(--background-secondary)]">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8 space-y-6 max-w-3xl">
-            {[1, 2, 3].map((i) => {
-              const isEven = i % 2 === 0;
-              return (
-                <div
-                  key={i}
-                  className={`
-            flex flex-col md:flex-row items-center gap-6
-            ${isEven ? "md:flex-row-reverse" : ""}
-          `}
+        {/* Diferenciais */}
+        <section id="diferenciais" className="py-24 sm:py-28">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionHeading
+              eyebrow="Diferenciais"
+              title="Tudo o que você precisa para precificar com dados"
+            />
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {ADVANTAGES.map(({ Icon, title, text }, i) => (
+                <Reveal
+                  key={title}
+                  delay={(i % 3) * 100}
+                  className={`group rounded-3xl border border-border bg-surface p-7 ${cardHover}`}
                 >
-                  <div className="w-full flex justify-center sm:w-1/2 md:w-2/5 mx-auto">
+                  <span className="mb-5 grid size-11 place-items-center rounded-2xl bg-brand-soft text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-brand-contrast">
+                    <Icon className="size-5" />
+                  </span>
+                  <h3 className="mb-1.5 font-semibold text-fg">{title}</h3>
+                  <p className="text-sm text-muted">{text}</p>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-3">
+              {[
+                { node: <CountUp to={10000} suffix="+" />, label: "Consultas realizadas" },
+                { node: <CountUp to={3} />, label: "Marketplaces comparados" },
+                { node: <CountUp to={7} suffix=" dias" />, label: "De teste grátis" },
+              ].map((s) => (
+                <div key={s.label} className="bg-surface p-8 text-center">
+                  <p className="text-4xl font-extrabold tracking-tight text-brand">{s.node}</p>
+                  <p className="mt-1 text-sm text-muted">{s.label}</p>
+                </div>
+              ))}
+            </Reveal>
+
+            <Reveal className="mx-auto mt-16 max-w-4xl">
+              <h3 className="mb-6 text-center text-xl font-semibold text-fg">
+                Somos a sua melhor alternativa
+              </h3>
+              <div className="overflow-x-auto rounded-3xl border border-border bg-surface">
+                <table className="w-full min-w-[560px] text-sm">
+                  <thead>
+                    <tr>
+                      <th className="px-5 py-4 text-left font-medium text-muted">Recurso</th>
+                      {COMPARISON.columns.map((c, i) => (
+                        <th
+                          key={c}
+                          className={
+                            i === 0
+                              ? "bg-brand px-4 py-4 font-semibold text-brand-contrast"
+                              : "px-4 py-4 font-medium text-muted"
+                          }
+                        >
+                          {c}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {COMPARISON.rows.map((row) => (
+                      <tr key={row} className="transition-colors hover:bg-surface-2">
+                        <td className="px-5 py-3.5 text-fg">{row}</td>
+                        {COMPARISON.columns.map((c, i) => (
+                          <td key={c} className={i === 0 ? "bg-brand-soft px-4 py-3.5" : "px-4 py-3.5"}>
+                            {i === 0 ? (
+                              <Check className="mx-auto size-5 text-brand" aria-label="Sim" />
+                            ) : (
+                              <X className="mx-auto size-4 text-subtle" aria-label="Não" />
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Depoimentos */}
+        <section id="depoimentos" className="bg-surface-2 py-24 sm:py-28">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionHeading eyebrow="Depoimentos" title="Quem usa, recomenda" />
+            <div className="grid gap-5 md:grid-cols-3">
+              {TESTIMONIALS.map((t, i) => (
+                <Reveal
+                  as="figure"
+                  key={t.name}
+                  delay={i * 120}
+                  className={`flex flex-col rounded-3xl border border-border bg-surface p-7 ${cardHover}`}
+                >
+                  <div className="mb-4 flex gap-0.5" aria-label="5 de 5 estrelas">
+                    {Array.from({ length: 5 }, (_, s) => (
+                      <Star key={s} className="size-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <blockquote className="flex-1 text-fg text-pretty">“{t.quote}”</blockquote>
+                  <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-5">
                     <Image
-                      src={`/article${i}.png`}
-                      alt={`Artigo ${i}`}
-                      width={300}
-                      height={200}
-                      className="w-3/4 sm:w-full h-auto rounded-xl"
+                      src={t.avatar}
+                      alt=""
+                      width={44}
+                      height={44}
+                      className="size-11 rounded-full object-cover ring-2 ring-brand-soft"
                     />
-                  </div>
-
-                  <div className="w-7/8 sm:w-2/3 space-y-4 text-center md:text-justify">
-                    <h4 className="text-[var(--third)] font-medium text-base sm:text-lg">
-                      {i === 1 && "ENCONTRE OS MELHORES PREÇOS RÁPIDO!"}
-                      {i === 2 && "FIQUE SEMPRE UM PASSO À FRENTE!"}
-                      {i === 3 && "TOME DECISÕES BASEADAS EM DADOS!"}
-                    </h4>
-                    <h2 className="text-[var(--white-to-primary)] font-semibold text-lg sm:text-xl">
-                      {i === 1 &&
-                        "Compare a lucratividade de vários produtos em vários marketplaces com um clique"}
-                      {i === 2 &&
-                        "Precificação inteligente para dominar o mercado"}
-                      {i === 3 && "Dados precisos para impulsionar seu negócio"}
-                    </h2>
-                    <p className="text-[var(--third-to-primary)] text-base sm:text-base">
-                      {i === 1 &&
-                        "A Search Price permite que você encontre os preços mais competitivos em diversos marketplaces com apenas alguns cliques. Chega de perder horas navegando em diferentes sites - agora você pode obter as informações que precisa instantaneamente, economizando um tempo valioso que pode ser dedicado a fazer crescer seu negócio."}
-                      {i === 2 &&
-                        "Em um cenário altamente competitivo, ter os melhores preços é essencial para se destacar. Com nossa plataforma, você acompanha em tempo real os valores praticados pelos concorrentes e ajusta suas ofertas estrategicamente. Garante mais visibilidade, mais vendas e torna sua loja a opção mais atraente para os clientes!"}
-                      {i === 3 &&
-                        "Tome decisões de precificação embasadas em dados concretos e não em suposições. Nosso software fornece relatórios detalhados e insights valiosos sobre as tendências de preços no mercado. Com essas informações estratégicas, você poderá identificar oportunidades, antecipar mudanças e adaptar-se rapidamente para maximizar seus lucros."}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="bg-[var(--black-to-gray)] py-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <h3 className="text-[var(--white-to-primary)] text-xl sm:text-2xl">
-              Comece a economizar tempo hoje
-            </h3>
-            <div className="flex justify-center gap-4">
-              <button
-                className="w-40 sm:w-auto px-8 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
-                onClick={() => router.push("/register")}
-              >
-                Iniciar teste grátis
-              </button>
-              <button
-                className="w-40 sm:w-auto px-4 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
-                onClick={() => router.push("/register")}
-              >
-                Conversar com os fundadores
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-8 bg-[var(--background-secondary)]">
-          <div className="container flex justify-center mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
-            <p className="w-13/14 text-2xl mt-2 sm:text-3xl lg:text-4xl font-medium text-[var(--white-to-primary)]">
-              Somos a{" "}
-              <span className="text-[var(--third)] font-bold">
-                sua melhor alternativa
-              </span>{" "}
-              de economizar seu tempo com busca de produtos que faturam
-            </p>
-          </div>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-6 flex flex-col lg:flex-row justify-center items-center">
-            <div className="grid grid-rows-5 gap-2 w-full lg:mt-16  justify-center lg:w-2/5 xl:w-1/3">
-              {[
-                "Análise de mercado em tempo real",
-                "Calculadora de lucro integrada",
-                "Baixo custo",
-                "Busca assertiva",
-                "Fornecedores na plataforma",
-              ].map((txt) => (
-                <div
-                  key={txt}
-                  className="flex items-center bg-[var(--background-secondary)] p-2 rounded-lg"
-                >
-                  <Image
-                    src="/dollar-bill.png"
-                    alt="Ícone"
-                    width={40}
-                    height={40}
-                    className="bg-[var(--dollar-bill-container)] rounded-full p-2 "
-                  />
-                  <p className="ml-3 text-[var(--white-to-primary)] font-medium">
-                    {txt}
-                  </p>
-                </div>
+                    <div>
+                      <p className="font-semibold text-fg">{t.name}</p>
+                      <p className="text-sm text-muted">{t.role}</p>
+                    </div>
+                  </figcaption>
+                </Reveal>
               ))}
             </div>
-            <div className="sm:mt-0 lg:-mt-10 sm:w-3/4 sm:justify-center lg:w-2/5 xl:w-1/3">
-              <Grid />
-            </div>
+            <Reveal className="mt-10 text-center">
+              <Link
+                href="/testimonials"
+                className="group inline-flex items-center gap-1.5 text-sm font-semibold text-brand"
+              >
+                Ver todos os depoimentos
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Reveal>
           </div>
         </section>
 
-        <section className="bg-[var(--dark-black-to-primary)] flex flex-col items-center text-center py-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
-              Seja um membro fundador da Search Price
-            </h2>
-            <p className="text-[var(--third-to-white)] text-base sm:text-lg mb-6">
-              Teste a Search Price gratuitamente por 7 dias e receba benefícios
-              exclusivos a membros fundadores
-            </p>
-            <button
-              onClick={() => router.push("/register")}
-              className="px-6 py-3 bg-[var(--primary-to-white)] text-[var(--white-to-primary)] rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary-to-white)]"
-            >
-              Quero ser um membro fundador
-            </button>
-          </div>
-        </section>
-
-        <section className="bg-[var(--background-secondary)] py-4">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold text-[var(--white-to-primary)] mb-6">
-              Perguntas frequentes:
-            </h2>
-            <div className="space-y-2">
-              {[
-                {
-                  q: "O que é a Search Price?",
-                  a: "É uma plataforma de comparação massiva e centralizada para os principais marketplaces, permitindo acesso a dados como preços, visitas e vendas. Nela também o usuário encontrará fornecedores e ofertas para os produtos pesquisados.",
-                },
-                {
-                  q: "Como a Search Price ajuda os vendedores?",
-                  a: "A plataforma economiza tempo ao centralizar a busca por preços competitivos, permitindo que os vendedores foquem em estratégias para crescer seus negócios.",
-                },
-                {
-                  q: "Quais são os benefícios de usar a Search Price?",
-                  a: "Centralização das informações, economia de tempo, maior assertividade nas decisões de compra e venda, e uma visão ampla do mercado.",
-                },
-                {
-                  q: "Como a Search Price pode me ajudar a definir preços competitivos?",
-                  a: "A plataforma fornece dados em tempo real sobre os preços praticados pelos concorrentes, permitindo ajustes estratégicos nas suas ofertas.",
-                },
-                {
-                  q: "O que diferencia a Search Price de outras ferramentas no mercado?",
-                  a: "A Search Price combina comparação massiva de preços e compra centralizada, oferecendo uma solução integrada que outras ferramentas não possuem.",
-                },
-                {
-                  q: "Posso utilizar a Search Price em diferentes marketplaces?",
-                  a: "Sim, a Search Price permite comparar preços em múltiplos marketplaces de forma simultânea.",
-                },
-              ].map(({ q, a }) => (
-                <Accordion
-                  key={q}
-                  sx={{
-                    backgroundColor: "var(--black-to-light-blue)",
-                    borderRadius: "0.5rem",
-                    border: "1.5px solid var(--secondary-to-light-blue)",
-                    color: "var(--white-to-primary)",
-                  }}
+        {/* Sobre */}
+        <section id="sobre" className="py-24 sm:py-28">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <Reveal>
+                <p className="mb-4 inline-flex rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand">
+                  Sobre nós
+                </p>
+                <h2 className="text-3xl font-bold tracking-tight text-fg text-balance sm:text-4xl">
+                  Feita por quem vende em marketplace
+                </h2>
+                <p className="mt-5 text-lg text-muted text-pretty">
+                  Fundada em 2023 por empreendedores apaixonados por e-commerce,
+                  a Search Price nasceu para acabar com a coleta manual de preços
+                  em vários marketplaces. Nossa missão é democratizar o acesso a
+                  dados de mercado para que qualquer lojista decida com
+                  informação real.
+                </p>
+                <Link
+                  href="/about"
+                  className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand"
                 >
-                  <AccordionSummary
-                    expandIcon={
-                      <ExpandMoreIcon className="text-[var(--white-to-primary)]" />
-                    }
-                    className="font-bold text-[var(--white-to-primary)]"
+                  Conheça nossa história
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Reveal>
+              <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {TEAM.map((m, i) => (
+                  <Reveal
+                    as="li"
+                    key={m.name}
+                    delay={i * 80}
+                    className={`flex flex-col items-center rounded-3xl border border-border bg-surface p-5 text-center ${cardHover}`}
                   >
-                    {q}
-                  </AccordionSummary>
-                  <AccordionDetails className="rounded-xl bg-[var(--black-to-light-blue)] text-[var(--white-to-primary)]">
-                    {a}
-                  </AccordionDetails>
-                </Accordion>
-              ))}
+                    <Image
+                      src={m.avatar}
+                      alt={m.name}
+                      width={72}
+                      height={72}
+                      className="mb-3 size-18 rounded-full object-cover ring-4 ring-brand-soft"
+                    />
+                    <p className="text-sm font-semibold leading-tight text-fg">{m.name}</p>
+                    <p className="mt-1 text-xs text-muted">{m.role}</p>
+                  </Reveal>
+                ))}
+                <Reveal
+                  as="li"
+                  delay={TEAM.length * 80}
+                  className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-brand/40 bg-brand-soft p-5 text-center"
+                >
+                  <Headset className="mb-2 size-6 text-brand" />
+                  <p className="text-sm font-semibold text-brand">Fale com a gente</p>
+                  <a
+                    href={WHATSAPP_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 text-xs text-muted underline-offset-2 hover:underline"
+                  >
+                    WhatsApp
+                  </a>
+                </Reveal>
+              </ul>
             </div>
           </div>
         </section>
 
-        <section className="bg-[var(--background-secondary)] flex flex-col items-center justify-center py-8 pb-14">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--white-to-primary)] mb-4">
-              Ainda restam dúvidas?
-            </h2>
-            <button
-              className="px-8 py-3 bg-[var(--primary)] text-white rounded-md font-semibold transition-transform duration-200 hover:scale-105 hover:bg-[var(--secondary)]"
-              onClick={() => router.push("/register")}
-            >
-              Entre em contato com os fundadores
-            </button>
+        {/* Membro fundador */}
+        <section className="px-4 sm:px-6">
+          <Reveal className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-strong via-brand to-accent px-6 py-16 text-center sm:px-12">
+            <div className="bg-grid absolute inset-0 opacity-20" aria-hidden />
+            <div
+              className="absolute -right-24 -top-24 size-80 animate-blob rounded-full bg-white/20 blur-3xl"
+              aria-hidden
+            />
+            <div className="relative">
+              <h2 className="text-3xl font-bold tracking-tight text-white text-balance sm:text-4xl">
+                Seja um membro fundador da Search Price
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-lg text-white/85">
+                Teste gratuitamente por 7 dias e receba benefícios exclusivos de
+                membro fundador.
+              </p>
+              <Link
+                href="/register"
+                className="group mt-8 inline-flex h-13 items-center gap-2 rounded-xl bg-white px-6 font-semibold text-brand-strong shadow-lift transition-all duration-200 hover:-translate-y-0.5"
+              >
+                Quero ser membro fundador
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="py-24 sm:py-28">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6">
+            <SectionHeading eyebrow="FAQ" title="Perguntas frequentes" />
+            <Reveal className="space-y-3">
+              {FAQ.map(({ q, a }) => (
+                <details
+                  key={q}
+                  className="group rounded-2xl border border-border bg-surface px-5 transition-colors open:border-brand/40 open:bg-brand-soft/40"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-semibold text-fg [&::-webkit-details-marker]:hidden">
+                    {q}
+                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-surface-2 text-muted transition-all duration-300 group-open:rotate-180 group-open:bg-brand group-open:text-brand-contrast">
+                      <ChevronDown className="size-4" />
+                    </span>
+                  </summary>
+                  <p className="-mt-1 pb-5 text-muted">{a}</p>
+                </details>
+              ))}
+            </Reveal>
+            <Reveal className="mt-10 flex flex-col items-center gap-3 text-center">
+              <p className="text-muted">Ainda restam dúvidas?</p>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonClass("secondary", "md")}
+              >
+                Falar com os fundadores
+              </a>
+            </Reveal>
           </div>
         </section>
       </main>
 
-      <footer className="bg-[var(--dark-black-to-primary)] text-white py-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
-          <p className="text-base">
-            © 2023-2025 Search Price Soluções Tecnológicas LTDA. Todos os
-            direitos reservados.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

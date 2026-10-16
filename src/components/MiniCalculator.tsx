@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
-import { formatBRL, parseToNumberFromMaskedBRL } from "@/helpers/currency";
-import Image from "next/image";
-import TooltipInfo from "@/components/TooltipInfo";
-
-export interface MiniCalculatorProps {
-  onCalc?: (sellPrice: number, calcResult: number | null) => void;
-}
+import { useEffect, useState } from "react";
+import clsx from "clsx";
+import { Calculator, X } from "lucide-react";
+import MoneyInput from "@/components/ui/MoneyInput";
+import { inputClass } from "@/components/ui/Field";
+import { formatBRL } from "@/helpers/currency";
 
 const logisticsCosts: Record<string, number> = {
   prime: 7,
@@ -23,312 +21,242 @@ const adCosts: Record<string, number> = {
   free: 0,
 };
 
-const maskNumber = (value: string, decimals: number) => {
-  const digits = value.replace(/\D/g, "");
-  if (!digits || Number(digits) === 0) return "";
-  const pad = digits.padStart(decimals + 1, "0");
-  const intPart = pad.slice(0, -decimals).replace(/^0+(?=\d)/, "");
-  const decPart = pad.slice(-decimals);
-  return `${intPart}.${decPart}`;
-};
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-export default function MiniCalculator({
-  onCalc,
-}: Readonly<MiniCalculatorProps>) {
+const parsePct = (v: string) => (parseFloat(v.replace(",", ".")) || 0) / 100;
+
+function Row({
+  label,
+  hint,
+  action,
+  children,
+}: Readonly<{
+  label: string;
+  hint?: string;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+}>) {
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="text-sm font-medium text-fg">{label}</span>
+        {action}
+      </div>
+      {children}
+      {hint && <p className="text-xs text-subtle">{hint}</p>}
+    </div>
+  );
+}
+
+function ToggleLink({
+  custom,
+  onClick,
+}: Readonly<{ custom: boolean; onClick: () => void }>) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="text-xs font-medium text-brand hover:underline"
+    >
+      {custom ? "Usar lista" : "Inserir valor"}
+    </button>
+  );
+}
+
+/** Painel lateral que calcula lucro e margem de uma venda. */
+export default function MiniCalculator() {
   const [open, setOpen] = useState(false);
-  const [sellPrice, setSellPrice] = useState("");
-  const [buyPrice, setBuyPrice] = useState("");
+  const [sellPrice, setSellPrice] = useState<number | null>(null);
+  const [buyPrice, setBuyPrice] = useState<number | null>(null);
+  const [additionalCost, setAdditionalCost] = useState<number | null>(null);
   const [aliquot, setAliquot] = useState("");
   const [logistics, setLogistics] = useState("");
-  const [adType, setAdType] = useState<keyof typeof adCosts>("");
-  const [customLogisticsEnabled, setCustomLogisticsEnabled] = useState(false);
-  const [customLogisticsValue, setCustomLogisticsValue] = useState("");
-  const [customAdEnabled, setCustomAdEnabled] = useState(false);
+  const [customLogistics, setCustomLogistics] = useState(false);
+  const [customLogisticsValue, setCustomLogisticsValue] = useState<number | null>(null);
+  const [adType, setAdType] = useState("");
+  const [customAd, setCustomAd] = useState(false);
   const [customAdValue, setCustomAdValue] = useState("");
-  const [calcResult, setCalcResult] = useState<number | null>(null);
-  const [additionalCost, setAdditionalCost] = useState("");
-
-  const handleSellPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const sellPrice = parseToNumberFromMaskedBRL(e.target.value);
-    setSellPrice(formatBRL(sellPrice));
-  };
-
-  const handleBuyPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const buyPrice = parseToNumberFromMaskedBRL(e.target.value);
-    setBuyPrice(formatBRL(buyPrice));
-  };
-
-  const handleCustomLogistics = (e: ChangeEvent<HTMLInputElement>) => {
-    const logisticsCost = parseToNumberFromMaskedBRL(e.target.value);
-    setCustomLogisticsValue(formatBRL(logisticsCost));
-  };
-
-  const handleAdditionalCost = (e: ChangeEvent<HTMLInputElement>) => {
-    const additionalCost = parseToNumberFromMaskedBRL(e.target.value);
-    setAdditionalCost(formatBRL(additionalCost));
-  };
-
-  const handleCustomAd = (e: ChangeEvent<HTMLInputElement>) =>
-    setCustomAdValue(maskNumber(e.target.value, 2));
-
-  const handleAliquot = (e: ChangeEvent<HTMLInputElement>) =>
-    setAliquot(maskNumber(e.target.value, 2));
 
   useEffect(() => {
-    if (!sellPrice || !buyPrice) {
-      setCalcResult(null);
-      onCalc?.(0, null);
-      return;
-    }
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
-    const sp = parseToNumberFromMaskedBRL(sellPrice);
-    const bp = parseToNumberFromMaskedBRL(buyPrice);
-    const additional = parseToNumberFromMaskedBRL(additionalCost);
+  const sp = sellPrice ?? 0;
+  const logCost = customLogistics
+    ? customLogisticsValue ?? 0
+    : logisticsCosts[logistics] ?? 0;
+  const adPct = customAd ? parsePct(customAdValue) : (adCosts[adType] ?? 0) / 100;
+  const alPct = parsePct(aliquot);
 
-    const logCost = customLogisticsEnabled
-      ? parseToNumberFromMaskedBRL(customLogisticsValue)
-      : logisticsCosts[logistics] ?? 0;
-
-    const adPct = customAdEnabled
-      ? (parseFloat(customAdValue.replace(",", ".")) || 0) / 100
-      : (adCosts[adType] ?? 0) / 100;
-
-    const alPct = (parseFloat(aliquot.replace(",", ".")) || 0) / 100;
-
-    const result = sp - logCost - sp * adPct - bp - sp * alPct - additional;
-
-    const final = Number.isFinite(result) ? result : null;
-    setCalcResult(final);
-    onCalc?.(sp, final);
-  }, [
-    sellPrice,
-    buyPrice,
-    logistics,
-    customLogisticsEnabled,
-    customLogisticsValue,
-    adType,
-    customAdEnabled,
-    customAdValue,
-    additionalCost,
-    aliquot,
-    onCalc,
-  ]);
-
-  const fmtBRL = (v: number) =>
-    new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(v);
+  const ready = sellPrice !== null && buyPrice !== null;
+  const result = ready
+    ? sp - logCost - sp * adPct - (buyPrice ?? 0) - sp * alPct - (additionalCost ?? 0)
+    : null;
+  const margin = result !== null && sp > 0 ? result / sp : null;
 
   return (
     <>
-      {!open && (
-        <button
-          onClick={() => setOpen(true)}
-          className="fixed right-3 bottom-3 bg-[var(--black-to-primary)] h-20 text-white border border-white rounded-[20px] px-6 py-1 z-30 transform hover:scale-105 duration-200"
-        >
-          <Image
-            src="/calculator.png"
-            alt="Calculadora"
-            width={45}
-            height={45}
-          />
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={clsx(
+          "fixed bottom-5 right-5 z-30 inline-flex h-12 items-center gap-2 rounded-full bg-brand px-5 font-semibold text-brand-contrast shadow-card transition-transform hover:scale-[1.03]",
+          open && "hidden"
+        )}
+      >
+        <Calculator className="size-5" />
+        Calculadora de margem
+      </button>
 
       {open && (
-        <div className="fixed bottom-1 right-1 w-[310px] bg-[var(--black-to-primary)] border border-white rounded-lg p-5 z-[1000]">
+        <div className="fixed inset-0 z-50 flex justify-end">
           <button
+            type="button"
+            aria-label="Fechar calculadora"
             onClick={() => setOpen(false)}
-            className="absolute top-2 right-3 text-white text-lg"
+            className="absolute inset-0 bg-black/40"
+          />
+          <aside
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="calc-title"
+            className="relative flex h-full w-full max-w-sm flex-col border-l border-border bg-surface shadow-card"
           >
-            ✕
-          </button>
-          <h2 className="text-white font-semibold text-lg text-center mt-2">
-            Calculadora
-          </h2>
-
-          <div className="space-y-4 mt-4">
-            <div>
-              <label
-                htmlFor="sell_price"
-                className="block text-base text-white"
+            <header className="flex items-center justify-between border-b border-border px-5 py-4">
+              <h2 id="calc-title" className="flex items-center gap-2 font-semibold text-fg">
+                <Calculator className="size-5 text-brand" />
+                Calculadora de margem
+              </h2>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Fechar"
+                className="grid size-8 place-items-center rounded-lg text-muted hover:bg-surface-2 hover:text-fg"
               >
-                Valor de venda
-                <TooltipInfo text="Valor pelo qual você deseja vender o produto." />
-              </label>
-              <input
-                id="sell_price"
-                type="text"
-                value={sellPrice}
-                onChange={handleSellPrice}
-                placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
-              />
-            </div>
+                <X className="size-4" />
+              </button>
+            </header>
 
-            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
+            <div className="flex-1 space-y-5 overflow-y-auto px-5 py-5">
+              <Row label="Preço de venda" hint="Valor pelo qual você quer vender.">
+                <MoneyInput value={sellPrice} onChange={setSellPrice} autoFocus />
+              </Row>
+              <Row label="Custo de compra" hint="Quanto você paga pelo produto.">
+                <MoneyInput value={buyPrice} onChange={setBuyPrice} />
+              </Row>
 
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <label className="text-white text-base">
-                  Custo de logística
-                  <TooltipInfo text="Selecione ou insira um valor personalizado." />
-                </label>
-                <button
-                  type="button"
-                  className="text-xs text-white"
-                  onClick={() => setCustomLogisticsEnabled((p) => !p)}
-                >
-                  {customLogisticsEnabled ? "Usar lista" : "Inserir valor"}
-                </button>
-              </div>
-              {customLogisticsEnabled ? (
-                <input
-                  type="text"
-                  value={customLogisticsValue}
-                  onChange={handleCustomLogistics}
-                  placeholder="R$ 0,00"
-                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
-                />
-              ) : (
-                <>
+              <Row
+                label="Logística"
+                action={
+                  <ToggleLink
+                    custom={customLogistics}
+                    onClick={() => setCustomLogistics((v) => !v)}
+                  />
+                }
+              >
+                {customLogistics ? (
+                  <MoneyInput
+                    value={customLogisticsValue}
+                    onChange={setCustomLogisticsValue}
+                  />
+                ) : (
                   <select
                     value={logistics}
                     onChange={(e) => setLogistics(e.target.value)}
-                    className="w-full text-base rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
+                    className={inputClass}
                   >
-                    <option value="" disabled>
-                      Logística
-                    </option>
-                    {Object.keys(logisticsCosts).map((k) => (
+                    <option value="">Selecione</option>
+                    {Object.entries(logisticsCosts).map(([k, v]) => (
                       <option key={k} value={k}>
-                        {k.charAt(0).toUpperCase() + k.slice(1)}
+                        {capitalize(k)} — {formatBRL(v)}
                       </option>
                     ))}
                   </select>
-                  {logistics && (
-                    <p className="mt-2 text-white text-sm">
-                      Valor: {fmtBRL(logisticsCosts[logistics])}
-                    </p>
-                  )}
-                </>
-              )}
-            </div>
+                )}
+              </Row>
 
-            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
-
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <label htmlFor="adPercentage" className="text-base text-white">
-                  Taxa de anúncio (%)
-                  <TooltipInfo text="Selecione ou insira uma taxa personalizada (%)." />
-                </label>
-                <button
-                  type="button"
-                  className="text-xs text-white"
-                  onClick={() => setCustomAdEnabled((p) => !p)}
-                >
-                  {customAdEnabled ? "Usar lista" : "Inserir valor"}
-                </button>
-              </div>
-              {customAdEnabled ? (
-                <input
-                  id="adPercentage"
-                  type="text"
-                  value={customAdValue}
-                  onChange={handleCustomAd}
-                  placeholder="0.00%"
-                  className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
-                />
-              ) : (
-                <>
+              <Row
+                label="Taxa do anúncio (%)"
+                action={
+                  <ToggleLink custom={customAd} onClick={() => setCustomAd((v) => !v)} />
+                }
+              >
+                {customAd ? (
+                  <input
+                    inputMode="decimal"
+                    placeholder="0,00"
+                    value={customAdValue}
+                    onChange={(e) => setCustomAdValue(e.target.value.replace(/[^\d.,]/g, ""))}
+                    className={inputClass}
+                  />
+                ) : (
                   <select
                     value={adType}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                      setAdType(e.target.value)
-                    }
-                    className="w-full text-base rounded-lg p-2 bg-[var(--black-to-primary)] text-white focus:outline-none"
+                    onChange={(e) => setAdType(e.target.value)}
+                    className={inputClass}
                   >
-                    <option value="" disabled>
-                      Anúncio
-                    </option>
-                    {Object.keys(adCosts).map((k) => (
+                    <option value="">Selecione</option>
+                    {Object.entries(adCosts).map(([k, v]) => (
                       <option key={k} value={k}>
-                        {k.charAt(0).toUpperCase() + k.slice(1)}
+                        {capitalize(k)} — {v}%
                       </option>
                     ))}
                   </select>
-                  {adType && (
-                    <p className="mt-2 text-white text-sm">
-                      Taxa: {adCosts[adType].toFixed(2)}%
+                )}
+              </Row>
+
+              <Row label="Alíquota de imposto (%)" hint="ICMS ou Simples sobre a venda.">
+                <input
+                  inputMode="decimal"
+                  placeholder="0,00"
+                  value={aliquot}
+                  onChange={(e) => setAliquot(e.target.value.replace(/[^\d.,]/g, ""))}
+                  className={inputClass}
+                />
+              </Row>
+              <Row label="Custos adicionais" hint="Embalagem, etiqueta, outros.">
+                <MoneyInput value={additionalCost} onChange={setAdditionalCost} />
+              </Row>
+            </div>
+
+            <footer className="border-t border-border bg-surface-2 px-5 py-4">
+              {result === null ? (
+                <p className="text-sm text-muted">
+                  Preencha preço de venda e custo de compra.
+                </p>
+              ) : (
+                <div className="flex items-end justify-between gap-4">
+                  <div>
+                    <p className="text-xs text-muted">
+                      {result >= 0 ? "Lucro por venda" : "Prejuízo por venda"}
                     </p>
+                    <p
+                      className={clsx(
+                        "text-2xl font-bold tabular",
+                        result >= 0 ? "text-success" : "text-danger"
+                      )}
+                    >
+                      {formatBRL(result)}
+                    </p>
+                  </div>
+                  {margin !== null && (
+                    <div className="text-right">
+                      <p className="text-xs text-muted">Margem</p>
+                      <p className="text-lg font-semibold text-fg tabular">
+                        {(margin * 100).toLocaleString("pt-BR", {
+                          maximumFractionDigits: 1,
+                        })}
+                        %
+                      </p>
+                    </div>
                   )}
-                </>
+                </div>
               )}
-            </div>
-
-            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
-
-            <div>
-              <label htmlFor="buy_price" className="block text-base text-white">
-                Custo de compra
-                <TooltipInfo text="Custo de compra do produto." />
-              </label>
-              <input
-                id="buy_price"
-                type="text"
-                value={buyPrice}
-                onChange={handleBuyPrice}
-                placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
-              />
-            </div>
-
-            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
-
-            <div>
-              <label
-                htmlFor="additional_cost"
-                className="block text-base text-white"
-              >
-                Custos adicionais
-                <TooltipInfo text="Outros custos que afetem o preço final." />
-              </label>
-              <input
-                id="additional_cost"
-                type="text"
-                value={additionalCost}
-                onChange={handleAdditionalCost}
-                placeholder="R$ 0,00"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
-              />
-            </div>
-
-            <hr className="border-[var(--gray-to-white)] -mt-2 mb-2" />
-
-            <div>
-              <label htmlFor="aliquot" className="block text-base text-white">
-                Alíquota (%)
-                <TooltipInfo text="ICMS da venda do produto." />
-              </label>
-              <input
-                id="aliquot"
-                type="text"
-                value={aliquot}
-                onChange={handleAliquot}
-                placeholder="0.00%"
-                className="w-full rounded-lg p-2 bg-[var(--black-to-primary)] text-white placeholder:text-gray-400 focus:outline-none"
-              />
-            </div>
-
-            {calcResult !== null && (
-              <p className="mt-4 text-white text-center font-medium">
-                {calcResult >= 0 ? "Lucro Total:" : "Prejuízo Total:"}{" "}
-                <strong>{fmtBRL(calcResult)}</strong>
-              </p>
-            )}
-          </div>
+            </footer>
+          </aside>
         </div>
       )}
     </>

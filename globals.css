@@ -1,125 +1,233 @@
 @import "tailwindcss";
 
-body, dialog {
-  font-family: "Poppins", sans-serif;
-  color: black;
-}
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-.sp-modal::backdrop {
-  background: rgba(0, 0, 0, 0.5);
-}
-
+/*
+ * Tokens de design da Search Price.
+ * Base branca com a marca em verde (derivado do teal do logo).
+ * Os componentes usam só os tokens semânticos (bg, surface, text, brand…);
+ * o tema escuro redefine os mesmos nomes.
+ */
 :root {
-  --primary: #144750;
-  --secondary: #278d8d;
-  --third: #41aaa3;
-  --fourth: #4dd1c8;
-  --fifth: #228da0;
-  --border: #b6b6b6;
-  --gray: #dfdfdf;
-  --light-gray: #f0f0f0;
-  --white: #f8f8f8;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f3f8f5;
+  /* painel escuro fixo (CTA, lateral do login) — escuro nos dois temas */
+  --surface-inverse: #062a20;
+  --border: #e3ebe7;
+  --border-strong: #c7d6cf;
 
-  --background-input: #f8f8f8;
-  --background-container: #f8f8f8;
-  --background-secondary: #f8f8f8;
+  --text: #0a1a14;
+  --text-muted: #4f625a;
+  --text-subtle: #8a9a93;
+  --text-inverse: #f1faf6;
 
-  --dark-black-to-primary: #144750;
-  --dark-black-to-secondary: #299c9c;
+  --brand: #0c9b6c;
+  --brand-hover: #08835a;
+  --brand-strong: #065f46;
+  --brand-soft: #e5f6ee;
+  --brand-contrast: #ffffff;
+  --accent: #34d399;
 
-  --black-to-gray: #d1ddde;
-  --black-to-gray-50: #f9fafb;
-  --black-to-gray-100: #d1ddde;
-  --black-to-light-gray: #f0f0f0;
-  --white-to-light-gray: #f0f0f0;
+  --success: #15803d;
+  --success-soft: #dcfce7;
+  --warning: #b45309;
+  --warning-soft: #fef3c7;
+  --danger: #c53340;
+  --danger-soft: #fde2e4;
 
-  --black-to-primary: #144750;
-  --black-to-secondary: #299c9c;
-  --black-to-light-blue: #dcf5f3;
-  --black-to-white: #f8f8f8;
+  --ring: color-mix(in oklab, var(--brand) 45%, transparent);
+  --shadow: 0 1px 2px rgb(10 26 20 / 0.04), 0 10px 30px -14px rgb(10 26 20 / 0.16);
+  --shadow-lg: 0 2px 4px rgb(10 26 20 / 0.04), 0 24px 48px -20px rgb(6 95 70 / 0.28);
 
-  --primary-to-white: #f8f8f8;
-  --primary-to-secondary: #299c9c;
-  --white-to-primary: #144750;
+  --mp-mercadolivre: #ffe600;
+  --mp-mercadolivre-ink: #2d3277;
+  --mp-amazon: #ff9900;
+  --mp-amazon-ink: #131921;
+  --mp-shopee: #ee4d2d;
+  --mp-shopee-ink: #ffffff;
 
-  --secondary-to-primary: #144750;
-  --secondary-to-third: #41aaa3;
-  --secondary-to-fourth: #4dd1c8;
-  --secondary-to-white: #f8f8f8;
-  --secondary-to-gray: #d1ddde;
-  --secondary-to-light-blue: #dcf5f3;
-
-  --third-to-primary: #144750;
-  --third-to-secondary: #299c9c;
-  --third-to-fourth: #4dd1c8;
-  --third-to-white: #f8f8f8;
-
-  --danger: #c93642;
-  --danger-hover: #fc5b69;
-
-  --green-400: #268d32;
-  --green-100: #47ce57;
-
-  --gray-to-white: #f8f8f8;
-  --white-to-light-blue: #dcf5f3;
-  --dollar-bill-container: #e3f4f7;
+  color-scheme: light;
 }
 
 [data-theme="dark"] {
+  --bg: #071417;
+  --surface: #0d1f23;
+  --surface-2: #132b30;
+  --surface-inverse: #0f2c31;
+  --border: #1d3a40;
+  --border-strong: #2a5058;
 
-  --primary: #144750;
-  --secondary: #299c9c;
-  --third: #41aaa3;
-  --fourth: #4dd1c8;
-  --fifth: #228da0;
-  --white: #f8f8f8;
-  --border: #333333;
+  --text: #e6f0f1;
+  --text-muted: #9ab0b3;
+  --text-subtle: #6b8387;
+  --text-inverse: #f2f7f7;
 
-  --background-input: #262626;
-  --background-container: #202020;
-  --background-secondary: #1a1a1a;
+  --brand: #34d399;
+  --brand-hover: #6ee7b7;
+  --brand-strong: #a7f3d0;
+  --brand-soft: #0d3326;
+  --brand-contrast: #032016;
+  --accent: #6ee7b7;
 
-  --dark-black-to-primary: #111111;
-  --dark-black-to-secondary: #111111;
+  --success: #4ade80;
+  --success-soft: #0f2e1d;
+  --warning: #fbbf24;
+  --warning-soft: #33270b;
+  --danger: #f87171;
+  --danger-soft: #3a1418;
 
-  --black-to-gray: #111111;
-  --black-to-gray-50: #1a1a1a;
-  --black-to-gray-100: #1a1a1a;
-  --black-to-light-gray: #1a1a1a;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -16px rgb(0 0 0 / 0.6);
+  --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px -20px rgb(0 0 0 / 0.7);
 
-  --black-to-primary: #1a1a1a;
-  --black-to-secondary: #1a1a1a;
-  --black-to-light-blue: #1a1a1a;
-  --black-to-white: #202020;
-
-  --primary-to-secondary: #144750;
-  --primary-to-white: #144750;
-  --white-to-primary: #f8f8f8;
-
-  --secondary-to-primary: #299c9c;
-  --secondary-to-third: #299c9c;
-  --secondary-to-fourth: #299c9c;
-  --secondary-to-gray: #299c9c;
-  --secondary-to-white: #299c9c;
-  --secondary-to-light-blue: #299c9c;
-
-  --third-to-primary: #41aaa3;
-  --third-to-secondary: #41aaa3;
-  --third-to-fourth: #41aaa3;
-  --third-to-white: #41aaa3;
-
-  --danger: #a52a34;
-  --danger-hover: #fc5b69;
-
-  --green-400: #268d32;
-  --green-100: #47ce57;
-
-  --gray-100: #808080;
-  --gray-to-white: #4b5563;
-
-  --dollar-bill-container: #e3f4f7;
-  --white-to-light-blue: #f8f8f8;
-  --white-to-light-gray: #f8f8f8;
+  color-scheme: dark;
 }
 
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-inverse: var(--text-inverse);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-contrast: var(--brand-contrast);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ring: var(--ring);
+
+  --shadow-card: var(--shadow);
+  --shadow-lift: var(--shadow-lg);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-blob: blob 18s ease-in-out infinite;
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.4s ease-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.08); }
+  66% { transform: translate(-25px, 20px) scale(0.95); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--brand) 45%, transparent); }
+  80%, 100% { box-shadow: 0 0 0 10px transparent; }
+}
+
+/* Entrada ao rolar: o componente <Reveal> liga data-visible quando entra na tela */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-feature-settings: "cv11", "ss01";
+}
+
+::selection {
+  background: color-mix(in oklab, var(--brand) 30%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.sp-modal::backdrop {
+  background: rgb(4 14 16 / 0.6);
+  backdrop-filter: blur(2px);
+}
+
+/* Fundo quadriculado sutil usado no hero */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
+}
+
+/* Texto com gradiente verde animado */
+.text-shine {
+  background: linear-gradient(90deg, var(--brand-strong), var(--brand), var(--accent), var(--brand));
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 6s ease-in-out infinite;
+}
+@keyframes shine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
