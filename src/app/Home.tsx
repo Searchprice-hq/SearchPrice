@@ -22,6 +22,7 @@ import HeroPreview from "@/components/site/HeroPreview";
 import Reveal from "@/components/ui/Reveal";
 import CountUp from "@/components/ui/CountUp";
 import { buttonClass } from "@/components/ui/button";
+import PressFeature from "@/components/site/PressFeature";
 import MarketplaceBadge, {
   MARKETPLACES,
   type MarketplaceKey,
@@ -554,6 +555,9 @@ export default function Home() {
                 </Reveal>
               </ul>
             </div>
+            <Reveal className="mt-12">
+              <PressFeature />
+            </Reveal>
           </div>
         </section>
 

@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter, { SOCIALS } from "@/components/site/SiteFooter";
 import PageHero from "@/components/site/PageHero";
+import PressFeature from "@/components/site/PressFeature";
 import { buttonClass } from "@/components/ui/button";
 
 const PILLARS = [
@@ -65,6 +66,12 @@ export default function About() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="pb-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <PressFeature />
           </div>
         </section>
 
