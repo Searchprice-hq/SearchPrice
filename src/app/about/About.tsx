@@ -23,7 +23,7 @@ const PILLARS = [
 ];
 
 const TEAM = [
-  { name: "Gerson Boing Carvalho", role: "CEO & Cofundador", avatar: "/gerson-boing.png" },
+  { name: "Gerson Boing Carvalho", role: "CEO & Cofundador", avatar: "/gerson-boing.jpeg" },
   { name: "Priscilla Barbosa Moni", role: "CTO & Cofundadora", avatar: "/priscilla-barbosa.png" },
   { name: "Rogerio Rodrigues da Silva", role: "Cloud System Administrator", avatar: "/rogerio-silva.png" },
   { name: "Patrick Meirelles", role: "Backend Developer", avatar: "/patrick-meirelles.png" },
@@ -94,7 +94,7 @@ export default function About() {
                     alt={m.name}
                     width={96}
                     height={96}
-                    className="mb-3 size-24 rounded-full object-cover ring-4 ring-brand-soft"
+                    className="mb-3 size-24 rounded-full object-cover object-top ring-4 ring-brand-soft"
                   />
                   <p className="font-semibold text-fg">{m.name}</p>
                   <p className="text-sm text-muted">{m.role}</p>

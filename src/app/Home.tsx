@@ -142,7 +142,7 @@ const TESTIMONIALS = [
 ];
 
 const TEAM = [
-  { name: "Gerson Boing Carvalho", role: "CEO & Cofundador", avatar: "/gerson-boing.png" },
+  { name: "Gerson Boing Carvalho", role: "CEO & Cofundador", avatar: "/gerson-boing.jpeg" },
   { name: "Priscilla Barbosa Moni", role: "CTO & Cofundadora", avatar: "/priscilla-barbosa.png" },
   { name: "Rogerio Rodrigues da Silva", role: "Cloud System Administrator", avatar: "/rogerio-silva.png" },
   { name: "Patrick Meirelles", role: "Backend Developer", avatar: "/patrick-meirelles.png" },
@@ -531,7 +531,7 @@ export default function Home() {
                       alt={m.name}
                       width={72}
                       height={72}
-                      className="mb-3 size-18 rounded-full object-cover ring-4 ring-brand-soft"
+                      className="mb-3 size-18 rounded-full object-cover object-top ring-4 ring-brand-soft"
                     />
                     <p className="text-sm font-semibold leading-tight text-fg">{m.name}</p>
                     <p className="mt-1 text-xs text-muted">{m.role}</p>
