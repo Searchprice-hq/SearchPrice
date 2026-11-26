@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import { ThemeProvider } from "next-themes";
 import "../../globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+// Fonte servida pelo próprio projeto: o next/font/google do Next 15.3
+// quebra no build quando o Google devolve URLs sem extensão.
+const jakarta = localFont({
+  src: "./fonts/PlusJakartaSans-latin.woff2",
+  weight: "200 800",
+  display: "swap",
   variable: "--font-jakarta",
 });
 
