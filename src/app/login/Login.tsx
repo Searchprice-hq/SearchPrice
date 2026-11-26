@@ -7,9 +7,8 @@ import { useLogin } from "@/hooks/useLogin";
 import AuthShell from "@/components/site/AuthShell";
 import { Field, FormError, PasswordField } from "@/components/ui/Field";
 import { buttonClass } from "@/components/ui/button";
+import { TEST_USER } from "@/mocks";
 
-// Usuário fixo da API (searchprice-master-api/app/utils/test_users.ts)
-const TEST_USER = { email: "user-test@searchprice.com", password: "UserTest@123" };
 
 export default function Login() {
   const router = useRouter();

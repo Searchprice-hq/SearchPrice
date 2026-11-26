@@ -1,4 +1,5 @@
 import type { User, LoginResponse } from "@/models/User";
+import { USE_MOCKS, delay, mockLogin, mockRegister } from "@/mocks";
 
 function getDefaultHeaders() {
   return {
@@ -20,6 +21,7 @@ export async function loginUser(
   email: string,
   password: string
 ): Promise<LoginResponse> {
+  if (USE_MOCKS) return mockLogin(email, password);
   const res = await fetch(`/api/user/login`, {
     method: "POST",
     headers: getDefaultHeaders(),
@@ -62,6 +64,7 @@ export async function registerUser(
   password: string,
   document: string
 ): Promise<User> {
+  if (USE_MOCKS) return mockRegister(fullName, email, password, document);
   const res = await fetch(`/api/user/register`, {
     method: "POST",
     headers: getDefaultHeaders(),
@@ -105,6 +108,7 @@ export async function registerUser(
 }
 
 export async function forgotPassword(email: string): Promise<void> {
+  if (USE_MOCKS) return void (await delay());
   const res = await fetch(`/api/email/forgot-password`, {
     method: "POST",
     headers: getDefaultHeaders(),
@@ -124,6 +128,7 @@ export async function resetPassword(
   token: string,
   password: string
 ): Promise<void> {
+  if (USE_MOCKS) return void (await delay());
   const res = await fetch(`/api/email/reset-password`, {
     method: "POST",
     headers: getDefaultHeaders(),

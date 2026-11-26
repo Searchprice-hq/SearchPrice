@@ -1,4 +1,5 @@
 import type { Product } from "@/models/Product";
+import { USE_MOCKS, mockProducts } from "@/mocks";
 
 function getHeaders() {
   const token =
@@ -13,6 +14,7 @@ export async function fetchProducts(
   filter?: "price" | "marketplace" | "shipping" | "productCode",
   dataFilter?: string
 ): Promise<Product[]> {
+  if (USE_MOCKS) return mockProducts(filter, dataFilter);
   const params = new URLSearchParams();
   if (filter) {
     params.append("filter", filter);

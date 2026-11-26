@@ -1,4 +1,7 @@
 import type { MarketplaceKey } from "@/components/ui/MarketplaceBadge";
+import { USE_MOCKS, delay } from "@/mocks";
+import * as mock from "@/mocks/pricing/gateway";
+import { FEE_TABLE_VERSION, simulate as mockSimulate } from "@/mocks/pricing/fees";
 
 /* Tipos espelhados de searchprice-master-api/app/services/pricing */
 
@@ -175,7 +178,11 @@ export function splitQuery(value: string): { ean: string | null; q: string | nul
   return { ean: null, q: v || null };
 }
 
-export function analyzeProduct(p: AnalyzeParams): Promise<Analysis> {
+export async function analyzeProduct(p: AnalyzeParams): Promise<Analysis> {
+  if (USE_MOCKS) {
+    await delay(500);
+    return mock.analyze({ ean: p.ean, term: p.q, myPrice: p.myPrice, includeOutliers: p.includeOutliers }) as Analysis;
+  }
   const qs = new URLSearchParams();
   if (p.ean) qs.set("ean", p.ean);
   if (p.q) qs.set("q", p.q);
@@ -185,32 +192,73 @@ export function analyzeProduct(p: AnalyzeParams): Promise<Analysis> {
   return request<Analysis>(`/pricing/analyze?${qs}`);
 }
 
-export function simulateProfit(p: SimulateParams) {
+export async function simulateProfit(p: SimulateParams): Promise<{ feeTableVersion: string; results: ProfitResult[] }> {
+  if (USE_MOCKS) {
+    await delay(150);
+    const listing: Partial<Record<MarketplaceKey, string | undefined>> = {
+      mercadolivre: p.mlListingType,
+      amazon: p.amazonListingType,
+    };
+    const keys: MarketplaceKey[] = ["mercadolivre", "amazon", "shopee", "magalu"];
+    return {
+      feeTableVersion: FEE_TABLE_VERSION,
+      results: keys.map((mp) =>
+        mockSimulate(mp, { price: p.price, cost: p.cost, taxPct: p.tax ?? 0, targetMarginPct: p.margin ?? 0, extraCost: p.extraCost }, listing[mp])
+      ),
+    };
+  }
   return request<{ feeTableVersion: string; results: ProfitResult[] }>("/pricing/simulate", {
     method: "POST",
     body: JSON.stringify(p),
   });
 }
 
-export function fetchHistory(p: { ean?: string | null; q?: string | null }) {
+export async function fetchHistory(p: { ean?: string | null; q?: string | null }): Promise<HistoryPoint[]> {
+  if (USE_MOCKS) {
+    await delay(200);
+    return mock.history({ ean: mock.normalizeEan(p.ean) || null, term: p.q?.trim() || null });
+  }
   const qs = new URLSearchParams();
   if (p.ean) qs.set("ean", p.ean);
   if (p.q) qs.set("q", p.q);
   return request<HistoryPoint[]>(`/pricing/history?${qs}`);
 }
 
-export function createManualOffer(query: { ean?: string | null; q?: string | null }, input: ManualOfferInput) {
+export async function createManualOffer(query: { ean?: string | null; q?: string | null }, input: ManualOfferInput) {
+  if (USE_MOCKS) {
+    await delay(150);
+    const list = mock.readManual();
+    const record = {
+      ...input,
+      id: Math.max(0, ...list.map((m) => m.id)) + 1,
+      queryKey: mock.queryKeyOf({ ean: mock.normalizeEan(query.ean) || null, term: query.q?.trim() || null }),
+      updatedAt: new Date().toISOString(),
+    };
+    mock.writeManual([...list, record]);
+    return record;
+  }
   return request("/pricing/offers", {
     method: "POST",
     body: JSON.stringify({ ...input, ean: query.ean ?? undefined, q: query.q ?? undefined }),
   });
 }
 
-export function updateManualOffer(id: number, input: Partial<ManualOfferInput>) {
+export async function updateManualOffer(id: number, input: Partial<ManualOfferInput>) {
+  if (USE_MOCKS) {
+    await delay(150);
+    const clean = Object.fromEntries(Object.entries(input).filter(([, v]) => v !== undefined));
+    mock.writeManual(mock.readManual().map((m) => (m.id === id ? { ...m, ...clean, updatedAt: new Date().toISOString() } : m)));
+    return { id };
+  }
   return request(`/pricing/offers/${id}`, { method: "PATCH", body: JSON.stringify(input) });
 }
 
-export function deleteManualOffer(id: number) {
+export async function deleteManualOffer(id: number) {
+  if (USE_MOCKS) {
+    await delay(150);
+    mock.writeManual(mock.readManual().filter((m) => m.id !== id));
+    return { id };
+  }
   return request(`/pricing/offers/${id}`, { method: "DELETE" });
 }
 
