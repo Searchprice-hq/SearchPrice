@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export type MarketplaceKey = "mercadolivre" | "amazon" | "shopee";
+export type MarketplaceKey = "mercadolivre" | "amazon" | "shopee" | "magalu";
 
 export const MARKETPLACES: Record<
   MarketplaceKey,
@@ -9,6 +9,7 @@ export const MARKETPLACES: Record<
   mercadolivre: { label: "Mercado Livre", short: "ML" },
   amazon: { label: "Amazon", short: "AMZ" },
   shopee: { label: "Shopee", short: "SHP" },
+  magalu: { label: "Magalu", short: "MGL" },
 };
 
 /** Normaliza o texto livre vindo da API ("Mercado Livre", "amazon"…) para uma chave. */
@@ -17,6 +18,7 @@ export function toMarketplaceKey(value: string): MarketplaceKey | null {
   if (v.includes("mercado")) return "mercadolivre";
   if (v.includes("amazon")) return "amazon";
   if (v.includes("shopee")) return "shopee";
+  if (v.includes("magalu") || v.includes("magazine")) return "magalu";
   return null;
 }
 
@@ -25,6 +27,7 @@ const styles: Record<MarketplaceKey, string> = {
     "bg-[var(--mp-mercadolivre)] text-[var(--mp-mercadolivre-ink)]",
   amazon: "bg-[var(--mp-amazon)] text-[var(--mp-amazon-ink)]",
   shopee: "bg-[var(--mp-shopee)] text-[var(--mp-shopee-ink)]",
+  magalu: "bg-[var(--mp-magalu)] text-[var(--mp-magalu-ink)]",
 };
 
 export function MarketplaceDot({

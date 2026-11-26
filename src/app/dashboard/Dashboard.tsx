@@ -1,9 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
+  BarChart3,
   LoaderCircle,
   LogOut,
   Package,
@@ -167,6 +169,10 @@ export default function Dashboard() {
                 Olá, <span className="font-medium text-fg">{firstName}</span>
               </span>
             )}
+            <Link href="/inteligencia" className={buttonClass("secondary", "sm")}>
+              <BarChart3 className="size-4" />
+              <span className="hidden sm:inline">Inteligência de preços</span>
+            </Link>
             <ThemeToggle />
             <button
               type="button"

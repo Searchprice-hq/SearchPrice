@@ -8,6 +8,9 @@ import AuthShell from "@/components/site/AuthShell";
 import { Field, FormError, PasswordField } from "@/components/ui/Field";
 import { buttonClass } from "@/components/ui/button";
 
+// Usuário fixo da API (searchprice-master-api/app/utils/test_users.ts)
+const TEST_USER = { email: "user-test@searchprice.com", password: "UserTest@123" };
+
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -19,6 +22,12 @@ export default function Login() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await handleLogin(email, password);
+  };
+
+  const onTestLogin = async () => {
+    setEmail(TEST_USER.email);
+    setPassword(TEST_USER.password);
+    await handleLogin(TEST_USER.email, TEST_USER.password);
   };
 
   const onForgotPassword = async () => {
@@ -86,6 +95,15 @@ export default function Login() {
           className={buttonClass("primary", "md", "w-full")}
         >
           {loading ? "Entrando…" : "Entrar"}
+        </button>
+
+        <button
+          type="button"
+          onClick={onTestLogin}
+          disabled={loading}
+          className={buttonClass("secondary", "md", "w-full")}
+        >
+          Entrar com usuário de teste
         </button>
       </form>
     </AuthShell>

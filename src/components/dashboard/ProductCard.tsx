@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import clsx from "clsx";
-import { ChevronDown } from "lucide-react";
+import { BarChart3, ChevronDown } from "lucide-react";
 import MoneyInput from "@/components/ui/MoneyInput";
 import MarketplaceBadge, {
   MARKETPLACES,
@@ -50,7 +51,15 @@ export default function ProductCard({
             <h3 className="truncate font-semibold text-fg" title={group.name}>
               {group.name}
             </h3>
-            <p className="text-xs text-subtle tabular">EAN {group.ean}</p>
+            <p className="flex items-center gap-2 text-xs text-subtle tabular">
+              EAN {group.ean}
+              <Link
+                href={`/inteligencia?ean=${group.key}`}
+                className="inline-flex items-center gap-1 font-semibold text-brand hover:text-brand-hover"
+              >
+                <BarChart3 className="size-3" aria-hidden /> Analisar
+              </Link>
+            </p>
             <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
               {(Object.keys(MARKETPLACES) as MarketplaceKey[]).map((k) =>
                 group.bestByMarketplace[k] !== undefined ? (
